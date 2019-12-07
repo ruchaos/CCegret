@@ -1,0 +1,30 @@
+{
+	"initial": [
+		"libs/modules/egret/egret.js",
+		"libs/modules/egret/egret.web.js",
+		"libs/modules/eui/eui.js",
+		"libs/modules/assetsmanager/assetsmanager.js",
+		"libs/modules/tween/tween.js",
+		"libs/modules/promise/promise.js"
+	],
+	"game": [
+		"bin-debug/Login.js",
+		"bin-debug/AssetAdapter.js",
+		"bin-debug/Create.js",
+		"bin-debug/FindPW.js",
+		"bin-debug/Game.js",
+		"bin-debug/GameItem.js",
+		"bin-debug/Home.js",
+		"bin-debug/LoadingUI.js",
+		"bin-debug/LOBBYEVENT.js",
+		"bin-debug/ChangePW.js",
+		"bin-debug/Main.js",
+		"bin-debug/Person.js",
+		"bin-debug/Platform.js",
+		"bin-debug/REF.js",
+		"bin-debug/Register.js",
+		"bin-debug/Room.js",
+		"bin-debug/ThemeAdapter.js",
+		"bin-debug/ToastUI.js"
+	]
+}

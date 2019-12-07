@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="ToastUISkin" width="300" height="100" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" >
+	<w:Config id="16b83396a15" ></w:Config>
+	<e:Rect width="300" height="100" x="0" y="0" fillAlpha="0.9" strokeColor="0xffffff" strokeWeight="3" strokeAlpha="1"/>
+	<e:Label id="toastMsg" text="最多20个字" anchorOffsetX="0" width="275" anchorOffsetY="0" height="77" verticalCenter="0" horizontalCenter="0" verticalAlign="middle" textAlign="center" fontFamily="Microsoft YaHei" size="24"/>
+</e:Skin>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="HomeUISkin" width="720" height="1280" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" >
+	<w:Config id="169dcc7f2b6" ></w:Config>
+
+	<e:Image id="logo" width="368" height="62" x="40" y="42" anchorOffsetX="0" anchorOffsetY="0" source="resource/pic/home/logo.png"/>
+	<e:Label id="person" text="请登录" x="537" y="60" textAlign="right" textColor="0x6699ff" anchorOffsetX="0" width="169" fontFamily="Microsoft YaHei"/>
+	<e:Image width="700" height="2" x="12" y="108" anchorOffsetX="0" anchorOffsetY="0" source="resource/pic/home/line.png"/>
+	<e:Button id="create" label="" x="582.5" y="146">
+		<e:skinName>
+			<e:Skin states="up,down,disabled">
+			<e:Image width="100%" height="100%" source="resource/pic/home/create.png" source.down="resource/pic/home/create-click.png"/>
+			<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
+			</e:Skin>
+		</e:skinName>
+	</e:Button>
+	<e:ToggleButton id="join" label="" x="6" y="146">
+		<e:skinName>
+		<e:Skin states="up,down,disabled">
+			<e:Image width="100%" height="100%" source="resource/pic/home/join.png" source.down="resource/pic/home/join-click.png"/>
+			<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
+		</e:Skin>
+		</e:skinName>
+	</e:ToggleButton>
+	<e:ToggleButton id="observe" label="" x="139" y="147">
+		<e:skinName>
+		<e:Skin states="up,down,disabled">
+			<e:Image width="100%" height="100%" source="resource/pic/home/observe.png" source.down="resource/pic/home/observe-click.png"/>
+			<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
+		</e:Skin>
+		</e:skinName>
+	</e:ToggleButton>
+	<e:ToggleButton id="history" label="" x="270" y="146">
+		<e:skinName>
+		<e:Skin states="up,down,disabled">
+			<e:Image width="100%" height="100%" source="resource/pic/home/history.png" source.down="resource/pic/home/history-click.png"/>
+			<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
+		</e:Skin>
+		</e:skinName>
+	</e:ToggleButton>
+	<e:Image width="375" height="63" x="28" y="226" anchorOffsetX="0" anchorOffsetY="0" source="resource/pic/home/searchinputbox.png"/>
+	<e:TextInput id="searchCondition" width="274" height="40" x="54.5" y="237" anchorOffsetX="0" anchorOffsetY="0" textColor="0xcccccc" prompt="输入房主ID..." skinName="skins.TextInputSkin2"/>
+
+	<e:Button id="search" label="" x="350" y="238">
+		<e:skinName>
+			<e:Skin states="up,down,disabled">
+			<e:Image width="100%" height="100%" source="resource/pic/home/search.png" source.down="resource/pic/home/search-click.png"/>
+			<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
+			</e:Skin>
+		</e:skinName>
+	</e:Button>
+	<e:Button id="clear" label="" x="414" y="234">
+		<e:skinName>
+			<e:Skin states="up,down,disabled">
+			<e:Image width="100%" height="100%" source="resource/pic/home/clear.png" source.down="resource/pic/home/clear-click.png"/>
+			<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
+			</e:Skin>
+		</e:skinName>
+	</e:Button>
+	<e:Scroller width="667" height="925" x="30" y="306" anchorOffsetX="0" anchorOffsetY="0" scrollPolicyH="off">
+		<e:List id="rooms" x="76.5" y="2" anchorOffsetY="0" height="931.06" itemRendererSkinName="GameItemSkin">
+			<e:ArrayCollection>
+				<e:Array>
+					<e:Object hostName="ruchaos ‘s game" gameType="1v1" gameTime="快棋" gameDate="20190528" roomState="1"/>
+					<e:Object hostName="nicle ‘s game" gameType="2v2" gameTime="长考" gameDate="20190528" roomState="1"/>
+					<e:Object hostName="mir ‘s game" gameType="1v1" gameTime="不限" gameDate="20190528" roomState="1"/>
+					<e:Object hostName="ruchaos ‘s game" gameType="1v1" gameTime="快棋" gameDate="20190528" roomState="1"/>
+					<e:Object hostName="ruchaos ‘s game" gameType="1v1" gameTime="快棋" gameDate="20190528" roomState="1"/>
+					<e:Object hostName="ruchaos ‘s game" gameType="1v1" gameTime="快棋" gameDate="20190528" roomState="1"/>
+					<e:Object hostName="ruchaos ‘s game" gameType="1v1" gameTime="长考" gameDate="20190528" roomState="1"/>
+					<e:Object hostName="ruchaos ‘s game" gameType="1v1" gameTime="长考" gameDate="20190528" roomState="1"/>
+				</e:Array>
+			</e:ArrayCollection>
+		</e:List>
+	</e:Scroller>
+</e:Skin>

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="GameSkin" width="700" height="700" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" >
+	<w:Config id="16ba7afa888" ></w:Config>
+	<e:Image width="700" height="700" x="0" y="0" fillMode="scale" source="resource/pic/room/game.png"/>
+</e:Skin>

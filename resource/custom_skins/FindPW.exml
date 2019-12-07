@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="FindPWSkin" width="720" height="1280" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
+	<e:Rect id="curtain" width="720" height="1280" x="0" y="0" fillAlpha="0.75"/>
+	<e:Image width="600" height="600" x="60" y="253.48" source="resource/pic/dialog/dialogback.png"/>
+	<e:Rect width="541.21" height="76.06" x="89" y="362.48" anchorOffsetX="0" anchorOffsetY="0" fillColor="0xcccccc"/>
+	<e:TextInput id="userName" width="541.21" height="76" x="89.55" y="361.94" anchorOffsetX="0" anchorOffsetY="0" textColor="0x666666" prompt="用户名" maxChars="10"/>
+	<e:Label id="lhintUN" text="" y="420.97" anchorOffsetY="0" height="34.55" verticalAlign="middle" textAlign="right" size="20" anchorOffsetX="0" fontFamily="Microsoft YaHei" backgroundColor="0xff9900" background="true" right="96" multiline="false" visible="false"/>
+	<e:Rect width="541.21" height="76.06" x="89.55" y="455.52" anchorOffsetX="0" anchorOffsetY="0" fillColor="0xCCCCCC"/>
+	<e:TextInput id="password" width="541.21" height="76" x="89.55" y="456.12" anchorOffsetX="0" anchorOffsetY="0" textColor="0x666666" prompt="新密码（6-18位英数符号组合）" maxChars="18" displayAsPassword="true"/>
+	<e:Label id="lhintPW" text="" y="516.15" anchorOffsetY="0" height="34.55" verticalAlign="middle" textAlign="right" size="20" anchorOffsetX="0" fontFamily="Microsoft YaHei" backgroundColor="0xff9900" background="true" right="95" multiline="false" visible="false"/>
+	<e:Rect width="541.21" height="76.06" x="89.55" y="550.7" anchorOffsetX="0" anchorOffsetY="0" fillColor="0xCCCCCC"/>
+	<e:TextInput id="repeatPW" width="541.21" height="76" x="89.55" y="551.3" anchorOffsetX="0" anchorOffsetY="0" textColor="0x666666" prompt="重复新密码（与设置密码相同）" maxChars="18" displayAsPassword="true"/>
+	<e:Label id="lhintRP" text="" y="611.33" anchorOffsetY="0" height="34.55" verticalAlign="middle" textAlign="right" size="20" anchorOffsetX="0" fontFamily="Microsoft YaHei" backgroundColor="0xff9900" background="true" right="95" multiline="false" visible="false"/>
+	<e:Rect width="541.21" height="76.06" x="89.55" y="645.88" anchorOffsetX="0" anchorOffsetY="0" fillColor="0xCCCCCC"/>
+	<e:TextInput id="clueName" width="541.21" height="75" x="89.55" y="646.48" anchorOffsetX="0" anchorOffsetY="0" textColor="0x666666" prompt="注册时填写的喜欢角色" maxChars="18"/>
+	<e:Label id="lhintCN" text="" anchorOffsetY="0" height="34.55" verticalAlign="middle" textAlign="right" size="20" anchorOffsetX="0" fontFamily="Microsoft YaHei" backgroundColor="0xff9900" background="true" right="95" y="707" multiline="false" visible="false"/>
+	<e:Label id="title" text="重设密码" y="274" anchorOffsetX="0" width="400" anchorOffsetY="0" height="50" verticalAlign="middle" textAlign="center" size="36" fontFamily="Microsoft YaHei" italic="true" horizontalCenter="0"/>
+	<e:Button id="btnClose" label="" x="595.06" y="268.48" width="54" height="54">
+		<e:skinName>
+			<e:Skin states="up,down,disabled">
+			<e:Image width="100%" height="100%" source="resource/pic/dialog/close.png" source.down="resource/pic/dialog/close-click.png"/>
+			<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
+			</e:Skin>
+		</e:skinName>
+	</e:Button>
+	<e:Button id="btnSubmit" label="" y="747" width="200" height="70" horizontalCenter="0">
+		<e:skinName>
+			<e:Skin states="up,down,disabled">
+			<e:Image width="100%" height="100%" source="resource/pic/dialog/submit.png" source.down="resource/pic/dialog/submit-click.png" source.disabled="resource/pic/dialog/submit-disable.png"/>
+			<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
+			</e:Skin>
+		</e:skinName>
+	</e:Button>
+</e:Skin>

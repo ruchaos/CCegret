@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="LoginSkin" width="720" height="1280" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
+	<e:Rect id="curtain" width="720" height="1280" x="0" y="0" fillAlpha="0.75"/>
+	<e:Image width="600" height="600" x="60" y="253.48" source="resource/pic/dialog/dialogback.png"/>
+	<e:Rect width="541.21" height="76.06" x="89" y="401.87" anchorOffsetX="0" anchorOffsetY="0" fillColor="0xcccccc"/>
+	<e:TextInput id="userName" width="541.21" height="76" x="89.55" y="401.33" anchorOffsetX="0" anchorOffsetY="0" textColor="0x666666" prompt="用户名"/>
+	<e:Label id="lhintUN" text="" y="460.36" anchorOffsetY="0" height="34.55" verticalAlign="middle" textAlign="right" size="20" anchorOffsetX="0" fontFamily="Microsoft YaHei" backgroundColor="0xff9900" background="true" right="95" visible="false"/>
+	<e:Rect width="541.21" height="76.06" x="89.55" y="510.32" anchorOffsetX="0" anchorOffsetY="0" fillColor="0xCCCCCC"/>
+	<e:TextInput id="password" width="541.21" height="76" x="89.55" y="510.92" anchorOffsetX="0" anchorOffsetY="0" textColor="0x666666" prompt="密码" displayAsPassword="true"/>
+	<e:Label id="lhintPW" text="" y="570.95" anchorOffsetY="0" height="34.55" verticalAlign="middle" textAlign="right" size="20" anchorOffsetX="0" fontFamily="Microsoft YaHei" background="true" backgroundColor="0xff9900" right="95" visible="false"/>
+	<e:Label id="title" text="登录" y="274" anchorOffsetX="0" width="400" anchorOffsetY="0" height="50" verticalAlign="middle" textAlign="center" size="36" fontFamily="Microsoft YaHei" italic="true" horizontalCenter="0"/>
+	<e:Button id="btnClose" label="" x="595.06" y="268.48" width="54" height="54">
+		<e:skinName>
+			<e:Skin states="up,down,disabled">
+			<e:Image width="100%" height="100%" source="resource/pic/dialog/close.png" source.down="resource/pic/dialog/close-click.png"/>
+			<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
+			</e:Skin>
+		</e:skinName>
+	</e:Button>
+	<e:Button id="btnSubmit" label="" y="747" width="200" height="70" horizontalCenter="0">
+		<e:skinName>
+			<e:Skin states="up,down,disabled">
+			<e:Image width="100%" height="100%" source="resource/pic/dialog/login.png" source.down="resource/pic/dialog/login-click.png" source.disabled="resource/pic/dialog/login-disable.png"/>
+			<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
+			</e:Skin>
+		</e:skinName>
+	</e:Button>
+	<e:Label id="toRegister" text="注册账号" x="98.13" y="621.99" anchorOffsetX="0" width="163.39" anchorOffsetY="0" height="48.18" textColor="0xaaaaaa" size="36" fontFamily="Microsoft YaHei" verticalAlign="middle" textAlign="center"/>
+	<e:Label id="toChangePW" text="忘记密码" x="460.94" y="621.99" anchorOffsetX="0" width="163.39" anchorOffsetY="0" height="48.18" textColor="0xAAAAAA" size="36" fontFamily="Microsoft YaHei" textAlign="center" verticalAlign="middle"/>
+</e:Skin>

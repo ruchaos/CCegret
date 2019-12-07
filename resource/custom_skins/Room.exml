@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="RoomSkin" width="720" height="1280" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" xmlns:ns1="*">
+	<e:Label id="roomName" text="ruchaos's game" fontFamily="Arial" size="40" horizontalCenter="0" y="20" textColor="0xcccccc" italic="true"/>
+	<e:Label id="gameType" text="2v2" x="32" y="95" textAlign="left" size="28" textColor="0xcccccc"/>
+	<e:Label id="gameTime" text="长考" x="230" y="95" textAlign="left" fontFamily="Microsoft YaHei" size="28" textColor="0xcccccc"/>
+	<e:Label id="gameDate" text="20190210" x="410" y="95" textAlign="left" fontFamily="Microsoft YaHei" size="28" textColor="0xcccccc"/>
+	<e:Button id="quit" label="" x="580" y="80">
+		<e:skinName>
+			<e:Skin states="up,down,disabled">
+			<e:Image width="100%" height="100%" source="resource/pic/room/quit.png" source.down="resource/pic/room/quit-click.png"/>
+			<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
+			</e:Skin>
+		</e:skinName>
+	</e:Button>
+	<e:Button id="dismiss" label="" x="580" y="80">
+		<e:skinName>
+			<e:Skin states="up,down,disabled">
+			<e:Image width="100%" height="100%" source="resource/pic/room/dismiss.png" source.down="resource/pic/room/dismiss-click.png"/>
+			<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
+			</e:Skin>
+		</e:skinName>
+	</e:Button>
+	<e:Rect id="BOARD" width="710" height="710" x="5" y="130" strokeColor="0x444444" strokeWeight="1" fillColor="0x000000" fillAlpha="0"/>
+	<ns1:Game id="Game" width="700" height="700" x="10" y="135"/>
+	<e:Rect id="curtain" width="710" height="710" x="5" y="130" strokeColor="0x444444" strokeWeight="1" fillColor="0x000000" fillAlpha="0.75"/>
+	<e:Label id="hint" text="等待房主开始游戏..." y="462" size="24" fontFamily="Microsoft YaHei" textColor="0xcccccc" horizontalCenter="0"/>
+	<e:Button id="start" label="" y="660" horizontalCenter="-2">
+		<e:skinName>
+			<e:Skin states="up,down,disabled">
+			<e:Image width="100%" height="100%" source="resource/pic/room/start.png" source.down="resource/pic/room/start-click.png" source.disabled="resource/pic/room/start-disable.png"/>
+			<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
+			</e:Skin>
+		</e:skinName>
+	</e:Button>
+	<e:Label id="player1" text="Label" x="15" y="850" anchorOffsetX="0" width="165" anchorOffsetY="0" height="50" verticalAlign="middle" size="24" textColor="0x00ff00"/>
+	<e:Label id="player2" text="Label" x="189.99999999999997" y="850" anchorOffsetX="0" width="165" anchorOffsetY="0" height="50" verticalAlign="middle" size="24" textColor="0xffcc00"/>
+	<e:Label id="player3" text="Label" x="364.99999999999994" y="850" anchorOffsetX="0" width="165" anchorOffsetY="0" height="50" verticalAlign="middle" size="24" textColor="0x00ccff"/>
+	<e:Label id="player4" text="Label" x="540" y="850" anchorOffsetX="0" width="165" anchorOffsetY="0" height="50" verticalAlign="middle" size="24" textColor="0xff00ff"/>
+	<e:ViewStack id="gameStateVS" width="716" height="432" x="0" y="843" anchorOffsetX="0" anchorOffsetY="0" selectedIndex="1">
+		<e:Group width="714" height="304" name="Group" anchorOffsetX="0" anchorOffsetY="0" x="0" y="52">
+			<e:Button id="switch12" label="" x="106" y="5" scaleX="1" scaleY="1">
+			<e:skinName>
+				<e:Skin states="up,down,disabled">
+				<e:Image width="100%" height="100%" source="resource/pic/room/switch.png" source.down="resource/pic/room/switch-click.png"/>
+				<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
+				</e:Skin>
+			</e:skinName>
+			</e:Button>
+			<e:Button id="switch23" label="" x="284" y="5" scaleX="1" scaleY="1">
+			<e:skinName>
+				<e:Skin states="up,down,disabled">
+				<e:Image width="100%" height="100%" source="resource/pic/room/switch.png" source.down="resource/pic/room/switch-click.png"/>
+				<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
+				</e:Skin>
+			</e:skinName>
+			</e:Button>
+			<e:Button id="switch34" label="" x="463" y="5" scaleX="1" scaleY="1">
+			<e:skinName>
+				<e:Skin states="up,down,disabled">
+				<e:Image width="100%" height="100%" source="resource/pic/room/switch.png" source.down="resource/pic/room/switch-click.png"/>
+				<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
+				</e:Skin>
+			</e:skinName>
+			</e:Button>
+			<e:Button id="kick2" label="" x="179.5" y="76" scaleX="1" scaleY="1">
+			<e:skinName>
+				<e:Skin states="up,down,disabled">
+				<e:Image width="100%" height="100%" source="resource/pic/room/kick.png" source.down="resource/pic/room/kick-click.png"/>
+				<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
+				</e:Skin>
+			</e:skinName>
+			</e:Button>
+			<e:Button id="kick3" label="" x="354.5" y="76" scaleX="1" scaleY="1">
+			<e:skinName>
+				<e:Skin states="up,down,disabled">
+				<e:Image width="100%" height="100%" source="resource/pic/room/kick.png" source.down="resource/pic/room/kick-click.png"/>
+				<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
+				</e:Skin>
+			</e:skinName>
+			</e:Button>
+			<e:Button id="kick4" label="" x="529.5" y="76" scaleX="1" scaleY="1">
+			<e:skinName>
+				<e:Skin states="up,down,disabled">
+				<e:Image width="100%" height="100%" source="resource/pic/room/kick.png" source.down="resource/pic/room/kick-click.png"/>
+				<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
+				</e:Skin>
+			</e:skinName>
+			</e:Button>
+			<e:Button id="kick1" label="" x="4.5" y="76" scaleX="1" scaleY="1">
+			<e:skinName>
+				<e:Skin states="up,down,disabled">
+				<e:Image width="100%" height="100%" source="resource/pic/room/kick.png" source.down="resource/pic/room/kick-click.png"/>
+				<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
+				</e:Skin>
+			</e:skinName>
+			</e:Button>
+		</e:Group>
+		<e:Group width="100%" height="100%" name="视图" x="0" y="0" scaleX="1" scaleY="1">
+			<e:Button id="surrender" label="" x="200" y="200">
+				<e:skinName>
+				<e:Skin states="up,down,disabled">
+					<e:Image width="100%" height="100%" source="resource/pic/room/surrender.png" source.down="resource/pic/room/surrender-click.png"/>
+					<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
+				</e:Skin>
+				</e:skinName>
+			</e:Button>
+			<e:Label id="timerA1" text="00:00" x="12" y="58" size="28" height="30" textColor="0xCCCCCC" scaleX="1" scaleY="1"/>
+			<e:Label id="timerB1" text="00:00" x="12" y="88" size="28" height="30" textColor="0xCCCCCC" scaleX="1" scaleY="1"/>
+			<e:Label text="00:00" x="184" y="58" id="timerA2" size="28" height="30" textColor="0xCCCCCC" scaleX="1" scaleY="1"/>
+			<e:Label id="timerB2" text="00:00" x="184" y="88" size="28" height="30" textColor="0xCCCCCC" scaleX="1" scaleY="1"/>
+			<e:Label id="timerA3" text="00:00" x="360.5" y="58" size="28" height="30" textColor="0xCCCCCC" scaleX="1" scaleY="1"/>
+			<e:Label id="timerB3" text="00:00" x="360.5" y="88" size="28" height="30" textColor="0xCCCCCC" scaleX="1" scaleY="1"/>
+			<e:Label id="timerA4" text="00:00" x="537" y="58" size="28" height="30" textColor="0xCCCCCC" scaleX="1" scaleY="1"/>
+			<e:Label id="timerB4" text="00:00" x="537" y="88" size="28" height="30" textColor="0xCCCCCC" scaleX="1" scaleY="1"/>
+		</e:Group>
+		<e:Group width="100%" height="100%" name="视图">
+			<e:Label id="stepNum" text="#122" x="19" y="165" size="40" textColor="0xcccccc" scaleX="1" scaleY="1"/>
+			<e:Image id="winner" width="454" height="90" x="130" y="136" anchorOffsetX="0" anchorOffsetY="0" fillMode="clip" source="resource/pic/room/team1win.png" scaleX="1" scaleY="1"/>
+			<e:Button id="beginning" label="" x="7" y="281" scaleX="1" scaleY="1">
+			<e:skinName>
+				<e:Skin states="up,down,disabled">
+				<e:Image width="100%" height="100%" source="resource/pic/room/beginning.png" source.down="resource/pic/room/beginning-click.png" source.disabled="resource/pic/room/beginning-disable.png"/>
+				<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
+				</e:Skin>
+			</e:skinName>
+			</e:Button>
+			<e:Button id="prev" label="" x="282" y="281" scaleX="1" scaleY="1">
+			<e:skinName>
+				<e:Skin states="up,down,disabled">
+				<e:Image width="100%" height="100%" source="resource/pic/room/prev.png" source.down="resource/pic/room/prev-click.png" source.disabled="resource/pic/room/prev-disable.png"/>
+				<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
+				</e:Skin>
+			</e:skinName>
+			</e:Button>
+			<e:Button id="next" label="" x="507" y="281" scaleX="1" scaleY="1">
+			<e:skinName>
+				<e:Skin states="up,down,disabled">
+				<e:Image width="100%" height="100%" source="resource/pic/room/next.png" source.down="resource/pic/room/next-click.png" source.disabled="resource/pic/room/next-disable.png"/>
+				<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
+				</e:Skin>
+			</e:skinName>
+			</e:Button>
+		</e:Group>
+	</e:ViewStack>
+</e:Skin>

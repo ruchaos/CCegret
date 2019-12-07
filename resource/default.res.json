@@ -1,0 +1,440 @@
+{
+	"groups": [
+		{
+			"keys": "checkbox_select_disabled_png,checkbox_select_down_png,checkbox_select_up_png,checkbox_unselect_png,selected_png,border_png,header_png,radiobutton_select_disabled_png,radiobutton_select_down_png,radiobutton_select_up_png,radiobutton_unselect_png,roundthumb_png,thumb_png,track_png,tracklight_png,handle_png,off_png,on_png,button_down_png,button_up_png,thumb_pb_png,track_pb_png,track_sb_png,bg_jpg,egret_icon_png,description_json,beginning_png,beginning-click_png,beginning-disable_png,dismiss_png,dismiss-click_png,kick_png,kick-click_png,next_png,next-click_png,next-disable_png,prev_png,prev-click_png,prev-disable_png,quit_png,quit-click_png,start_png,start-click_png,start-disable_png,surrender_png,surrender-click_png,switch_png,switch-click_png,team1win_png,team2win_png,BGCC-game-finish_png,CC-room-hostready_png,dialogback_png,login_png,login-click_png,login-disable_png,logout_png,logout-click_png,logout-disable_png,register_png,register-click_png,register-disabe_png,submit_png,submit-click_png,submit-disable_png,timefast_png,timefast-click_png,timeslow_png,timeslow-click_png,timeunlimited_png,timeunlimited-click_png,type11_png,type11-click_png,type22_png,type22-click_png,type22rt_png,type22rt-click_png,btncreate_png,btncreate-click_png,btncreate-disable_png,close_png,close-click_png,CC-login_png,CC-person_png,CC-register_png,CC-changePW_png",
+			"name": "preload"
+		}
+	],
+	"resources": [
+		{
+			"url": "assets/CheckBox/checkbox_select_disabled.png",
+			"type": "image",
+			"name": "checkbox_select_disabled_png"
+		},
+		{
+			"url": "assets/CheckBox/checkbox_select_down.png",
+			"type": "image",
+			"name": "checkbox_select_down_png"
+		},
+		{
+			"url": "assets/CheckBox/checkbox_select_up.png",
+			"type": "image",
+			"name": "checkbox_select_up_png"
+		},
+		{
+			"url": "assets/CheckBox/checkbox_unselect.png",
+			"type": "image",
+			"name": "checkbox_unselect_png"
+		},
+		{
+			"url": "assets/ItemRenderer/selected.png",
+			"type": "image",
+			"name": "selected_png"
+		},
+		{
+			"url": "assets/Panel/border.png",
+			"type": "image",
+			"name": "border_png"
+		},
+		{
+			"url": "assets/Panel/header.png",
+			"type": "image",
+			"name": "header_png"
+		},
+		{
+			"url": "assets/RadioButton/radiobutton_select_disabled.png",
+			"type": "image",
+			"name": "radiobutton_select_disabled_png"
+		},
+		{
+			"url": "assets/RadioButton/radiobutton_select_down.png",
+			"type": "image",
+			"name": "radiobutton_select_down_png"
+		},
+		{
+			"url": "assets/RadioButton/radiobutton_select_up.png",
+			"type": "image",
+			"name": "radiobutton_select_up_png"
+		},
+		{
+			"url": "assets/RadioButton/radiobutton_unselect.png",
+			"type": "image",
+			"name": "radiobutton_unselect_png"
+		},
+		{
+			"url": "assets/ScrollBar/roundthumb.png",
+			"type": "image",
+			"name": "roundthumb_png"
+		},
+		{
+			"url": "assets/Slider/thumb.png",
+			"type": "image",
+			"name": "thumb_png"
+		},
+		{
+			"url": "assets/Slider/track.png",
+			"type": "image",
+			"name": "track_png"
+		},
+		{
+			"url": "assets/Slider/tracklight.png",
+			"type": "image",
+			"name": "tracklight_png"
+		},
+		{
+			"url": "assets/ToggleSwitch/handle.png",
+			"type": "image",
+			"name": "handle_png"
+		},
+		{
+			"url": "assets/ToggleSwitch/off.png",
+			"type": "image",
+			"name": "off_png"
+		},
+		{
+			"url": "assets/ToggleSwitch/on.png",
+			"type": "image",
+			"name": "on_png"
+		},
+		{
+			"url": "assets/Button/button_down.png",
+			"type": "image",
+			"name": "button_down_png"
+		},
+		{
+			"url": "assets/Button/button_up.png",
+			"type": "image",
+			"name": "button_up_png"
+		},
+		{
+			"url": "assets/ProgressBar/thumb_pb.png",
+			"type": "image",
+			"name": "thumb_pb_png"
+		},
+		{
+			"url": "assets/ProgressBar/track_pb.png",
+			"type": "image",
+			"name": "track_pb_png"
+		},
+		{
+			"url": "assets/ScrollBar/track_sb.png",
+			"type": "image",
+			"name": "track_sb_png"
+		},
+		{
+			"url": "assets/bg.jpg",
+			"type": "image",
+			"name": "bg_jpg"
+		},
+		{
+			"url": "assets/egret_icon.png",
+			"type": "image",
+			"name": "egret_icon_png"
+		},
+		{
+			"name": "description_json",
+			"type": "json",
+			"url": "config/description.json"
+		},
+		{
+			"name": "beginning_png",
+			"type": "image",
+			"url": "pic/room/beginning.png"
+		},
+		{
+			"name": "beginning-click_png",
+			"type": "image",
+			"url": "pic/room/beginning-click.png"
+		},
+		{
+			"name": "beginning-disable_png",
+			"type": "image",
+			"url": "pic/room/beginning-disable.png"
+		},
+		{
+			"name": "dismiss_png",
+			"type": "image",
+			"url": "pic/room/dismiss.png"
+		},
+		{
+			"name": "dismiss-click_png",
+			"type": "image",
+			"url": "pic/room/dismiss-click.png"
+		},
+		{
+			"name": "kick_png",
+			"type": "image",
+			"url": "pic/room/kick.png"
+		},
+		{
+			"name": "kick-click_png",
+			"type": "image",
+			"url": "pic/room/kick-click.png"
+		},
+		{
+			"name": "next_png",
+			"type": "image",
+			"url": "pic/room/next.png"
+		},
+		{
+			"name": "next-click_png",
+			"type": "image",
+			"url": "pic/room/next-click.png"
+		},
+		{
+			"name": "next-disable_png",
+			"type": "image",
+			"url": "pic/room/next-disable.png"
+		},
+		{
+			"name": "prev_png",
+			"type": "image",
+			"url": "pic/room/prev.png"
+		},
+		{
+			"name": "prev-click_png",
+			"type": "image",
+			"url": "pic/room/prev-click.png"
+		},
+		{
+			"name": "prev-disable_png",
+			"type": "image",
+			"url": "pic/room/prev-disable.png"
+		},
+		{
+			"name": "quit_png",
+			"type": "image",
+			"url": "pic/room/quit.png"
+		},
+		{
+			"name": "quit-click_png",
+			"type": "image",
+			"url": "pic/room/quit-click.png"
+		},
+		{
+			"name": "start_png",
+			"type": "image",
+			"url": "pic/room/start.png"
+		},
+		{
+			"name": "start-click_png",
+			"type": "image",
+			"url": "pic/room/start-click.png"
+		},
+		{
+			"name": "start-disable_png",
+			"type": "image",
+			"url": "pic/room/start-disable.png"
+		},
+		{
+			"name": "surrender_png",
+			"type": "image",
+			"url": "pic/room/surrender.png"
+		},
+		{
+			"name": "surrender-click_png",
+			"type": "image",
+			"url": "pic/room/surrender-click.png"
+		},
+		{
+			"name": "switch_png",
+			"type": "image",
+			"url": "pic/room/switch.png"
+		},
+		{
+			"name": "switch-click_png",
+			"type": "image",
+			"url": "pic/room/switch-click.png"
+		},
+		{
+			"name": "team1win_png",
+			"type": "image",
+			"url": "pic/room/team1win.png"
+		},
+		{
+			"name": "team2win_png",
+			"type": "image",
+			"url": "pic/room/team2win.png"
+		},
+		{
+			"name": "BGCC-game-finish_png",
+			"type": "image",
+			"url": "pic/room/BGCC-game-finish.png"
+		},
+		{
+			"name": "CC-room-hostready_png",
+			"type": "image",
+			"url": "pic/room/CC-room-hostready.png"
+		},
+		{
+			"name": "dialogback_png",
+			"type": "image",
+			"url": "pic/dialog/dialogback.png"
+		},
+		{
+			"name": "login_png",
+			"type": "image",
+			"url": "pic/dialog/login.png"
+		},
+		{
+			"name": "login-click_png",
+			"type": "image",
+			"url": "pic/dialog/login-click.png"
+		},
+		{
+			"name": "login-disable_png",
+			"type": "image",
+			"url": "pic/dialog/login-disable.png"
+		},
+		{
+			"name": "logout_png",
+			"type": "image",
+			"url": "pic/dialog/logout.png"
+		},
+		{
+			"name": "logout-click_png",
+			"type": "image",
+			"url": "pic/dialog/logout-click.png"
+		},
+		{
+			"name": "logout-disable_png",
+			"type": "image",
+			"url": "pic/dialog/logout-disable.png"
+		},
+		{
+			"name": "register_png",
+			"type": "image",
+			"url": "pic/dialog/register.png"
+		},
+		{
+			"name": "register-click_png",
+			"type": "image",
+			"url": "pic/dialog/register-click.png"
+		},
+		{
+			"name": "register-disabe_png",
+			"type": "image",
+			"url": "pic/dialog/register-disabe.png"
+		},
+		{
+			"name": "submit_png",
+			"type": "image",
+			"url": "pic/dialog/submit.png"
+		},
+		{
+			"name": "submit-click_png",
+			"type": "image",
+			"url": "pic/dialog/submit-click.png"
+		},
+		{
+			"name": "submit-disable_png",
+			"type": "image",
+			"url": "pic/dialog/submit-disable.png"
+		},
+		{
+			"name": "timefast_png",
+			"type": "image",
+			"url": "pic/dialog/timefast.png"
+		},
+		{
+			"name": "timefast-click_png",
+			"type": "image",
+			"url": "pic/dialog/timefast-click.png"
+		},
+		{
+			"name": "timeslow_png",
+			"type": "image",
+			"url": "pic/dialog/timeslow.png"
+		},
+		{
+			"name": "timeslow-click_png",
+			"type": "image",
+			"url": "pic/dialog/timeslow-click.png"
+		},
+		{
+			"name": "timeunlimited_png",
+			"type": "image",
+			"url": "pic/dialog/timeunlimited.png"
+		},
+		{
+			"name": "timeunlimited-click_png",
+			"type": "image",
+			"url": "pic/dialog/timeunlimited-click.png"
+		},
+		{
+			"name": "type11_png",
+			"type": "image",
+			"url": "pic/dialog/type11.png"
+		},
+		{
+			"name": "type11-click_png",
+			"type": "image",
+			"url": "pic/dialog/type11-click.png"
+		},
+		{
+			"name": "type22_png",
+			"type": "image",
+			"url": "pic/dialog/type22.png"
+		},
+		{
+			"name": "type22-click_png",
+			"type": "image",
+			"url": "pic/dialog/type22-click.png"
+		},
+		{
+			"name": "type22rt_png",
+			"type": "image",
+			"url": "pic/dialog/type22rt.png"
+		},
+		{
+			"name": "type22rt-click_png",
+			"type": "image",
+			"url": "pic/dialog/type22rt-click.png"
+		},
+		{
+			"name": "btncreate_png",
+			"type": "image",
+			"url": "pic/dialog/btncreate.png"
+		},
+		{
+			"name": "btncreate-click_png",
+			"type": "image",
+			"url": "pic/dialog/btncreate-click.png"
+		},
+		{
+			"name": "btncreate-disable_png",
+			"type": "image",
+			"url": "pic/dialog/btncreate-disable.png"
+		},
+		{
+			"name": "close_png",
+			"type": "image",
+			"url": "pic/dialog/close.png"
+		},
+		{
+			"name": "close-click_png",
+			"type": "image",
+			"url": "pic/dialog/close-click.png"
+		},
+		{
+			"name": "CC-login_png",
+			"type": "image",
+			"url": "pic/dialog/CC-login.png"
+		},
+		{
+			"name": "CC-person_png",
+			"type": "image",
+			"url": "pic/dialog/CC-person.png"
+		},
+		{
+			"name": "CC-register_png",
+			"type": "image",
+			"url": "pic/dialog/CC-register.png"
+		},
+		{
+			"name": "CC-changePW_png",
+			"type": "image",
+			"url": "pic/dialog/CC-changePW.png"
+		}
+	]
+}
