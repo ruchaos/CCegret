@@ -40,7 +40,7 @@ var GameItem = (function (_super) {
     };
     //监听的Handlers
     GameItem.prototype.roomEnterHandler = function () {
-        if (this.data.roomState = 2) {
+        if (this.data.roomState == 2) {
             var LobbyEvent = new LOBBYEVENT(LOBBYEVENT.ENTERROOM);
             LobbyEvent.roomID = this.data.roomID;
             LobbyEvent.roomState = this.data.roomState;

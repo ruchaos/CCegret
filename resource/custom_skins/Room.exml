@@ -20,6 +20,22 @@
 			</e:Skin>
 		</e:skinName>
 	</e:Button>
+	<e:Button id="surrender" label="" x="580" y="80">
+		<e:skinName>
+		<e:Skin states="up,down,disabled">
+			<e:Image width="100%" height="100%" source="resource/pic/room/surrender.png" source.down="resource/pic/room/surrender-click.png"/>
+			<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
+		</e:Skin>
+		</e:skinName>
+	</e:Button>
+	<e:ToggleButton id="drawoffer" label="" x="440" y="80" width="120">
+		<e:skinName>
+		<e:Skin states="up,down,disabled">
+			<e:Image width="100%" height="100%" source="resource/pic/room/drawoffer.png" source.down="resource/pic/room/drawoffer-click.png"/>
+			<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
+		</e:Skin>
+		</e:skinName>
+	</e:ToggleButton>
 	<e:Rect id="BOARD" width="710" height="710" x="5" y="130" strokeColor="0x444444" strokeWeight="1" fillColor="0x000000" fillAlpha="0"/>
 	<ns1:Game id="Game" width="700" height="700" x="10" y="135"/>
 	<e:Rect id="curtain" width="710" height="710" x="5" y="130" strokeColor="0x444444" strokeWeight="1" fillColor="0x000000" fillAlpha="0.75"/>
@@ -36,8 +52,8 @@
 	<e:Label id="player2" text="Label" x="189.99999999999997" y="850" anchorOffsetX="0" width="165" anchorOffsetY="0" height="50" verticalAlign="middle" size="24" textColor="0xffcc00"/>
 	<e:Label id="player3" text="Label" x="364.99999999999994" y="850" anchorOffsetX="0" width="165" anchorOffsetY="0" height="50" verticalAlign="middle" size="24" textColor="0x00ccff"/>
 	<e:Label id="player4" text="Label" x="540" y="850" anchorOffsetX="0" width="165" anchorOffsetY="0" height="50" verticalAlign="middle" size="24" textColor="0xff00ff"/>
-	<e:ViewStack id="gameStateVS" width="716" height="432" x="0" y="843" anchorOffsetX="0" anchorOffsetY="0" selectedIndex="1">
-		<e:Group width="714" height="304" name="Group" anchorOffsetX="0" anchorOffsetY="0" x="0" y="52">
+	<e:ViewStack id="gameStateVS" width="716" height="432" x="0" y="843" anchorOffsetX="0" anchorOffsetY="0" selectedIndex="0">
+		<e:Group id="waitingstate" width="714" height="304" name="Group" anchorOffsetX="0" anchorOffsetY="0" x="0" y="52">
 			<e:Button id="switch12" label="" x="106" y="5" scaleX="1" scaleY="1">
 			<e:skinName>
 				<e:Skin states="up,down,disabled">
@@ -95,15 +111,7 @@
 			</e:skinName>
 			</e:Button>
 		</e:Group>
-		<e:Group width="100%" height="100%" name="视图" x="0" y="0" scaleX="1" scaleY="1">
-			<e:Button id="surrender" label="" x="200" y="200">
-				<e:skinName>
-				<e:Skin states="up,down,disabled">
-					<e:Image width="100%" height="100%" source="resource/pic/room/surrender.png" source.down="resource/pic/room/surrender-click.png"/>
-					<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
-				</e:Skin>
-				</e:skinName>
-			</e:Button>
+		<e:Group id="gamingstate" width="100%" height="100%" name="视图" x="0" y="0" scaleX="1" scaleY="1">
 			<e:Label id="timerA1" text="00:00" x="12" y="58" size="28" height="30" textColor="0xCCCCCC" scaleX="1" scaleY="1"/>
 			<e:Label id="timerB1" text="00:00" x="12" y="88" size="28" height="30" textColor="0xCCCCCC" scaleX="1" scaleY="1"/>
 			<e:Label text="00:00" x="184" y="58" id="timerA2" size="28" height="30" textColor="0xCCCCCC" scaleX="1" scaleY="1"/>
@@ -113,9 +121,9 @@
 			<e:Label id="timerA4" text="00:00" x="537" y="58" size="28" height="30" textColor="0xCCCCCC" scaleX="1" scaleY="1"/>
 			<e:Label id="timerB4" text="00:00" x="537" y="88" size="28" height="30" textColor="0xCCCCCC" scaleX="1" scaleY="1"/>
 		</e:Group>
-		<e:Group width="100%" height="100%" name="视图">
+		<e:Group id="resultstate" width="100%" height="100%" name="视图">
 			<e:Label id="stepNum" text="#122" x="19" y="165" size="40" textColor="0xcccccc" scaleX="1" scaleY="1"/>
-			<e:Image id="winner" width="454" height="90" x="130" y="136" anchorOffsetX="0" anchorOffsetY="0" fillMode="clip" source="resource/pic/room/team1win.png" scaleX="1" scaleY="1"/>
+			<e:Image id="result" width="454" height="90" x="130" y="136" anchorOffsetX="0" anchorOffsetY="0" fillMode="clip" source="resource/pic/room/team1win.png" scaleX="1" scaleY="1"/>
 			<e:Button id="beginning" label="" x="7" y="281" scaleX="1" scaleY="1">
 			<e:skinName>
 				<e:Skin states="up,down,disabled">

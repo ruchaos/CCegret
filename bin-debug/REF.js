@@ -6,6 +6,6 @@ var LoginSrv = Srv + "login";
 var ChangePWSrv = Srv + "changePW";
 var RecordSrv = Srv + "record";
 var isLogin = false;
-var username = "Rux";
+var username = "guest";
 var formerPage = "Home";
 //# sourceMappingURL=REF.js.map

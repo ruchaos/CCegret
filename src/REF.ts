@@ -7,5 +7,5 @@ let ChangePWSrv:string=Srv+"changePW";
 let RecordSrv:string=Srv+"record";
 
 let isLogin:boolean=false;
-let username:string="Rux";
+let username:string="guest";
 let formerPage:string="Home";

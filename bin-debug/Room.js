@@ -45,10 +45,10 @@ var Room = (function (_super) {
             gameType: "2v2",
             gameTime: "快棋",
             gameDate: "20190615",
-            hostName: "Rux",
-            player1: "Rux",
+            hostName: "rus",
+            player1: "rus",
             player2: "lynn",
-            player3: "Rux",
+            player3: "rus",
             player4: "lynn",
             timerA1: 600,
             timerB1: 60,
@@ -86,6 +86,7 @@ var Room = (function (_super) {
         this.curtain.visible = false;
         this.hint.visible = false;
         this.start.visible = false;
+        this.drawoffer.visible = false;
         if (roomInfo.roomState == 2) {
             var isPlayer = false;
             if (username == roomInfo.player1) {
@@ -102,17 +103,35 @@ var Room = (function (_super) {
             }
             if (isPlayer) {
                 this.surrender.visible = true;
+                this.drawoffer.visible = true;
+                this.gameDate.visible = false;
             }
             else {
                 this.quit.visible = true;
+                this.gameDate.visible = true;
             }
         }
         else if (roomInfo.roomState == 1) {
             this.curtain.visible = true;
             this.hint.visible = true;
+            this.gameDate.visible = true;
+            this.kick1.visible = false;
+            this.kick2.visible = false;
+            this.kick3.visible = false;
+            this.kick4.visible = false;
+            this.switch12.visible = false;
+            this.switch23.visible = false;
+            this.switch34.visible = false;
             if (roomInfo.hostName == username) {
                 this.dismiss.visible = true;
                 this.start.visible = true;
+                this.kick1.visible = true;
+                this.kick2.visible = true;
+                this.kick3.visible = true;
+                this.kick4.visible = true;
+                this.switch12.visible = true;
+                this.switch23.visible = true;
+                this.switch34.visible = true;
             }
             else {
                 this.quit.visible = true;

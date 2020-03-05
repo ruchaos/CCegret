@@ -19,6 +19,15 @@ class Room extends eui.Component implements  eui.UIComponent {
 	private uiCompHandler():void{
 		this.quit.addEventListener(egret.TouchEvent.TOUCH_TAP,this.quitHandler,this);
 		this.dismiss.addEventListener(egret.TouchEvent.TOUCH_TAP,this.dismissHandler,this);
+		this.kick1.addEventListener(egret.TouchEvent.TOUCH_TAP,this.kick1Handler,this);
+		this.kick2.addEventListener(egret.TouchEvent.TOUCH_TAP,this.kick2Handler,this);
+		this.kick3.addEventListener(egret.TouchEvent.TOUCH_TAP,this.kick3Handler,this);
+		this.kick4.addEventListener(egret.TouchEvent.TOUCH_TAP,this.kick4Handler,this);
+		this.switch12.addEventListener(egret.TouchEvent.TOUCH_TAP,this.switch12Handler,this);
+		this.switch23.addEventListener(egret.TouchEvent.TOUCH_TAP,this.switch23Handler,this);
+		this.switch34.addEventListener(egret.TouchEvent.TOUCH_TAP,this.switch34Handler,this);
+		this.drawoffer.addEventListener(egret.TouchEvent.TOUCH_TAP,this.drawofferHandler,this);
+		this.surrender.addEventListener(egret.TouchEvent.TOUCH_TAP,this.surrenderHandler,this);
 	}
 
 	private quitHandler():void{
@@ -27,7 +36,51 @@ class Room extends eui.Component implements  eui.UIComponent {
 
 	private dismissHandler():void{
 		this.BacktoHome();
-	}	
+	}
+
+	private drawofferHandler():void{
+		if(this.drawoffer.selected==true){
+			Toast.launch("正在提合，再次点击取消");
+		}else{
+			Toast.launch("已取消提合");
+		}
+		
+		//如果当前是按下状态，向服务器提交设置为提合，否则设置为未提合
+	}
+
+	private surrenderHandler():void{
+		//如果当前是按下状态，向服务器提交设置为提合，否则设置为未提合	
+		this.BacktoHome();
+	}		
+
+	private kick1Handler():void{
+
+	}
+	private kick2Handler():void{
+
+	}
+	private kick3Handler():void{
+
+	}
+	private kick4Handler():void{
+
+	}
+
+	private switch12Handler():void{
+		
+	}
+	private switch23Handler():void{
+
+	}
+	private switch34Handler():void{
+
+	}
+
+	private updateRoomInfo():void{
+		this.init(this.roomID,this.roomState);
+	}
+	
+
 
 	public init(roomID:number,searchState:number):void{
 		//roomState如果是3，则查询棋谱库，否则查询当前房间列表，查询roomID（唯一索引）
@@ -42,10 +95,10 @@ class Room extends eui.Component implements  eui.UIComponent {
 			gameType:"2v2",
 			gameTime:"快棋",
 			gameDate:"20190615",
-			hostName:"Rux",
-			player1:"Rux",
+			hostName:"rux",
+			player1:"rux",
 			player2:"lynn",
-			player3:"Rux",
+			player3:"rux",
 			player4:"lynn",
 			timerA1:600,
 			timerB1:60,
@@ -61,6 +114,8 @@ class Room extends eui.Component implements  eui.UIComponent {
 		roomInfo.roomState=searchState;
 
 		//测试代码结束
+		this.roomID=roomInfo.roomID;
+		this.roomState=roomInfo.roomState;
 
 		this.roomName.text=roomInfo.hostName+" 's game";
 		this.gameType.text=roomInfo.gameType;
@@ -71,7 +126,7 @@ class Room extends eui.Component implements  eui.UIComponent {
 		this.player3.text=roomInfo.player3;
 		this.player4.text=roomInfo.player4;
 		this.addStar4Me();
-		this.player4.textFlow=[{text:this.player4.text,style:{"underline":true}}];
+		this.player1.textFlow=[{text:this.player1.text,style:{"underline":true}}];
 		this.setPlayerTimer(roomInfo);
 		roomState=roomInfo.roomState;
 		this.setBtn(roomInfo);
@@ -87,9 +142,11 @@ class Room extends eui.Component implements  eui.UIComponent {
 		this.start.visible=false;
 		this.curtain.visible=false;
 		this.hint.visible=false;
-		this.start.visible=false;	
+		this.start.visible=false;
+		this.drawoffer.visible=false;	
+		
 
-		if(roomInfo.roomState==2){
+		if(this.roomState==2){
 			var isPlayer=false;
 			if(username==roomInfo.player1){
 				isPlayer=true;
@@ -106,19 +163,52 @@ class Room extends eui.Component implements  eui.UIComponent {
 			
 			if(isPlayer){
 				this.surrender.visible=true;
+				this.drawoffer.visible=true;	
+				this.gameDate.visible=false;			
 			}else{
 				this.quit.visible=true;
+				this.gameDate.visible=true;
 			}
 
 		}
-		else if(roomInfo.roomState==1){
+		else if(this.roomState==1){
 			this.curtain.visible=true;
 			this.hint.visible=true;
+			this.gameDate.visible=true;
+			this.kick1.visible=false;
+			this.kick2.visible=false;
+			this.kick3.visible=false;
+			this.kick4.visible=false;
+			this.switch12.visible=false;
+			this.switch23.visible=false;
+			this.switch34.visible=false;
 			if(roomInfo.hostName==username){
 				this.dismiss.visible=true;
 				this.start.visible=true;
+				this.kick1.visible=true;
+				this.kick2.visible=true;
+				this.kick3.visible=true;
+				this.kick4.visible=true;
+				this.switch12.visible=true;
+				this.switch23.visible=true;
+				this.switch34.visible=true;
+				if(roomInfo.player1==username){
+					this.kick1.visible=false;
+				}
+				if(roomInfo.player2==username){
+					this.kick2.visible=false;
+				}
+				if(roomInfo.player3==username){
+					this.kick3.visible=false;
+				}
+				if(roomInfo.player4==username){
+					this.kick4.visible=false;
+				}
+				
+
 			}else{
-				this.quit.visible=true;				
+				this.quit.visible=true;	
+							
 			}
 		}
 		else{
@@ -185,6 +275,10 @@ class Room extends eui.Component implements  eui.UIComponent {
 	}
 
 	//定义变量
+	public roomID:number;
+	public roomState:number;
+
+
 	public roomName:eui.Label;
 	public gameType:eui.Label;
 	public gameTime:eui.Label;
@@ -192,6 +286,7 @@ class Room extends eui.Component implements  eui.UIComponent {
 	public quit:eui.Button;
 	public dismiss:eui.Button;
 	public surrender:eui.Button;
+	public drawoffer:eui.ToggleButton;
 	public BOARD:eui.Rect;
 	public Game:Game;
 	public curtain:eui.Rect;
@@ -218,7 +313,7 @@ class Room extends eui.Component implements  eui.UIComponent {
 	public timerA4:eui.Label;
 	public timerB4:eui.Label;
 	public stepNum:eui.Label;
-	public winner:eui.Image;
+	public result:eui.Image;
 	public beginning:eui.Button;
 	public prev:eui.Button;
 	public next:eui.Button;

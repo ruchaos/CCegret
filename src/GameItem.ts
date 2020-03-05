@@ -38,7 +38,7 @@ class GameItem extends eui.ItemRenderer{
 
 //监听的Handlers
 	private roomEnterHandler():void{
-		if(this.data.roomState=2){
+		if(this.data.roomState==2){
 			var LobbyEvent:LOBBYEVENT=new LOBBYEVENT(LOBBYEVENT.ENTERROOM);
 			LobbyEvent.roomID=this.data.roomID;
 			LobbyEvent.roomState=this.data.roomState;
