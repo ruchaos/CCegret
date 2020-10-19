@@ -188,11 +188,11 @@ class Main extends eui.UILayer {
                         this.addPage(evt.pageName);
                         if(evt.pageName=="Login"){
                             this._Login.userName.text=evt.username;
+                            Toast.launch("修改成功！请用新密码登录！");	
                         }  
                     },this); 
                     this._ChangePW.addEventListener(LOBBYEVENT.LOGOUT,()=>{
-                    isLogin=false;
-                    Toast.launch("请重新登录, "+username);
+                    isLogin=false;                    
                     this._Home.person.text="请登录";//不规范！
                     },this);
 
@@ -207,6 +207,7 @@ class Main extends eui.UILayer {
                         this.addPage(evt.pageName);
                         if(evt.pageName=="Login"){
                             this._Login.userName.text=evt.username;
+                            Toast.launch("请用新密码登录！");	
                         }  
                     },this); 
                 }                    
@@ -220,6 +221,7 @@ class Main extends eui.UILayer {
                         this.addPage(evt.pageName);
                         if(evt.pageName=="Login"){
                             this._Login.userName.text=evt.username;
+                            Toast.launch("注册成功请登录！");	
                         }                        
                     },this);                     
                 }

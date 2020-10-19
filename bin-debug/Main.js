@@ -246,11 +246,11 @@ var Main = (function (_super) {
                         _this.addPage(evt.pageName);
                         if (evt.pageName == "Login") {
                             _this._Login.userName.text = evt.username;
+                            Toast.launch("修改成功请登录！");
                         }
                     }, this);
                     this._ChangePW.addEventListener(LOBBYEVENT.LOGOUT, function () {
                         isLogin = false;
-                        Toast.launch("请重新登录, " + username);
                         _this._Home.person.text = "请登录"; //不规范！
                     }, this);
                 }
@@ -263,6 +263,7 @@ var Main = (function (_super) {
                         _this.addPage(evt.pageName);
                         if (evt.pageName == "Login") {
                             _this._Login.userName.text = evt.username;
+                            Toast.launch("修改成功请登录！");
                         }
                     }, this);
                 }
@@ -275,6 +276,7 @@ var Main = (function (_super) {
                         _this.addPage(evt.pageName);
                         if (evt.pageName == "Login") {
                             _this._Login.userName.text = evt.username;
+                            Toast.launch("注册成功请登录！");
                         }
                     }, this);
                 }
