@@ -246,7 +246,7 @@ var Main = (function (_super) {
                         _this.addPage(evt.pageName);
                         if (evt.pageName == "Login") {
                             _this._Login.userName.text = evt.username;
-                            Toast.launch("修改成功请登录！");
+                            Toast.launch("修改成功！请用新密码登录！");
                         }
                     }, this);
                     this._ChangePW.addEventListener(LOBBYEVENT.LOGOUT, function () {
@@ -263,7 +263,7 @@ var Main = (function (_super) {
                         _this.addPage(evt.pageName);
                         if (evt.pageName == "Login") {
                             _this._Login.userName.text = evt.username;
-                            Toast.launch("修改成功请登录！");
+                            Toast.launch("请用新密码登录！");
                         }
                     }, this);
                 }
