@@ -116,6 +116,11 @@ var FindPW = (function (_super) {
         this.closePanel();
     };
     FindPW.prototype.changePWFailed = function (error) {
+        if (error.username) {
+            this.lhintUN.text = error.username;
+            this.lhintUN.visible = true;
+        }
+        ;
         if (error.password) {
             this.lhintPW.text = error.password;
             this.lhintPW.visible = true;

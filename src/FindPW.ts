@@ -122,7 +122,11 @@ class FindPW extends eui.Component implements  eui.UIComponent {
 		this.dispatchEvent(LobbyEvent);
 		this.closePanel();
 	}
-	private changePWFailed(error):void{		
+	private changePWFailed(error):void{	
+		if(error.username){
+			this.lhintUN.text=error.username;
+			this.lhintUN.visible=true;			
+		};	
 
 		if(error.password){
 			this.lhintPW.text=error.password;

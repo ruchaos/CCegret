@@ -122,7 +122,8 @@ class Register extends eui.Component implements  eui.UIComponent {
 		var LobbyEvent:LOBBYEVENT=new LOBBYEVENT(LOBBYEVENT.OPEN);
 		LobbyEvent.pageName="Login";
 		LobbyEvent.username=usernamesuccess;
-		console.log(usernamesuccess+" 注册成功！");		
+		console.log(usernamesuccess+" 注册成功！");	
+		Toast.launch("注册成功请登录！");	
 		this.dispatchEvent(LobbyEvent);
 		this.closePanel();
 	}

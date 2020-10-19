@@ -25,12 +25,51 @@ var Room = (function (_super) {
     Room.prototype.uiCompHandler = function () {
         this.quit.addEventListener(egret.TouchEvent.TOUCH_TAP, this.quitHandler, this);
         this.dismiss.addEventListener(egret.TouchEvent.TOUCH_TAP, this.dismissHandler, this);
+        this.kick1.addEventListener(egret.TouchEvent.TOUCH_TAP, this.kick1Handler, this);
+        this.kick2.addEventListener(egret.TouchEvent.TOUCH_TAP, this.kick2Handler, this);
+        this.kick3.addEventListener(egret.TouchEvent.TOUCH_TAP, this.kick3Handler, this);
+        this.kick4.addEventListener(egret.TouchEvent.TOUCH_TAP, this.kick4Handler, this);
+        this.switch12.addEventListener(egret.TouchEvent.TOUCH_TAP, this.switch12Handler, this);
+        this.switch23.addEventListener(egret.TouchEvent.TOUCH_TAP, this.switch23Handler, this);
+        this.switch34.addEventListener(egret.TouchEvent.TOUCH_TAP, this.switch34Handler, this);
+        this.drawoffer.addEventListener(egret.TouchEvent.TOUCH_TAP, this.drawofferHandler, this);
+        this.surrender.addEventListener(egret.TouchEvent.TOUCH_TAP, this.surrenderHandler, this);
     };
     Room.prototype.quitHandler = function () {
         this.BacktoHome();
     };
     Room.prototype.dismissHandler = function () {
         this.BacktoHome();
+    };
+    Room.prototype.drawofferHandler = function () {
+        if (this.drawoffer.selected == true) {
+            Toast.launch("正在提合，再次点击取消");
+        }
+        else {
+            Toast.launch("已取消提合");
+        }
+        //如果当前是按下状态，向服务器提交设置为提合，否则设置为未提合
+    };
+    Room.prototype.surrenderHandler = function () {
+        //如果当前是按下状态，向服务器提交设置为提合，否则设置为未提合	
+        this.BacktoHome();
+    };
+    Room.prototype.kick1Handler = function () {
+    };
+    Room.prototype.kick2Handler = function () {
+    };
+    Room.prototype.kick3Handler = function () {
+    };
+    Room.prototype.kick4Handler = function () {
+    };
+    Room.prototype.switch12Handler = function () {
+    };
+    Room.prototype.switch23Handler = function () {
+    };
+    Room.prototype.switch34Handler = function () {
+    };
+    Room.prototype.updateRoomInfo = function () {
+        this.init(this.roomID, this.roomState);
     };
     Room.prototype.init = function (roomID, searchState) {
         //roomState如果是3，则查询棋谱库，否则查询当前房间列表，查询roomID（唯一索引）
@@ -45,10 +84,10 @@ var Room = (function (_super) {
             gameType: "2v2",
             gameTime: "快棋",
             gameDate: "20190615",
-            hostName: "rus",
-            player1: "rus",
+            hostName: "rux",
+            player1: "rux",
             player2: "lynn",
-            player3: "rus",
+            player3: "rux",
             player4: "lynn",
             timerA1: 600,
             timerB1: 60,
@@ -63,6 +102,8 @@ var Room = (function (_super) {
         };
         roomInfo.roomState = searchState;
         //测试代码结束
+        this.roomID = roomInfo.roomID;
+        this.roomState = roomInfo.roomState;
         this.roomName.text = roomInfo.hostName + " 's game";
         this.gameType.text = roomInfo.gameType;
         this.gameTime.text = roomInfo.gameTime;
@@ -72,7 +113,7 @@ var Room = (function (_super) {
         this.player3.text = roomInfo.player3;
         this.player4.text = roomInfo.player4;
         this.addStar4Me();
-        this.player4.textFlow = [{ text: this.player4.text, style: { "underline": true } }];
+        this.player1.textFlow = [{ text: this.player1.text, style: { "underline": true } }];
         this.setPlayerTimer(roomInfo);
         roomState = roomInfo.roomState;
         this.setBtn(roomInfo);
@@ -87,7 +128,7 @@ var Room = (function (_super) {
         this.hint.visible = false;
         this.start.visible = false;
         this.drawoffer.visible = false;
-        if (roomInfo.roomState == 2) {
+        if (this.roomState == 2) {
             var isPlayer = false;
             if (username == roomInfo.player1) {
                 isPlayer = true;
@@ -111,7 +152,7 @@ var Room = (function (_super) {
                 this.gameDate.visible = true;
             }
         }
-        else if (roomInfo.roomState == 1) {
+        else if (this.roomState == 1) {
             this.curtain.visible = true;
             this.hint.visible = true;
             this.gameDate.visible = true;
@@ -132,6 +173,18 @@ var Room = (function (_super) {
                 this.switch12.visible = true;
                 this.switch23.visible = true;
                 this.switch34.visible = true;
+                if (roomInfo.player1 == username) {
+                    this.kick1.visible = false;
+                }
+                if (roomInfo.player2 == username) {
+                    this.kick2.visible = false;
+                }
+                if (roomInfo.player3 == username) {
+                    this.kick3.visible = false;
+                }
+                if (roomInfo.player4 == username) {
+                    this.kick4.visible = false;
+                }
             }
             else {
                 this.quit.visible = true;
