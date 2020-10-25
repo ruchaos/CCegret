@@ -252,4 +252,3 @@ var Room = (function (_super) {
     return Room;
 }(eui.Component));
 __reflect(Room.prototype, "Room", ["eui.UIComponent", "egret.DisplayObject"]);
-//# sourceMappingURL=Room.js.map

@@ -59,4 +59,3 @@ var GameItem = (function (_super) {
     return GameItem;
 }(eui.ItemRenderer));
 __reflect(GameItem.prototype, "GameItem");
-//# sourceMappingURL=GameItem.js.map

@@ -8,4 +8,3 @@ var RecordSrv = Srv + "record";
 var isLogin = false;
 var username = "guest";
 var formerPage = "Home";
-//# sourceMappingURL=REF.js.map

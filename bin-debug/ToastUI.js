@@ -47,4 +47,3 @@ var Toast = (function (_super) {
     return Toast;
 }(eui.Component));
 __reflect(Toast.prototype, "Toast", ["eui.UIComponent", "egret.DisplayObject"]);
-//# sourceMappingURL=ToastUI.js.map

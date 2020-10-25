@@ -141,4 +141,3 @@ var Create = (function (_super) {
     return Create;
 }(eui.Component));
 __reflect(Create.prototype, "Create", ["eui.UIComponent", "egret.DisplayObject"]);
-//# sourceMappingURL=Create.js.map

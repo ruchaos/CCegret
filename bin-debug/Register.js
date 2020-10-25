@@ -190,4 +190,3 @@ var Register = (function (_super) {
     return Register;
 }(eui.Component));
 __reflect(Register.prototype, "Register", ["eui.UIComponent", "egret.DisplayObject"]);
-//# sourceMappingURL=Register.js.map

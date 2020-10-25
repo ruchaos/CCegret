@@ -22,4 +22,3 @@ var Game = (function (_super) {
     return Game;
 }(eui.Component));
 __reflect(Game.prototype, "Game", ["eui.UIComponent", "egret.DisplayObject"]);
-//# sourceMappingURL=Game.js.map

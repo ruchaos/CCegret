@@ -186,4 +186,3 @@ var Home = (function (_super) {
     return Home;
 }(eui.Component));
 __reflect(Home.prototype, "Home", ["eui.UIComponent", "egret.DisplayObject"]);
-//# sourceMappingURL=Home.js.map

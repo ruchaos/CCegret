@@ -100,4 +100,3 @@ var Person = (function (_super) {
     return Person;
 }(eui.Component));
 __reflect(Person.prototype, "Person", ["eui.UIComponent", "egret.DisplayObject"]);
-//# sourceMappingURL=Person.js.map

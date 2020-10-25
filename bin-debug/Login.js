@@ -151,4 +151,3 @@ var Login = (function (_super) {
     return Login;
 }(eui.Component));
 __reflect(Login.prototype, "Login", ["eui.UIComponent", "egret.DisplayObject"]);
-//# sourceMappingURL=Login.js.map
