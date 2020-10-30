@@ -1,5 +1,6 @@
 // TypeScript file
-let Srv:string="http://127.0.0.1:8080/";
+let Srv:string="http://192.168.31.15:8080/";
+let Socket:String="http://192.168.31.15:3000/";
 let RoomSrv:string=Srv+"list";
 let RegisterSrv:string=Srv+"register";
 let LoginSrv:string=Srv+"login";

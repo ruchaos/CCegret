@@ -40,9 +40,9 @@ class Room extends eui.Component implements  eui.UIComponent {
 
 	private drawofferHandler():void{
 		if(this.drawoffer.selected==true){
-			Toast.launch("正在提合，再次点击取消");
+			Toast.launch("正在提和，再次点击取消");
 		}else{
-			Toast.launch("已取消提合");
+			Toast.launch("已取消提和");
 		}
 		
 		//如果当前是按下状态，向服务器提交设置为提合，否则设置为未提合

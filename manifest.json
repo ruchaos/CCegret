@@ -5,7 +5,8 @@
 		"libs/modules/eui/eui.js",
 		"libs/modules/assetsmanager/assetsmanager.js",
 		"libs/modules/tween/tween.js",
-		"libs/modules/promise/promise.js"
+		"libs/modules/promise/promise.js",
+		"libs/socketio/socket.io.js"
 	],
 	"game": [
 		"bin-debug/Login.js",

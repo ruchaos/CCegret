@@ -40,6 +40,9 @@ var GameItem = (function (_super) {
     };
     //监听的Handlers
     GameItem.prototype.roomEnterHandler = function () {
+        //todo重写 改为先判断登录，然后请求服务器，如果可以进入则进入并跳转，如果不可以则toast错误信息。
+        //连接socketio，然后申请“create”，{hostName：username,gameType:gameType,gameTime:gameTime}
+        //on("created",function(data) {进入房间页面，roomID，roomState,“host”}）
         if (this.data.roomState == 2) {
             var LobbyEvent = new LOBBYEVENT(LOBBYEVENT.ENTERROOM);
             LobbyEvent.roomID = this.data.roomID;
