@@ -23,7 +23,10 @@ var GameItem = (function (_super) {
         _super.prototype.childrenCreated.call(this);
     };
     GameItem.prototype.dataChanged = function () {
-        this.hostName.text = this.data.hostName + " 's game";
+        this.gameName.text = this.data.gameName;
+        if (this.data.gameDate == 0) {
+            this.gameDate.text = "";
+        }
     };
     //加载完成添加监听
     GameItem.prototype.uiCompHandler = function () {
@@ -62,3 +65,4 @@ var GameItem = (function (_super) {
     return GameItem;
 }(eui.ItemRenderer));
 __reflect(GameItem.prototype, "GameItem");
+//# sourceMappingURL=GameItem.js.map

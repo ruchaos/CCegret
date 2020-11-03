@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <e:Skin class="RoomSkin" width="720" height="1280" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" xmlns:ns1="*">
-	<e:Label id="roomName" text="ruchaos's game" fontFamily="Arial" size="40" horizontalCenter="0" y="20" textColor="0xcccccc" italic="true"/>
+	<e:Label id="gameName" text="ruchaos's game" fontFamily="Arial" size="40" horizontalCenter="0" y="20" textColor="0xcccccc" italic="true"/>
 	<e:Label id="gameType" text="2v2" x="32" y="95" textAlign="left" size="28" textColor="0xcccccc"/>
 	<e:Label id="gameTime" text="长考" x="230" y="95" textAlign="left" fontFamily="Microsoft YaHei" size="28" textColor="0xcccccc"/>
 	<e:Label id="gameDate" text="20190210" x="410" y="95" textAlign="left" fontFamily="Microsoft YaHei" size="28" textColor="0xcccccc"/>

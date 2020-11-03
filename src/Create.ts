@@ -56,18 +56,34 @@ class Create extends eui.Component implements  eui.UIComponent {
 
 	//提交
 	private btnSubmitHandler():void{
+		var data={username:"",token:"",gameName:"",gameType:1,gameTime:1};
+		data.username=username;
+		data.token=token;		
+		data.gameName=username+" 's game";
+		data.gameType=this.gameType;
+		data.gameTime=this.gameTime;
+		var disapthcher=this;
+
 		//提交 username time type
+		socket.emit("CreateRoom",data);
 		//如果成功，关闭对话框，发出事件，携带房间ID
-		var success=true;
-		var roomID:number=1234;//测试
-		
-		if(success){
+		socket.on("CreateRoomSuccess",function(data){			
 			var LobbyEvent:LOBBYEVENT=new LOBBYEVENT(LOBBYEVENT.ENTERROOM);
-			LobbyEvent.roomID=roomID;
+			LobbyEvent.roomID=data.roomID;
 			LobbyEvent.roomState=1;
-			this.parent.parent.parent.dispatchEvent(LobbyEvent);
-		}
-		this.closePanel();
+			disapthcher.dispatchEvent(LobbyEvent);
+			disapthcher.closePanel();
+		});
+		// var success=true;
+		// var roomID:number=1234;//测试
+		
+		// if(success){
+		// 	var LobbyEvent:LOBBYEVENT=new LOBBYEVENT(LOBBYEVENT.ENTERROOM);
+		// 	LobbyEvent.roomID=roomID;
+		// 	LobbyEvent.roomState=1;
+		// 	this.parent.parent.parent.dispatchEvent(LobbyEvent);
+		// }
+	
 
 		//（事件由Main完成，进入指定ID的ROOM，并移除HOME）
 
@@ -125,7 +141,7 @@ class Create extends eui.Component implements  eui.UIComponent {
 
 	private time3Handler():void{
 		//设置样式
-		this.setBtnTimeFocus(this.time2);
+		this.setBtnTimeFocus(this.time3);
 		//修改数据
 		this.gameTime=3;//3-不限
 		//修改提示文本

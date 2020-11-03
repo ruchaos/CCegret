@@ -24,3 +24,4 @@ var LOBBYEVENT = (function (_super) {
     return LOBBYEVENT;
 }(egret.Event));
 __reflect(LOBBYEVENT.prototype, "LOBBYEVENT");
+//# sourceMappingURL=LOBBYEVENT.js.map

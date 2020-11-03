@@ -8,7 +8,7 @@
 			</e:Skin>
 		</e:skinName>
 	</e:Button>
-	<e:Label id="hostName" x="17" y="18" size="36" text="{data.hostName}"/>
+	<e:Label id="gameName" x="17" y="18" size="36" text="{data.gameName}"/>
 	<e:Label id="gameType" text="{data.gameType}" x="18" y="76" size="24" fontFamily="Microsoft YaHei" italic="true"/>
 	<e:Label id="gameTime" x="178" y="76" size="24" text="{data.gameTime}" fontFamily="Microsoft YaHei" italic="true"/>
 	<e:Label id="gameDate" x="338" y="76" size="24" fontFamily="Microsoft YaHei" italic="true" text="{data.gameDate}"/>

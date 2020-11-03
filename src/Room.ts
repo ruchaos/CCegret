@@ -82,55 +82,66 @@ class Room extends eui.Component implements  eui.UIComponent {
 	
 
 
-	public init(roomID:number,searchState:number):void{
+	public init(roomID:string,roomState:number):void{
 		//roomState如果是3，则查询棋谱库，否则查询当前房间列表，查询roomID（唯一索引）
 		//确定UI内容
-		var roomState:number;
-		console.log("roomid:"+roomID);
+		// var roomState:number;
+		// console.log("roomID:"+roomID);
+		var data={username:"",token:"",roomID:""};
+		data.username=username;
+		data.token=token;
+		data.roomID=roomID;
+		socket.emit("EnterRoom",data);
+		var Roomui=this;
+		socket.on("EnterRoomSuccess",function(data){
+			Roomui.roomID=data.roomID;
+			Roomui.roomState=data.roomState;
+			Roomui.gameName.text=data.gameName;
+			Roomui.gameType.text=gameTypeNo[data.gameType-1];
+			Roomui.gameTime.text=gameTimeNo[data.gameTime-1];
+			Roomui.gameDate.text=data.gameDate;
+			Roomui.player1.text=data.players[0].playerName;
+			Roomui.player2.text=data.players[1].playerName;
+			Roomui.player3.text=data.players[2].playerName;
+			Roomui.player4.text=data.players[3].playerName;
+			//Roomui.addStar4Me();//改为加横线，忽略房主问题
+			//Roomui.player1.textFlow=[{text:Roomui.player1.text,style:{"underline":true}}];//改为加横线，忽略房主问题
+			Roomui.setPlayerTimer(data);
+			roomState=data.roomState;
+			Roomui.setBtn(data);
+			Roomui.gameStateVS.selectedIndex=roomState-1;
+		});
+		
+
+		
 		//测试代码
-		roomState=1;//roomState 1-等待中；2-进行中；3-已结束；(4-当前游戏)
-		var roomInfo={
-			roomID:123,	
-			roomState:3,		
-			gameType:"2v2",
-			gameTime:"快棋",
-			gameDate:"20190615",
-			hostName:"rux",
-			player1:"rux",
-			player2:"lynn",
-			player3:"rux",
-			player4:"lynn",
-			timerA1:600,
-			timerB1:60,
-			timerA2:600,
-			timerB2:60,
-			timerA3:600,
-			timerB3:60,
-			timerA4:600,
-			timerB4:60,
-			ready:true,
-			history:{},
-		};
-		roomInfo.roomState=searchState;
+		// roomState=1;//roomState 1-等待中；2-进行中；3-已结束；(4-当前游戏)
+		// var roomInfo={
+		// 	roomID:123,	
+		// 	roomState:3,//NUM		
+		// 	gameType:"2v2",//NUM	
+		// 	gameTime:"快棋",//NUM	
+		// 	gameDate:"20190615",
+		// 	hostName:"rux",
+		// 	player1:"rux",
+		// 	player2:"lynn",
+		// 	player3:"rux",
+		// 	player4:"lynn",
+		// 	timerA1:600,
+		// 	timerB1:60,
+		// 	timerA2:600,
+		// 	timerB2:60,
+		// 	timerA3:600,
+		// 	timerB3:60,
+		// 	timerA4:600,
+		// 	timerB4:60,
+		// 	ready:true,
+		// 	menu:[],
+		// };
+		// roomInfo.roomState=searchState;
 
 		//测试代码结束
-		this.roomID=roomInfo.roomID;
-		this.roomState=roomInfo.roomState;
-
-		this.roomName.text=roomInfo.hostName+" 's game";
-		this.gameType.text=roomInfo.gameType;
-		this.gameTime.text=roomInfo.gameTime;
-		this.gameDate.text=roomInfo.gameDate;
-		this.player1.text=roomInfo.player1;
-		this.player2.text=roomInfo.player2;
-		this.player3.text=roomInfo.player3;
-		this.player4.text=roomInfo.player4;
-		this.addStar4Me();
-		this.player1.textFlow=[{text:this.player1.text,style:{"underline":true}}];
-		this.setPlayerTimer(roomInfo);
-		roomState=roomInfo.roomState;
-		this.setBtn(roomInfo);
-		this.gameStateVS.selectedIndex=roomState-1;
+		
 
 
 
@@ -141,8 +152,7 @@ class Room extends eui.Component implements  eui.UIComponent {
 		this.surrender.visible=false;
 		this.start.visible=false;
 		this.curtain.visible=false;
-		this.hint.visible=false;
-		this.start.visible=false;
+		this.hint.visible=false;		
 		this.drawoffer.visible=false;	
 		
 
@@ -238,14 +248,14 @@ class Room extends eui.Component implements  eui.UIComponent {
 	}
 
 	private setPlayerTimer(roomInfo):void{
-		this.timerA1.text=this.S2MMSS(roomInfo.timerA1);
-		this.timerB1.text=this.S2MMSS(roomInfo.timerB1);
-		this.timerA2.text=this.S2MMSS(roomInfo.timerA2);
-		this.timerB2.text=this.S2MMSS(roomInfo.timerB2);
-		this.timerA3.text=this.S2MMSS(roomInfo.timerA3);
-		this.timerB3.text=this.S2MMSS(roomInfo.timerB3);
-		this.timerA4.text=this.S2MMSS(roomInfo.timerA4);
-		this.timerB4.text=this.S2MMSS(roomInfo.timerB4);
+		this.timerA1.text=this.S2MMSS(roomInfo.players[0].playerTimeA);
+		this.timerB1.text=this.S2MMSS(roomInfo.players[0].playerTimeB);
+		this.timerA2.text=this.S2MMSS(roomInfo.players[1].playerTimeA);
+		this.timerB2.text=this.S2MMSS(roomInfo.players[1].playerTimeB);
+		this.timerA3.text=this.S2MMSS(roomInfo.players[2].playerTimeA);
+		this.timerB3.text=this.S2MMSS(roomInfo.players[2].playerTimeB);
+		this.timerA4.text=this.S2MMSS(roomInfo.players[3].playerTimeA);
+		this.timerB4.text=this.S2MMSS(roomInfo.players[3].playerTimeB);
 	}
 
 	private S2MMSS(seconds:number):string{
@@ -275,11 +285,11 @@ class Room extends eui.Component implements  eui.UIComponent {
 	}
 
 	//定义变量
-	public roomID:number;
+	public roomID:string;
 	public roomState:number;
 
 
-	public roomName:eui.Label;
+	public gameName:eui.Label;
 	public gameType:eui.Label;
 	public gameTime:eui.Label;
 	public gameDate:eui.Label;

@@ -18,7 +18,10 @@ class GameItem extends eui.ItemRenderer{
 	}
 	
 	protected dataChanged():void{
-		this.hostName.text=this.data.hostName+" 's game";
+		this.gameName.text=this.data.gameName;
+		if(this.data.gameDate==0){
+			this.gameDate.text="";
+		}
 	}
 //加载完成添加监听
 	private uiCompHandler():void{
@@ -63,7 +66,7 @@ class GameItem extends eui.ItemRenderer{
 	private roomState:number;//1-等待中；2-进行中；3-已结束；4-当前游戏
 
 	private roomEnter:eui.Button;
-	private hostName:eui.Label;
+	private gameName:eui.Label;
 	private gameType:eui.Label;
 	private gameTime:eui.Label;
 	private gameDate:eui.Label;

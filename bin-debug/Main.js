@@ -179,7 +179,7 @@ var Main = (function (_super) {
         this._Room.init(roomID, roomState);
         this.addChild(this._Room);
         if (this._Home) {
-            this.removeChild(this._Home);
+            this._Home.parent.removeChild(this._Home);
         }
     };
     //加载页面功能，加载page页面
@@ -288,3 +288,4 @@ var Main = (function (_super) {
     return Main;
 }(eui.UILayer));
 __reflect(Main.prototype, "Main");
+//# sourceMappingURL=Main.js.map

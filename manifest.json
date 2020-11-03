@@ -25,6 +25,7 @@
 		"bin-debug/REF.js",
 		"bin-debug/Register.js",
 		"bin-debug/Room.js",
+		"bin-debug/Socketio.js",
 		"bin-debug/ThemeAdapter.js",
 		"bin-debug/ToastUI.js"
 	]

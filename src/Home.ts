@@ -39,14 +39,14 @@ class Home extends eui.Component implements  eui.UIComponent {
 
 
 		this.dsRooms=[
-			{roomID:123,roomState:1,hostName:"ruchaos",gameType:"1v1",gameTime:"快棋",gameDate:"20190615"},
-			{roomID:124,roomState:1,hostName:"ruchaos",gameType:"1v1",gameTime:"快棋",gameDate:"20190615"},
-			{roomID:125,roomState:1,hostName:"ruchaos",gameType:"1v1",gameTime:"快棋",gameDate:"20190615"}
+			{roomID:123,roomState:1,gameName:"ruchaos 's game",hostName:"ruchaos",gameType:"1v1",gameTime:"快棋",gameDate:"20190615"},
+			{roomID:124,roomState:1,gameName:"ruchaos 's game",hostName:"ruchaos",gameType:"1v1",gameTime:"快棋",gameDate:"20190615"},
+			{roomID:125,roomState:1,gameName:"ruchaos 's game",hostName:"ruchaos",gameType:"1v1",gameTime:"快棋",gameDate:"20190615"}
 		];
 
 		this.dpRooms=new eui.ArrayCollection(this.dsRooms);				
 		this.rooms.dataProvider=this.dpRooms;
-		this.rooms.itemRenderer=GameItem;
+		this.rooms.itemRenderer=GameItem;//绑定到GameItem
 
 		this.joinHandler();	
 		this.refreshRooms();
@@ -143,7 +143,16 @@ class Home extends eui.Component implements  eui.UIComponent {
 
 //页面方法
 	//刷新房间列表
-	private updateRoom(roomlist:Object[]):void{
+	private updateRoom(data=[]):void{
+		var roomlist;
+		roomlist=data;		
+		for(var i=0;i<data.length;i++){
+			roomlist[i].gameType=gameTypeNo[data[i].gameType-1];
+			roomlist[i].gameTime=gameTimeNo[data[i].gameTime-1];
+			if(data[i].gameDate==0||data[i].gameDate=="0"){
+				roomlist[i].gameDate=="";
+			};
+		};
 		this.dsRooms=roomlist;
 		this.dpRooms.replaceAll(this.dsRooms);		
 

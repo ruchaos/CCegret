@@ -10,7 +10,7 @@ class LOBBYEVENT extends egret.Event{
 	public static ENTERROOM:string="ENTERROOM";
 
 	public pageName:string="Home";
-	public roomID:number;
+	public roomID:string;
 	public roomState:number;
 	public username:string;
 }

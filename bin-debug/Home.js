@@ -45,13 +45,13 @@ var Home = (function (_super) {
     Home.prototype.init = function () {
         this.refreshTime = 2000;
         this.dsRooms = [
-            { roomID: 123, roomState: 1, hostName: "ruchaos", gameType: "1v1", gameTime: "快棋", gameDate: "20190615" },
-            { roomID: 124, roomState: 1, hostName: "ruchaos", gameType: "1v1", gameTime: "快棋", gameDate: "20190615" },
-            { roomID: 125, roomState: 1, hostName: "ruchaos", gameType: "1v1", gameTime: "快棋", gameDate: "20190615" }
+            { roomID: 123, roomState: 1, gameName: "ruchaos 's game", hostName: "ruchaos", gameType: "1v1", gameTime: "快棋", gameDate: "20190615" },
+            { roomID: 124, roomState: 1, gameName: "ruchaos 's game", hostName: "ruchaos", gameType: "1v1", gameTime: "快棋", gameDate: "20190615" },
+            { roomID: 125, roomState: 1, gameName: "ruchaos 's game", hostName: "ruchaos", gameType: "1v1", gameTime: "快棋", gameDate: "20190615" }
         ];
         this.dpRooms = new eui.ArrayCollection(this.dsRooms);
         this.rooms.dataProvider = this.dpRooms;
-        this.rooms.itemRenderer = GameItem;
+        this.rooms.itemRenderer = GameItem; //绑定到GameItem
         this.joinHandler();
         this.refreshRooms();
     };
@@ -132,7 +132,19 @@ var Home = (function (_super) {
     };
     //页面方法
     //刷新房间列表
-    Home.prototype.updateRoom = function (roomlist) {
+    Home.prototype.updateRoom = function (data) {
+        if (data === void 0) { data = []; }
+        var roomlist;
+        roomlist = data;
+        for (var i = 0; i < data.length; i++) {
+            roomlist[i].gameType = gameTypeNo[data[i].gameType - 1];
+            roomlist[i].gameTime = gameTimeNo[data[i].gameTime - 1];
+            if (data[i].gameDate == 0 || data[i].gameDate == "0") {
+                roomlist[i].gameDate == "";
+            }
+            ;
+        }
+        ;
         this.dsRooms = roomlist;
         this.dpRooms.replaceAll(this.dsRooms);
     };
@@ -186,3 +198,4 @@ var Home = (function (_super) {
     return Home;
 }(eui.Component));
 __reflect(Home.prototype, "Home", ["eui.UIComponent", "egret.DisplayObject"]);
+//# sourceMappingURL=Home.js.map

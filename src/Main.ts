@@ -103,7 +103,7 @@ class Main extends eui.UILayer {
    //登陆验证功能？
 
    //TODO，新的事件处理，进入房间（并停止home）
-   openRoom(roomID:number,roomState:number){
+   openRoom(roomID:string,roomState:number){
        //roomState 1-等待中；2-进行中；3-已结束；4-当前游戏
        if(!this._Room){
                     this._Room=new Room();
@@ -114,8 +114,8 @@ class Main extends eui.UILayer {
 
         this._Room.init(roomID,roomState);                                              
         this.addChild(this._Room);
-        if(this._Home){
-            this.removeChild(this._Home);
+        if(this._Home){            
+        this._Home.parent.removeChild(this._Home);
         }
        
    }
