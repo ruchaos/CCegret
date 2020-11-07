@@ -96,29 +96,62 @@ class Main extends eui.UILayer {
     //主控制开始点，首先进行登陆，然后加载首页
     protected createGameScene(): void {
      
-       this.addPage("Home");
+        this.addPage("Home");
         Toast.init(this);
+        this.socketsListening();
     }
 
    //登陆验证功能？
 
-   //TODO，新的事件处理，进入房间（并停止home）
-   openRoom(roomID:string,roomState:number){
+
+   //socket监听
+   socketsListening(){
+
+        socket.on("CreateRoomSuccess",(data)=>{
+            console.log("Server:CreateRoomSuccess");
+			var enterRoom={username:"",token:"",roomID:""};
+			enterRoom.username=username;
+			enterRoom.token=token;
+			enterRoom.roomID=data.roomID;
+			socket.emit("EnterRoomAfterCreate",enterRoom);
+			console.log("emit EnterRoomAfterCreate");
+		});
+
+        socket.on("EnterRoomSuccess",(roomData)=>{
+            console.log("Server:EnterRoomSuccess");
+            this.openRoom(roomData);        	
+        });
+
+        socket.on("EnterRoomAfterCreateSuccess",(roomData)=>{
+            console.log("Server:EnterRoomSuccessAfterCreateSuccess");
+            this.openRoom(roomData);        	
+        }); 
+
+        socket.on("PlayersChanges",(roomData)=>{
+            console.log("Server:PlayersChanges");
+            var LobbyEvent:LOBBYEVENT=new LOBBYEVENT(LOBBYEVENT.SOCKETMSG);
+		    LobbyEvent.socketevent="PlayersChanges";
+            LobbyEvent.roomData=roomData;
+            if(this._Room){
+                this._Room.dispatchEvent(LobbyEvent); 
+            };
+        });
+   }
+
+    //进入房间（并停止home）
+   openRoom(roomData:any){
        //roomState 1-等待中；2-进行中；3-已结束；4-当前游戏
        if(!this._Room){
                     this._Room=new Room();
                     this._Room.addEventListener(LOBBYEVENT.OPEN,(evt:LOBBYEVENT)=>{
                         this.addPage(evt.pageName);
-                    },this);
-                } 
-
-        this._Room.init(roomID,roomState);                                              
+                    },this);                    
+        };
+        this._Room.init(roomData);                                              
         this.addChild(this._Room);
-        if(this._Home){            
-        this._Home.parent.removeChild(this._Home);
-        }
-       
+        this._Home.visible=false;
    }
+  
 
    //加载页面功能，加载page页面
    addPage(page:string):void{
@@ -130,12 +163,12 @@ class Main extends eui.UILayer {
                         this.addPage(evt.pageName);
                     },this);
                     //TODO 添加进入room事件，传递roomID和roomstate
-                     this._Home.addEventListener(LOBBYEVENT.ENTERROOM,(evt:LOBBYEVENT)=>{
-                        this.openRoom(evt.roomID,evt.roomState);
-                    },this);                   
-                }
+                    this._Home.addEventListener(LOBBYEVENT.ENTERROOM,(evt:LOBBYEVENT)=>{
+                        this.openRoom(evt.roomData);
+                    },this);                    
+                };
                 this.addChild(this._Home);
-                
+                this._Home.visible=true; 
                 break;
                 
             case "Login":
@@ -147,8 +180,10 @@ class Main extends eui.UILayer {
                     this._Login.addEventListener(LOBBYEVENT.LOGIN,()=>{
                         isLogin=true;
                         Toast.launch("欢迎！"+username);
-                    this._Home.person.text="hi,"+username;//不规范！
-                },this);}
+                        this._Home.person.text="hi,"+username;//不规范！
+                    },this);
+                    
+                }
                 this.addChild(this._Login);
                 break;
                 
@@ -159,13 +194,12 @@ class Main extends eui.UILayer {
                         this.addPage(evt.pageName);
                     },this); 
                     this._Person.addEventListener(LOBBYEVENT.LOGOUT,()=>{
-                    Toast.launch("再见, "+username);
-                    isLogin=false;
-                    this._Home.person.text="请登录";//不规范！
-                    },this);}
-                this.addChild(this._Person);
-                
-                
+                        Toast.launch("再见, "+username);
+                        isLogin=false;
+                        this._Home.person.text="请登录";//不规范！
+                    },this);
+                }
+                this.addChild(this._Person); 
                 break;
                 
             case "Create":
@@ -175,7 +209,7 @@ class Main extends eui.UILayer {
                         this.addPage(evt.pageName);
                     },this);
                     this._Create.addEventListener(LOBBYEVENT.ENTERROOM,(evt:LOBBYEVENT)=>{
-                        this.openRoom(evt.roomID,evt.roomState);
+                        this.openRoom(evt.roomData);
                     },this);
                 } 
                 this.addChild(this._Create);                    
@@ -228,7 +262,6 @@ class Main extends eui.UILayer {
                 this.addChild(this._Register);
                 break; 
 
-            case "Room":
  
         }
 

@@ -8,9 +8,12 @@ class LOBBYEVENT extends egret.Event{
 	public static LOGIN:string="LOGIN";
 	public static LOGOUT:string="LOGOUT";
 	public static ENTERROOM:string="ENTERROOM";
+	public static SOCKETMSG:string="SOCKETMSG";
 
 	public pageName:string="Home";
 	public roomID:string;
 	public roomState:number;
+	public roomData:any;
 	public username:string;
+	public socketevent:string;
 }

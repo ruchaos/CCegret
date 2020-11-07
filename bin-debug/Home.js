@@ -193,7 +193,7 @@ var Home = (function (_super) {
         console.log("post error : " + event);
     };
     Home.prototype.onPostProgress = function (event) {
-        console.log("post progress : " + Math.floor(100 * event.bytesLoaded / event.bytesTotal) + "%");
+        //console.log("post progress : " + Math.floor(100*event.bytesLoaded/event.bytesTotal) + "%");
     };
     return Home;
 }(eui.Component));

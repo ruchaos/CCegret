@@ -2,6 +2,7 @@ class Room extends eui.Component implements  eui.UIComponent {
 	public constructor() {
 		super();
 		this.addEventListener(eui.UIEvent.COMPLETE,this.uiCompHandler,this);
+
 		this.skinName="resource/custom_skins/Room.exml";
 	}
 
@@ -27,7 +28,25 @@ class Room extends eui.Component implements  eui.UIComponent {
 		this.switch23.addEventListener(egret.TouchEvent.TOUCH_TAP,this.switch23Handler,this);
 		this.switch34.addEventListener(egret.TouchEvent.TOUCH_TAP,this.switch34Handler,this);
 		this.drawoffer.addEventListener(egret.TouchEvent.TOUCH_TAP,this.drawofferHandler,this);
-		this.surrender.addEventListener(egret.TouchEvent.TOUCH_TAP,this.surrenderHandler,this);
+		this.surrender.addEventListener(egret.TouchEvent.TOUCH_TAP,this.surrenderHandler,this);		
+		
+		this.addEventListener(LOBBYEVENT.SOCKETMSG,this.SocketHandler,this);
+	}
+
+	private SocketHandler(evt:LOBBYEVENT):void{
+		var Roomui=this;
+		var roomData=evt.roomData;
+		switch (evt.socketevent){
+			case "PlayersChanges":
+				Roomui.player1.text=roomData.players[0].playerName;
+				Roomui.player2.text=roomData.players[1].playerName;
+				Roomui.player3.text=roomData.players[2].playerName;
+				Roomui.player4.text=roomData.players[3].playerName;
+				//Roomui.addStar4Me();//改为加横线，忽略房主问题
+				//Roomui.player1.textFlow=[{text:Roomui.player1.text,style:{"underline":true}}];//改为加横线，忽略房主问题
+				Roomui.setPlayerTimer(roomData);
+				Roomui.setBtn(roomData);
+		};
 	}
 
 	private quitHandler():void{
@@ -76,47 +95,37 @@ class Room extends eui.Component implements  eui.UIComponent {
 
 	}
 
-	private updateRoomInfo():void{
-		this.init(this.roomID,this.roomState);
+	private updateroomData(roomData:any):void{
+		this.init(roomData);
 	}
 	
-
-
-	public init(roomID:string,roomState:number):void{
+	public init(roomData:any):void{
 		//roomState如果是3，则查询棋谱库，否则查询当前房间列表，查询roomID（唯一索引）
 		//确定UI内容
 		// var roomState:number;
 		// console.log("roomID:"+roomID);
-		var data={username:"",token:"",roomID:""};
-		data.username=username;
-		data.token=token;
-		data.roomID=roomID;
-		socket.emit("EnterRoom",data);
-		var Roomui=this;
-		socket.on("EnterRoomSuccess",function(data){
-			Roomui.roomID=data.roomID;
-			Roomui.roomState=data.roomState;
-			Roomui.gameName.text=data.gameName;
-			Roomui.gameType.text=gameTypeNo[data.gameType-1];
-			Roomui.gameTime.text=gameTimeNo[data.gameTime-1];
-			Roomui.gameDate.text=data.gameDate;
-			Roomui.player1.text=data.players[0].playerName;
-			Roomui.player2.text=data.players[1].playerName;
-			Roomui.player3.text=data.players[2].playerName;
-			Roomui.player4.text=data.players[3].playerName;
-			//Roomui.addStar4Me();//改为加横线，忽略房主问题
-			//Roomui.player1.textFlow=[{text:Roomui.player1.text,style:{"underline":true}}];//改为加横线，忽略房主问题
-			Roomui.setPlayerTimer(data);
-			roomState=data.roomState;
-			Roomui.setBtn(data);
-			Roomui.gameStateVS.selectedIndex=roomState-1;
-		});
-		
 
+		var Roomui=this;
+		Roomui.roomID=roomData.roomID;
+		Roomui.roomState=roomData.roomState;
+		Roomui.gameName.text=roomData.gameName;
+		Roomui.gameType.text=gameTypeNo[roomData.gameType-1];
+		Roomui.gameTime.text=gameTimeNo[roomData.gameTime-1];
+		Roomui.gameDate.text=roomData.gameDate;
+		Roomui.player1.text=roomData.players[0].playerName;
+		Roomui.player2.text=roomData.players[1].playerName;
+		Roomui.player3.text=roomData.players[2].playerName;
+		Roomui.player4.text=roomData.players[3].playerName;
+		//Roomui.addStar4Me();//改为加横线，忽略房主问题
+		//Roomui.player1.textFlow=[{text:Roomui.player1.text,style:{"underline":true}}];//改为加横线，忽略房主问题
+		Roomui.setPlayerTimer(roomData);			
+		Roomui.setBtn(roomData);
+		Roomui.gameStateVS.selectedIndex=roomData.roomState-1;
 		
+			
 		//测试代码
 		// roomState=1;//roomState 1-等待中；2-进行中；3-已结束；(4-当前游戏)
-		// var roomInfo={
+		// var roomData={
 		// 	roomID:123,	
 		// 	roomState:3,//NUM		
 		// 	gameType:"2v2",//NUM	
@@ -138,15 +147,13 @@ class Room extends eui.Component implements  eui.UIComponent {
 		// 	ready:true,
 		// 	menu:[],
 		// };
-		// roomInfo.roomState=searchState;
+		// roomData.roomState=searchState;
 
 		//测试代码结束
 		
 
-
-
 	}
-	private setBtn(roomInfo):void{
+	private setBtn(roomData):void{
 		this.quit.visible=false;
 		this.dismiss.visible=false;
 		this.surrender.visible=false;
@@ -158,16 +165,16 @@ class Room extends eui.Component implements  eui.UIComponent {
 
 		if(this.roomState==2){
 			var isPlayer=false;
-			if(username==roomInfo.player1){
+			if(username==roomData.player1){
 				isPlayer=true;
 			}
-			if(username==roomInfo.player2){
+			if(username==roomData.player2){
 				isPlayer=true;
 			}
-			if(username==roomInfo.player3){
+			if(username==roomData.player3){
 				isPlayer=true;
 			}
-			if(username==roomInfo.player4){
+			if(username==roomData.player4){
 				isPlayer=true;
 			}
 			
@@ -192,7 +199,7 @@ class Room extends eui.Component implements  eui.UIComponent {
 			this.switch12.visible=false;
 			this.switch23.visible=false;
 			this.switch34.visible=false;
-			if(roomInfo.hostName==username){
+			if(roomData.hostName==username){
 				this.dismiss.visible=true;
 				this.start.visible=true;
 				this.kick1.visible=true;
@@ -202,16 +209,16 @@ class Room extends eui.Component implements  eui.UIComponent {
 				this.switch12.visible=true;
 				this.switch23.visible=true;
 				this.switch34.visible=true;
-				if(roomInfo.player1==username){
+				if(roomData.players[0].playerName==username){
 					this.kick1.visible=false;
 				}
-				if(roomInfo.player2==username){
+				if(roomData.players[1].playerName==username){
 					this.kick2.visible=false;
 				}
-				if(roomInfo.player3==username){
+				if(roomData.players[2].playerName==username){
 					this.kick3.visible=false;
 				}
-				if(roomInfo.player4==username){
+				if(roomData.players[3].playerName==username){
 					this.kick4.visible=false;
 				}
 				
@@ -225,37 +232,37 @@ class Room extends eui.Component implements  eui.UIComponent {
 			this.quit.visible=true;
 		}
 	}
-	private addStar4Me():void{
-		if(this.player1.text==username){
-			this.player1.text="*"+this.player1.text;
-		};
-		if(this.player2.text==username){
-			this.player2.text="*"+this.player2.text;
-		};
-		if(this.player3.text==username){
-			this.player3.text="*"+this.player3.text;
-		};		
-		if(this.player4.text==username){
-			this.player4.text="*"+this.player4.text;
+	// private addStar4Me():void{
+	// 	if(this.player1.text==username){
+	// 		this.player1.text="*"+this.player1.text;
+	// 	};
+	// 	if(this.player2.text==username){
+	// 		this.player2.text="*"+this.player2.text;
+	// 	};
+	// 	if(this.player3.text==username){
+	// 		this.player3.text="*"+this.player3.text;
+	// 	};		
+	// 	if(this.player4.text==username){
+	// 		this.player4.text="*"+this.player4.text;
 			
-		};
-	}
-	private noStar(str:string):string{
-		if(str.charAt(0)=="*"){
-			str=str.slice(1,str.length);
-		}
-		return str;
-	}
+	// 	};
+	// }
+	// private noStar(str:string):string{
+	// 	if(str.charAt(0)=="*"){
+	// 		str=str.slice(1,str.length);
+	// 	}
+	// 	return str;
+	// }
 
-	private setPlayerTimer(roomInfo):void{
-		this.timerA1.text=this.S2MMSS(roomInfo.players[0].playerTimeA);
-		this.timerB1.text=this.S2MMSS(roomInfo.players[0].playerTimeB);
-		this.timerA2.text=this.S2MMSS(roomInfo.players[1].playerTimeA);
-		this.timerB2.text=this.S2MMSS(roomInfo.players[1].playerTimeB);
-		this.timerA3.text=this.S2MMSS(roomInfo.players[2].playerTimeA);
-		this.timerB3.text=this.S2MMSS(roomInfo.players[2].playerTimeB);
-		this.timerA4.text=this.S2MMSS(roomInfo.players[3].playerTimeA);
-		this.timerB4.text=this.S2MMSS(roomInfo.players[3].playerTimeB);
+	private setPlayerTimer(roomData):void{
+		this.timerA1.text=this.S2MMSS(roomData.players[0].playerTimeA);
+		this.timerB1.text=this.S2MMSS(roomData.players[0].playerTimeB);
+		this.timerA2.text=this.S2MMSS(roomData.players[1].playerTimeA);
+		this.timerB2.text=this.S2MMSS(roomData.players[1].playerTimeB);
+		this.timerA3.text=this.S2MMSS(roomData.players[2].playerTimeA);
+		this.timerB3.text=this.S2MMSS(roomData.players[2].playerTimeB);
+		this.timerA4.text=this.S2MMSS(roomData.players[3].playerTimeA);
+		this.timerB4.text=this.S2MMSS(roomData.players[3].playerTimeB);
 	}
 
 	private S2MMSS(seconds:number):string{
@@ -287,6 +294,7 @@ class Room extends eui.Component implements  eui.UIComponent {
 	//定义变量
 	public roomID:string;
 	public roomState:number;
+
 
 
 	public gameName:eui.Label;

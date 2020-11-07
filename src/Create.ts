@@ -66,14 +66,17 @@ class Create extends eui.Component implements  eui.UIComponent {
 
 		//提交 username time type
 		socket.emit("CreateRoom",data);
+		this.closePanel();
 		//如果成功，关闭对话框，发出事件，携带房间ID
-		socket.on("CreateRoomSuccess",function(data){			
-			var LobbyEvent:LOBBYEVENT=new LOBBYEVENT(LOBBYEVENT.ENTERROOM);
-			LobbyEvent.roomID=data.roomID;
-			LobbyEvent.roomState=1;
-			disapthcher.dispatchEvent(LobbyEvent);
-			disapthcher.closePanel();
-		});
+
+
+		// socket.on("EnterRoomSuccessAfterCreate",(roomData)=>{
+		// 	console.log("Server:EnterRoomSuccessAfterCreate");
+		// 	var LobbyEvent:LOBBYEVENT=new LOBBYEVENT(LOBBYEVENT.ENTERROOM);			
+		// 	LobbyEvent.roomData=roomData;
+		// 	disapthcher.dispatchEvent(LobbyEvent);
+		// });
+
 		// var success=true;
 		// var roomID:number=1234;//测试
 		

@@ -21,6 +21,7 @@ var LOBBYEVENT = (function (_super) {
     LOBBYEVENT.LOGIN = "LOGIN";
     LOBBYEVENT.LOGOUT = "LOGOUT";
     LOBBYEVENT.ENTERROOM = "ENTERROOM";
+    LOBBYEVENT.SOCKETMSG = "SOCKETMSG";
     return LOBBYEVENT;
 }(egret.Event));
 __reflect(LOBBYEVENT.prototype, "LOBBYEVENT");

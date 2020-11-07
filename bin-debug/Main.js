@@ -164,10 +164,42 @@ var Main = (function (_super) {
     Main.prototype.createGameScene = function () {
         this.addPage("Home");
         Toast.init(this);
+        this.socketsListening();
     };
     //登陆验证功能？
-    //TODO，新的事件处理，进入房间（并停止home）
-    Main.prototype.openRoom = function (roomID, roomState) {
+    //socket监听
+    Main.prototype.socketsListening = function () {
+        var _this = this;
+        socket.on("CreateRoomSuccess", function (data) {
+            console.log("Server:CreateRoomSuccess");
+            var enterRoom = { username: "", token: "", roomID: "" };
+            enterRoom.username = username;
+            enterRoom.token = token;
+            enterRoom.roomID = data.roomID;
+            socket.emit("EnterRoomAfterCreate", enterRoom);
+            console.log("emit EnterRoomAfterCreate");
+        });
+        socket.on("EnterRoomSuccess", function (roomData) {
+            console.log("Server:EnterRoomSuccess");
+            _this.openRoom(roomData);
+        });
+        socket.on("EnterRoomAfterCreateSuccess", function (roomData) {
+            console.log("Server:EnterRoomSuccessAfterCreateSuccess");
+            _this.openRoom(roomData);
+        });
+        socket.on("PlayersChanges", function (roomData) {
+            console.log("Server:PlayersChanges");
+            var LobbyEvent = new LOBBYEVENT(LOBBYEVENT.SOCKETMSG);
+            LobbyEvent.socketevent = "PlayersChanges";
+            LobbyEvent.roomData = roomData;
+            if (_this._Room) {
+                _this._Room.dispatchEvent(LobbyEvent);
+            }
+            ;
+        });
+    };
+    //进入房间（并停止home）
+    Main.prototype.openRoom = function (roomData) {
         var _this = this;
         //roomState 1-等待中；2-进行中；3-已结束；4-当前游戏
         if (!this._Room) {
@@ -176,11 +208,10 @@ var Main = (function (_super) {
                 _this.addPage(evt.pageName);
             }, this);
         }
-        this._Room.init(roomID, roomState);
+        ;
+        this._Room.init(roomData);
         this.addChild(this._Room);
-        if (this._Home) {
-            this._Home.parent.removeChild(this._Home);
-        }
+        this._Home.visible = false;
     };
     //加载页面功能，加载page页面
     Main.prototype.addPage = function (page) {
@@ -194,10 +225,12 @@ var Main = (function (_super) {
                     }, this);
                     //TODO 添加进入room事件，传递roomID和roomstate
                     this._Home.addEventListener(LOBBYEVENT.ENTERROOM, function (evt) {
-                        _this.openRoom(evt.roomID, evt.roomState);
+                        _this.openRoom(evt.roomData);
                     }, this);
                 }
+                ;
                 this.addChild(this._Home);
+                this._Home.visible = true;
                 break;
             case "Login":
                 if (!this._Login) {
@@ -234,7 +267,7 @@ var Main = (function (_super) {
                         _this.addPage(evt.pageName);
                     }, this);
                     this._Create.addEventListener(LOBBYEVENT.ENTERROOM, function (evt) {
-                        _this.openRoom(evt.roomID, evt.roomState);
+                        _this.openRoom(evt.roomData);
                     }, this);
                 }
                 this.addChild(this._Create);
@@ -282,7 +315,6 @@ var Main = (function (_super) {
                 }
                 this.addChild(this._Register);
                 break;
-            case "Room":
         }
     };
     return Main;

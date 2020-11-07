@@ -209,7 +209,7 @@ class Home extends eui.Component implements  eui.UIComponent {
 		console.log("post error : " + event);
 	}
 	private onPostProgress(event:egret.ProgressEvent):void {
-		console.log("post progress : " + Math.floor(100*event.bytesLoaded/event.bytesTotal) + "%");
+		//console.log("post progress : " + Math.floor(100*event.bytesLoaded/event.bytesTotal) + "%");
 	}
 
 
