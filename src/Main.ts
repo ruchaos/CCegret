@@ -136,6 +136,17 @@ class Main extends eui.UILayer {
                 this._Room.dispatchEvent(LobbyEvent); 
             };
         });
+
+        socket.on("LeaveRoomSuccess",(roomData)=>{
+            console.log("Server:LeaveRoomSuccess");
+            var LobbyEvent:LOBBYEVENT=new LOBBYEVENT(LOBBYEVENT.SOCKETMSG);
+		    LobbyEvent.socketevent="LeaveRoomSuccess";
+            LobbyEvent.roomData=roomData;
+            if(this._Room){
+                this._Room.dispatchEvent(LobbyEvent); 
+            };
+        });
+
    }
 
     //进入房间（并停止home）

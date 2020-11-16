@@ -197,6 +197,16 @@ var Main = (function (_super) {
             }
             ;
         });
+        socket.on("LeaveRoomSuccess", function (roomData) {
+            console.log("Server:LeaveRoomSuccess");
+            var LobbyEvent = new LOBBYEVENT(LOBBYEVENT.SOCKETMSG);
+            LobbyEvent.socketevent = "LeaveRoomSuccess";
+            LobbyEvent.roomData = roomData;
+            if (_this._Room) {
+                _this._Room.dispatchEvent(LobbyEvent);
+            }
+            ;
+        });
     };
     //进入房间（并停止home）
     Main.prototype.openRoom = function (roomData) {

@@ -46,11 +46,20 @@ class Room extends eui.Component implements  eui.UIComponent {
 				//Roomui.player1.textFlow=[{text:Roomui.player1.text,style:{"underline":true}}];//改为加横线，忽略房主问题
 				Roomui.setPlayerTimer(roomData);
 				Roomui.setBtn(roomData);
+				break;
+			case "LeaveRoomSuccess":
+				this.BacktoHome();
+				break;
 		};
+		
 	}
 
 	private quitHandler():void{
-		this.BacktoHome();
+		var data={username:"",token:"",roomID:""};
+		data.username=username;
+		data.token=token;
+		data.roomID=this.roomID;
+		socket.emit("LeaveRoom",data);
 	}
 
 	private dismissHandler():void{
@@ -86,13 +95,26 @@ class Room extends eui.Component implements  eui.UIComponent {
 	}
 
 	private switch12Handler():void{
-		
+			var switchPlayer={username:"",token:"",roomID:""};
+			switchPlayer.username=username;
+			switchPlayer.token=token;
+			switchPlayer.roomID=this.roomID;
+			socket.emit("Switch12",switchPlayer);
 	}
-	private switch23Handler():void{
 
+	private switch23Handler():void{
+			var switchPlayer={username:"",token:"",roomID:""};
+			switchPlayer.username=username;
+			switchPlayer.token=token;
+			switchPlayer.roomID=this.roomID;
+			socket.emit("Switch23",switchPlayer);
 	}
 	private switch34Handler():void{
-
+			var switchPlayer={username:"",token:"",roomID:""};
+			switchPlayer.username=username;
+			switchPlayer.token=token;
+			switchPlayer.roomID=this.roomID;
+			socket.emit("Switch34",switchPlayer);
 	}
 
 	private updateroomData(roomData:any):void{
@@ -165,18 +187,18 @@ class Room extends eui.Component implements  eui.UIComponent {
 
 		if(this.roomState==2){
 			var isPlayer=false;
-			if(username==roomData.player1){
+			if(roomData.players[0].playerName==username){
 				isPlayer=true;
-			}
-			if(username==roomData.player2){
+			};
+			if(roomData.players[1].playerName==username){
 				isPlayer=true;
-			}
-			if(username==roomData.player3){
+			};
+			if(roomData.players[2].playerName==username){
 				isPlayer=true;
-			}
-			if(username==roomData.player4){
+			};
+			if(roomData.players[3].playerName==username){
 				isPlayer=true;
-			}
+			};
 			
 			if(isPlayer){
 				this.surrender.visible=true;
@@ -202,25 +224,37 @@ class Room extends eui.Component implements  eui.UIComponent {
 			if(roomData.hostName==username){
 				this.dismiss.visible=true;
 				this.start.visible=true;
-				this.kick1.visible=true;
-				this.kick2.visible=true;
-				this.kick3.visible=true;
-				this.kick4.visible=true;
-				this.switch12.visible=true;
-				this.switch23.visible=true;
-				this.switch34.visible=true;
-				if(roomData.players[0].playerName==username){
+				if(roomData.gameType==1){
+					this.kick1.visible=true;
+					this.kick2.visible=true;
+					this.switch12.visible=true;
+				}else if(roomData.gameType==2){
+					this.kick1.visible=true;
+					this.kick2.visible=true;
+					this.kick3.visible=true;
+					this.kick4.visible=true;
+					this.switch12.visible=true;
+					this.switch23.visible=true;
+					this.switch34.visible=true;
+				}else if(roomData.gameType==3){
+					this.kick1.visible=true;
+					this.kick2.visible=true;
+					this.kick3.visible=true;
+					this.kick4.visible=true;
+				};
+
+				if((roomData.players[0].playerName==username)||(roomData.players[0].playerName=="")){
 					this.kick1.visible=false;
-				}
-				if(roomData.players[1].playerName==username){
+				};
+				if((roomData.players[1].playerName==username)||(roomData.players[1].playerName=="")){
 					this.kick2.visible=false;
-				}
-				if(roomData.players[2].playerName==username){
+				};
+				if((roomData.players[2].playerName==username)||(roomData.players[2].playerName=="")){
 					this.kick3.visible=false;
-				}
-				if(roomData.players[3].playerName==username){
+				};
+				if((roomData.players[3].playerName==username)||(roomData.players[3].playerName=="")){
 					this.kick4.visible=false;
-				}
+				};
 				
 
 			}else{
