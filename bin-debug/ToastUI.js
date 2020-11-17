@@ -42,6 +42,7 @@ var Toast = (function (_super) {
         if (this._cont) {
             var toast = new Toast(msg, this._cont.stage.stageWidth, this._cont.stage.stageHeight);
             this._cont.addChild(toast);
+            this._cont.setChildIndex(toast, -1);
         }
     };
     return Toast;

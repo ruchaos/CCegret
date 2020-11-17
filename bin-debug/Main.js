@@ -207,7 +207,36 @@ var Main = (function (_super) {
             }
             ;
         });
+        socket.on("RoomDismissed", function (roomData) {
+            console.log("Server:RoomDismissed");
+            var LobbyEvent = new LOBBYEVENT(LOBBYEVENT.SOCKETMSG);
+            LobbyEvent.socketevent = "RoomDismissed";
+            LobbyEvent.roomData = roomData;
+            if (_this._Room) {
+                _this._Room.dispatchEvent(LobbyEvent);
+            }
+            ;
+        });
+        socket.on("PlayerBeKicked", function (roomData) {
+            console.log("Server:PlayerBeKicked");
+            var LobbyEvent = new LOBBYEVENT(LOBBYEVENT.SOCKETMSG);
+            LobbyEvent.socketevent = "PlayerBeKicked";
+            LobbyEvent.roomData = roomData;
+            if (_this._Room) {
+                _this._Room.dispatchEvent(LobbyEvent);
+            }
+            ;
+            // var timer:egret.Timer = new egret.Timer(300,1);
+            // //注册事件侦听器
+            // timer.addEventListener(egret.TimerEvent.TIMER_COMPLETE,this.toastkick,this);      
+            // //开始计时
+            // timer.start();
+        });
     };
+    // private toastkick(msg:string){
+    //     //糟糕的办法，解决被请出房间后，toast层在home以下的问题。
+    //     Toast.launch("你已被请出房间");
+    // };
     //进入房间（并停止home）
     Main.prototype.openRoom = function (roomData) {
         var _this = this;

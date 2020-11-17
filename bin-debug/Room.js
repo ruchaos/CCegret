@@ -53,6 +53,21 @@ var Room = (function (_super) {
             case "LeaveRoomSuccess":
                 this.BacktoHome();
                 break;
+            case "RoomDismissed":
+                this.BacktoHome();
+                Toast.launch("房间已解散");
+                break;
+            case "PlayerBeKicked":
+                if (evt.roomData.bekickedPlayer == username) {
+                    var data = { username: "", token: "", roomID: "" };
+                    data.username = username;
+                    data.token = token;
+                    data.roomID = this.roomID;
+                    socket.emit("LeaveRoom", data);
+                    Toast.launch("你已被请出房间");
+                }
+                ;
+                break;
         }
         ;
     };
@@ -64,7 +79,11 @@ var Room = (function (_super) {
         socket.emit("LeaveRoom", data);
     };
     Room.prototype.dismissHandler = function () {
-        this.BacktoHome();
+        var data = { username: "", token: "", roomID: "" };
+        data.username = username;
+        data.token = token;
+        data.roomID = this.roomID;
+        socket.emit("DismissRoom", data);
     };
     Room.prototype.drawofferHandler = function () {
         if (this.drawoffer.selected == true) {
@@ -80,12 +99,36 @@ var Room = (function (_super) {
         this.BacktoHome();
     };
     Room.prototype.kick1Handler = function () {
+        var data = { username: "", token: "", roomID: "", bekickedPlayer: "" };
+        data.username = username;
+        data.token = token;
+        data.roomID = this.roomID;
+        data.bekickedPlayer = this.player1.text;
+        socket.emit("KickPlayer", data);
     };
     Room.prototype.kick2Handler = function () {
+        var data = { username: "", token: "", roomID: "", bekickedPlayer: "" };
+        data.username = username;
+        data.token = token;
+        data.roomID = this.roomID;
+        data.bekickedPlayer = this.player2.text;
+        socket.emit("KickPlayer", data);
     };
     Room.prototype.kick3Handler = function () {
+        var data = { username: "", token: "", roomID: "", bekickedPlayer: "" };
+        data.username = username;
+        data.token = token;
+        data.roomID = this.roomID;
+        data.bekickedPlayer = this.player3.text;
+        socket.emit("KickPlayer", data);
     };
     Room.prototype.kick4Handler = function () {
+        var data = { username: "", token: "", roomID: "", bekickedPlayer: "" };
+        data.username = username;
+        data.token = token;
+        data.roomID = this.roomID;
+        data.bekickedPlayer = this.player4.text;
+        socket.emit("KickPlayer", data);
     };
     Room.prototype.switch12Handler = function () {
         var switchPlayer = { username: "", token: "", roomID: "" };

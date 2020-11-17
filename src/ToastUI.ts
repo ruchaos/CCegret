@@ -43,6 +43,7 @@ class Toast extends eui.Component implements  eui.UIComponent {
         if( this._cont ){
             var toast:Toast = new Toast( msg, this._cont.stage.stageWidth, this._cont.stage.stageHeight );
             this._cont.addChild( toast );
+			this._cont.setChildIndex(toast,-1);
         }
     }
 

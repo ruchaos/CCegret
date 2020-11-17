@@ -50,6 +50,20 @@ class Room extends eui.Component implements  eui.UIComponent {
 			case "LeaveRoomSuccess":
 				this.BacktoHome();
 				break;
+			case "RoomDismissed":
+				this.BacktoHome();
+				Toast.launch("房间已解散");
+				break;
+			case "PlayerBeKicked":
+				if(evt.roomData.bekickedPlayer==username){
+						var data={username:"",token:"",roomID:""};
+						data.username=username;
+						data.token=token;
+						data.roomID=this.roomID;
+						socket.emit("LeaveRoom",data);						
+						Toast.launch("你已被请出房间");
+				};
+				break;
 		};
 		
 	}
@@ -63,7 +77,11 @@ class Room extends eui.Component implements  eui.UIComponent {
 	}
 
 	private dismissHandler():void{
-		this.BacktoHome();
+		var data={username:"",token:"",roomID:""};
+		data.username=username;
+		data.token=token;
+		data.roomID=this.roomID;
+		socket.emit("DismissRoom",data);
 	}
 
 	private drawofferHandler():void{
@@ -82,16 +100,36 @@ class Room extends eui.Component implements  eui.UIComponent {
 	}		
 
 	private kick1Handler():void{
-
+		var data={username:"",token:"",roomID:"",bekickedPlayer:""};
+		data.username=username;
+		data.token=token;
+		data.roomID=this.roomID;
+		data.bekickedPlayer=this.player1.text;
+		socket.emit("KickPlayer",data);
 	}
 	private kick2Handler():void{
-
+		var data={username:"",token:"",roomID:"",bekickedPlayer:""};
+		data.username=username;
+		data.token=token;
+		data.roomID=this.roomID;
+		data.bekickedPlayer=this.player2.text;
+		socket.emit("KickPlayer",data);
 	}
 	private kick3Handler():void{
-
+		var data={username:"",token:"",roomID:"",bekickedPlayer:""};
+		data.username=username;
+		data.token=token;
+		data.roomID=this.roomID;
+		data.bekickedPlayer=this.player3.text;
+		socket.emit("KickPlayer",data);
 	}
 	private kick4Handler():void{
-
+		var data={username:"",token:"",roomID:"",bekickedPlayer:""};
+		data.username=username;
+		data.token=token;
+		data.roomID=this.roomID;
+		data.bekickedPlayer=this.player4.text;
+		socket.emit("KickPlayer",data);
 	}
 
 	private switch12Handler():void{
