@@ -217,10 +217,10 @@ var Main = (function (_super) {
             }
             ;
         });
-        socket.on("PlayerBeKicked", function (roomData) {
-            console.log("Server:PlayerBeKicked");
+        socket.on("BeKicked", function (roomData) {
+            console.log("Server:BeKicked");
             var LobbyEvent = new LOBBYEVENT(LOBBYEVENT.SOCKETMSG);
-            LobbyEvent.socketevent = "PlayerBeKicked";
+            LobbyEvent.socketevent = "BeKicked";
             LobbyEvent.roomData = roomData;
             if (_this._Room) {
                 _this._Room.dispatchEvent(LobbyEvent);
@@ -281,6 +281,10 @@ var Main = (function (_super) {
                         isLogin = true;
                         Toast.launch("欢迎！" + username);
                         _this._Home.person.text = "hi," + username; //不规范！
+                        var data = { username: "", token: "" };
+                        data.username = username;
+                        data.token = token;
+                        socket.emit("UserLogin", data); //新登录协议要求
                     }, this);
                 }
                 this.addChild(this._Login);
@@ -293,8 +297,12 @@ var Main = (function (_super) {
                     }, this);
                     this._Person.addEventListener(LOBBYEVENT.LOGOUT, function () {
                         Toast.launch("再见, " + username);
-                        isLogin = false;
                         _this._Home.person.text = "请登录"; //不规范！
+                        var data = { username: "" };
+                        data.username = username;
+                        socket.emit("UserLogout", data); //新登录协议要求
+                        isLogin = false;
+                        username = "guest";
                     }, this);
                 }
                 this.addChild(this._Person);

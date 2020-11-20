@@ -157,10 +157,10 @@ class Main extends eui.UILayer {
             };
         });
 
-        socket.on("PlayerBeKicked",(roomData)=>{
-            console.log("Server:PlayerBeKicked");
+        socket.on("BeKicked",(roomData)=>{
+            console.log("Server:BeKicked");
             var LobbyEvent:LOBBYEVENT=new LOBBYEVENT(LOBBYEVENT.SOCKETMSG);
-		    LobbyEvent.socketevent="PlayerBeKicked";
+		    LobbyEvent.socketevent="BeKicked";
             LobbyEvent.roomData=roomData;
             if(this._Room){
                 this._Room.dispatchEvent(LobbyEvent); 
@@ -223,6 +223,12 @@ class Main extends eui.UILayer {
                         isLogin=true;
                         Toast.launch("欢迎！"+username);
                         this._Home.person.text="hi,"+username;//不规范！
+
+                        var data={username:"",token:""};
+                        data.username=username;
+                        data.token=token;
+                        socket.emit("UserLogin",data);//新登录协议要求
+
                     },this);
                     
                 }
@@ -237,8 +243,14 @@ class Main extends eui.UILayer {
                     },this); 
                     this._Person.addEventListener(LOBBYEVENT.LOGOUT,()=>{
                         Toast.launch("再见, "+username);
-                        isLogin=false;
                         this._Home.person.text="请登录";//不规范！
+
+                        var data={username:""};
+                        data.username=username;                        
+                        socket.emit("UserLogout",data);//新登录协议要求
+
+                        isLogin=false;
+                        username="guest";
                     },this);
                 }
                 this.addChild(this._Person); 

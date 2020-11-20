@@ -78,7 +78,7 @@ class Login extends eui.Component implements  eui.UIComponent {
 	private LoginSuccess(usernamesuccess:string):void{
 		var LobbyEvent:LOBBYEVENT=new LOBBYEVENT(LOBBYEVENT.LOGIN);
 		username=usernamesuccess;
-		console.log(usernamesuccess+" 登录成功！");		
+		console.log(usernamesuccess+" 登录成功！");
 		this.dispatchEvent(LobbyEvent);
 		this.closePanel();
 	}

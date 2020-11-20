@@ -37,18 +37,10 @@ var Room = (function (_super) {
         this.addEventListener(LOBBYEVENT.SOCKETMSG, this.SocketHandler, this);
     };
     Room.prototype.SocketHandler = function (evt) {
-        var Roomui = this;
         var roomData = evt.roomData;
         switch (evt.socketevent) {
             case "PlayersChanges":
-                Roomui.player1.text = roomData.players[0].playerName;
-                Roomui.player2.text = roomData.players[1].playerName;
-                Roomui.player3.text = roomData.players[2].playerName;
-                Roomui.player4.text = roomData.players[3].playerName;
-                //Roomui.addStar4Me();//改为加横线，忽略房主问题
-                //Roomui.player1.textFlow=[{text:Roomui.player1.text,style:{"underline":true}}];//改为加横线，忽略房主问题
-                Roomui.setPlayerTimer(roomData);
-                Roomui.setBtn(roomData);
+                this.playerChange(roomData);
                 break;
             case "LeaveRoomSuccess":
                 this.BacktoHome();
@@ -57,16 +49,8 @@ var Room = (function (_super) {
                 this.BacktoHome();
                 Toast.launch("房间已解散");
                 break;
-            case "PlayerBeKicked":
-                if (evt.roomData.bekickedPlayer == username) {
-                    var data = { username: "", token: "", roomID: "" };
-                    data.username = username;
-                    data.token = token;
-                    data.roomID = this.roomID;
-                    socket.emit("LeaveRoom", data);
-                    Toast.launch("你已被请出房间");
-                }
-                ;
+            case "BeKicked":
+                this.BacktoHome();
                 break;
         }
         ;
@@ -201,6 +185,14 @@ var Room = (function (_super) {
         // };
         // roomData.roomState=searchState;
         //测试代码结束
+    };
+    Room.prototype.playerChange = function (roomData) {
+        this.player1.text = roomData.players[0].playerName;
+        this.player2.text = roomData.players[1].playerName;
+        this.player3.text = roomData.players[2].playerName;
+        this.player4.text = roomData.players[3].playerName;
+        this.setPlayerTimer(roomData);
+        this.setBtn(roomData);
     };
     Room.prototype.setBtn = function (roomData) {
         this.quit.visible = false;
