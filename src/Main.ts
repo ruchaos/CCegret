@@ -165,15 +165,27 @@ class Main extends eui.UILayer {
             if(this._Room){
                 this._Room.dispatchEvent(LobbyEvent); 
             };
-
-            // var timer:egret.Timer = new egret.Timer(300,1);
-            // //注册事件侦听器
-            // timer.addEventListener(egret.TimerEvent.TIMER_COMPLETE,this.toastkick,this);      
-            // //开始计时
-            // timer.start();
         });
 
+        socket.on("GameStarted",(roomData)=>{
+            console.log("Server:GameStarted");
+            var LobbyEvent:LOBBYEVENT=new LOBBYEVENT(LOBBYEVENT.SOCKETMSG);
+		    LobbyEvent.socketevent="GameStarted";
+            LobbyEvent.roomData=roomData;
+            if(this._Room){
+                this._Room.dispatchEvent(LobbyEvent); 
+            };
+        });
 
+        socket.on("GameOver",(roomData)=>{
+            console.log("Server:GameOver");
+            var LobbyEvent:LOBBYEVENT=new LOBBYEVENT(LOBBYEVENT.SOCKETMSG);
+		    LobbyEvent.socketevent="GameOver";
+            LobbyEvent.roomData=roomData;
+            if(this._Room){
+                this._Room.dispatchEvent(LobbyEvent); 
+            };
+        });
    }
         // private toastkick(msg:string){
         //     //糟糕的办法，解决被请出房间后，toast层在home以下的问题。
@@ -204,10 +216,10 @@ class Main extends eui.UILayer {
                     this._Home.addEventListener(LOBBYEVENT.OPEN,(evt:LOBBYEVENT)=>{
                         this.addPage(evt.pageName);
                     },this);
-                    //TODO 添加进入room事件，传递roomID和roomstate
-                    this._Home.addEventListener(LOBBYEVENT.ENTERROOM,(evt:LOBBYEVENT)=>{
-                        this.openRoom(evt.roomData);
-                    },this);                    
+                    //不再由页面触发，改为socket服务器触发
+                    // this._Home.addEventListener(LOBBYEVENT.ENTERROOM,(evt:LOBBYEVENT)=>{
+                    //     this.openRoom(evt.roomData);
+                    // },this);                    
                 };
                 this.addChild(this._Home);
                 this._Home.visible=true; 
@@ -315,6 +327,38 @@ class Main extends eui.UILayer {
                 }
                 this.addChild(this._Register);
                 break; 
+
+            case "Room"://仅用于测试
+                		var roomData={
+                            roomID: "r1",
+                            hostName:"ruchaos",
+                            gameName:"ruchaos ‘s game",
+                            roomState:1, // 1-等待中；2-进行中；3-已结束；(4-当前游戏)
+                            gameType:1,//1-1v1,2-2v2,3-2v2随机分组
+                            gameTime:1,//1-快棋，2-长考，3不限
+                            players:[
+                                {playerName:"ruchaos",playerTimeA:60,playerTimeB:600},//time和游戏类型对应;如果是1v1,player[2],player[3]和[0][1]一样。
+                                {playerName:"lynn",playerTimeA:60,playerTimeB:600},
+                                {playerName:"ruchaos",playerTimeA:60,playerTimeB:600},
+                                {playerName:"lynn",playerTimeA:60,playerTimeB:600},
+                            ],
+                            //游戏开始后才有
+                            gameVersion:"CC1.0",
+                            gameID:123456,
+                            gameMenu:[ "aE-Bc","fSxAbxBb"],// afwe
+                            gameBoards:[ "","ASDFBSDSDA+eE-Bc","SDFASDFASDF+ fSxAbxBb"],
+                            gameDate: 1604398926, //游戏开始时间戳
+                            gameresult:{
+                                winnerteam:0,//0-无结果,1-1队,2-2队,3-和棋
+                                winner:[],
+                                loser:[],
+                                drawer:[]
+                                }
+                        };
+                        this.openRoom(roomData);
+                        break;
+		//测试代码结束
+
 
  
         }

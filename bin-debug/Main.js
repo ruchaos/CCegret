@@ -226,11 +226,26 @@ var Main = (function (_super) {
                 _this._Room.dispatchEvent(LobbyEvent);
             }
             ;
-            // var timer:egret.Timer = new egret.Timer(300,1);
-            // //注册事件侦听器
-            // timer.addEventListener(egret.TimerEvent.TIMER_COMPLETE,this.toastkick,this);      
-            // //开始计时
-            // timer.start();
+        });
+        socket.on("GameStarted", function (roomData) {
+            console.log("Server:GameStarted");
+            var LobbyEvent = new LOBBYEVENT(LOBBYEVENT.SOCKETMSG);
+            LobbyEvent.socketevent = "GameStarted";
+            LobbyEvent.roomData = roomData;
+            if (_this._Room) {
+                _this._Room.dispatchEvent(LobbyEvent);
+            }
+            ;
+        });
+        socket.on("GameOver", function (roomData) {
+            console.log("Server:GameOver");
+            var LobbyEvent = new LOBBYEVENT(LOBBYEVENT.SOCKETMSG);
+            LobbyEvent.socketevent = "GameOver";
+            LobbyEvent.roomData = roomData;
+            if (_this._Room) {
+                _this._Room.dispatchEvent(LobbyEvent);
+            }
+            ;
         });
     };
     // private toastkick(msg:string){
@@ -262,10 +277,10 @@ var Main = (function (_super) {
                     this._Home.addEventListener(LOBBYEVENT.OPEN, function (evt) {
                         _this.addPage(evt.pageName);
                     }, this);
-                    //TODO 添加进入room事件，传递roomID和roomstate
-                    this._Home.addEventListener(LOBBYEVENT.ENTERROOM, function (evt) {
-                        _this.openRoom(evt.roomData);
-                    }, this);
+                    //不再由页面触发，改为socket服务器触发
+                    // this._Home.addEventListener(LOBBYEVENT.ENTERROOM,(evt:LOBBYEVENT)=>{
+                    //     this.openRoom(evt.roomData);
+                    // },this);                    
                 }
                 ;
                 this.addChild(this._Home);
@@ -361,6 +376,35 @@ var Main = (function (_super) {
                     }, this);
                 }
                 this.addChild(this._Register);
+                break;
+            case "Room"://仅用于测试
+                var roomData = {
+                    roomID: "r1",
+                    hostName: "ruchaos",
+                    gameName: "ruchaos ‘s game",
+                    roomState: 1,
+                    gameType: 1,
+                    gameTime: 1,
+                    players: [
+                        { playerName: "ruchaos", playerTimeA: 60, playerTimeB: 600 },
+                        { playerName: "lynn", playerTimeA: 60, playerTimeB: 600 },
+                        { playerName: "ruchaos", playerTimeA: 60, playerTimeB: 600 },
+                        { playerName: "lynn", playerTimeA: 60, playerTimeB: 600 },
+                    ],
+                    //游戏开始后才有
+                    gameVersion: "CC1.0",
+                    gameID: 123456,
+                    gameMenu: ["aE-Bc", "fSxAbxBb"],
+                    gameBoards: ["", "ASDFBSDSDA+eE-Bc", "SDFASDFASDF+ fSxAbxBb"],
+                    gameDate: 1604398926,
+                    gameresult: {
+                        winnerteam: 0,
+                        winner: [],
+                        loser: [],
+                        drawer: []
+                    }
+                };
+                this.openRoom(roomData);
                 break;
         }
     };

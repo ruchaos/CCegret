@@ -35,6 +35,25 @@ var Room = (function (_super) {
         this.drawoffer.addEventListener(egret.TouchEvent.TOUCH_TAP, this.drawofferHandler, this);
         this.surrender.addEventListener(egret.TouchEvent.TOUCH_TAP, this.surrenderHandler, this);
         this.addEventListener(LOBBYEVENT.SOCKETMSG, this.SocketHandler, this);
+        this.start.addEventListener(egret.TouchEvent.TOUCH_TAP, this.startHandler, this);
+    };
+    Room.prototype.startHandler = function () {
+        //向socket发送start
+        var data = { username: "", token: "", roomID: "" };
+        data.username = username;
+        data.token = token;
+        data.roomID = this.roomID;
+        socket.emit("StartGame", data);
+    };
+    Room.prototype.toGaming = function (roomData) {
+        //开始游戏
+        //切换到游戏状态	
+        this.setBtn(roomData);
+    };
+    Room.prototype.toFinished = function (roomData) {
+        //游戏结束
+        //切换到游戏结束状态
+        this.setBtn(roomData);
     };
     Room.prototype.SocketHandler = function (evt) {
         var roomData = evt.roomData;
@@ -51,6 +70,12 @@ var Room = (function (_super) {
                 break;
             case "BeKicked":
                 this.BacktoHome();
+                break;
+            case "GameStarted":
+                this.toGaming(roomData);
+                break;
+            case "GameOver":
+                this.toFinished(roomData);
                 break;
         }
         ;
@@ -79,8 +104,11 @@ var Room = (function (_super) {
         //如果当前是按下状态，向服务器提交设置为提合，否则设置为未提合
     };
     Room.prototype.surrenderHandler = function () {
-        //如果当前是按下状态，向服务器提交设置为提合，否则设置为未提合	
-        this.BacktoHome();
+        var data = { username: "", token: "", roomID: "" };
+        data.username = username;
+        data.token = token;
+        data.roomID = this.roomID;
+        socket.emit("testGameOver", data);
     };
     Room.prototype.kick1Handler = function () {
         var data = { username: "", token: "", roomID: "", bekickedPlayer: "" };
@@ -144,21 +172,21 @@ var Room = (function (_super) {
         // var roomState:number;
         // console.log("roomID:"+roomID);
         var Roomui = this;
-        Roomui.roomID = roomData.roomID;
-        Roomui.roomState = roomData.roomState;
-        Roomui.gameName.text = roomData.gameName;
-        Roomui.gameType.text = gameTypeNo[roomData.gameType - 1];
-        Roomui.gameTime.text = gameTimeNo[roomData.gameTime - 1];
-        Roomui.gameDate.text = roomData.gameDate;
-        Roomui.player1.text = roomData.players[0].playerName;
-        Roomui.player2.text = roomData.players[1].playerName;
-        Roomui.player3.text = roomData.players[2].playerName;
-        Roomui.player4.text = roomData.players[3].playerName;
+        this.roomID = roomData.roomID;
+        this.roomState = roomData.roomState;
+        this.gameName.text = roomData.gameName;
+        this.gameType.text = gameTypeNo[roomData.gameType - 1];
+        this.gameTime.text = gameTimeNo[roomData.gameTime - 1];
+        this.gameDate.text = roomData.gameDate;
+        this.player1.text = roomData.players[0].playerName;
+        this.player2.text = roomData.players[1].playerName;
+        this.player3.text = roomData.players[2].playerName;
+        this.player4.text = roomData.players[3].playerName;
         //Roomui.addStar4Me();//改为加横线，忽略房主问题
         //Roomui.player1.textFlow=[{text:Roomui.player1.text,style:{"underline":true}}];//改为加横线，忽略房主问题
-        Roomui.setPlayerTimer(roomData);
-        Roomui.setBtn(roomData);
-        Roomui.gameStateVS.selectedIndex = roomData.roomState - 1;
+        this.setPlayerTimer(roomData);
+        this.setBtn(roomData);
+        this.gameStateVS.selectedIndex = roomData.roomState - 1;
         //测试代码
         // roomState=1;//roomState 1-等待中；2-进行中；3-已结束；(4-当前游戏)
         // var roomData={
@@ -195,6 +223,9 @@ var Room = (function (_super) {
         this.setBtn(roomData);
     };
     Room.prototype.setBtn = function (roomData) {
+        this.gameDate.text = roomData.gameDate;
+        this.roomState = roomData.roomState;
+        this.gameStateVS.selectedIndex = this.roomState - 1;
         this.quit.visible = false;
         this.dismiss.visible = false;
         this.surrender.visible = false;
@@ -202,35 +233,7 @@ var Room = (function (_super) {
         this.curtain.visible = false;
         this.hint.visible = false;
         this.drawoffer.visible = false;
-        if (this.roomState == 2) {
-            var isPlayer = false;
-            if (roomData.players[0].playerName == username) {
-                isPlayer = true;
-            }
-            ;
-            if (roomData.players[1].playerName == username) {
-                isPlayer = true;
-            }
-            ;
-            if (roomData.players[2].playerName == username) {
-                isPlayer = true;
-            }
-            ;
-            if (roomData.players[3].playerName == username) {
-                isPlayer = true;
-            }
-            ;
-            if (isPlayer) {
-                this.surrender.visible = true;
-                this.drawoffer.visible = true;
-                this.gameDate.visible = false;
-            }
-            else {
-                this.quit.visible = true;
-                this.gameDate.visible = true;
-            }
-        }
-        else if (this.roomState == 1) {
+        if (this.roomState == 1) {
             this.curtain.visible = true;
             this.hint.visible = true;
             this.gameDate.visible = true;
@@ -282,9 +285,51 @@ var Room = (function (_super) {
                 }
                 ;
             }
+        }
+        else if (this.roomState == 2) {
+            var isPlayer = false;
+            if (roomData.players[0].playerName == username) {
+                isPlayer = true;
+            }
+            ;
+            if (roomData.players[1].playerName == username) {
+                isPlayer = true;
+            }
+            ;
+            if (roomData.players[2].playerName == username) {
+                isPlayer = true;
+            }
+            ;
+            if (roomData.players[3].playerName == username) {
+                isPlayer = true;
+            }
+            ;
+            if (isPlayer) {
+                this.surrender.visible = true;
+                this.drawoffer.visible = true;
+                this.gameDate.visible = false;
+            }
             else {
                 this.quit.visible = true;
+                this.gameDate.visible = true;
             }
+        }
+        else if (this.roomState == 3) {
+            this.quit.visible = true;
+            this.gameDate.visible = true;
+            this.T1win.visible = false;
+            this.T2win.visible = false;
+            this.Draw.visible = false;
+            if (roomData.gameResult.winnerteam == 1) {
+                this.T1win.visible = true;
+            }
+            else if (roomData.gameResult.winnerteam == 2) {
+                this.T2win.visible = true;
+            }
+            else if (roomData.gameResult.winnerteam == 3) {
+                this.Draw.visible = true;
+            }
+            ;
         }
         else {
             this.quit.visible = true;
