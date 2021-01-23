@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="TargetSkin" width="50" height="50" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" >
+	<w:Config id="177299d1a3f" ></w:Config>
+	<e:Image id="targeting" width="42" height="42" horizontalCenter="0" verticalCenter="0"/>
+</e:Skin>

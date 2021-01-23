@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="PieceSkin" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing"  width="60" height="60">
+	<w:Config id="176d205a966" ></w:Config>
+	<e:Image id="p" scaleX="1" scaleY="1" width="52" height="52" horizontalCenter="0" verticalCenter="0" source="resource/pic/game/AD.png"/>
+	<e:Image id="s" scaleX="1" scaleY="1" source="resource/pic/game/ADs.png" width="58" height="58" left="0" top="0" visible="false"/>
+	<e:Image id="skill" source="resource/pic/game/skill.png" width="40" height="40" right="-5" bottom="-5" visible="false"/>
+	<e:Image id="restrict" width="30" height="30" x="20" y="20" source="resource/pic/game/weaken.png" visible="false"/>
+</e:Skin>

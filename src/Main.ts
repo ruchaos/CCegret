@@ -96,7 +96,7 @@ class Main extends eui.UILayer {
     //主控制开始点，首先进行登陆，然后加载首页
     protected createGameScene(): void {
      
-        this.addPage("Home");
+        this.addPage("Room");
         Toast.init(this);
         this.socketsListening();
     }
@@ -203,7 +203,9 @@ class Main extends eui.UILayer {
         };
         this._Room.init(roomData);                                              
         this.addChild(this._Room);
-        this._Home.visible=false;
+        if(this._Home){
+            this._Home.visible=false;
+        }
    }
   
 
@@ -222,7 +224,9 @@ class Main extends eui.UILayer {
                     // },this);                    
                 };
                 this.addChild(this._Home);
-                this._Home.visible=true; 
+                if(this._Home){
+                    this._Home.visible=true; 
+                }
                 break;
                 
             case "Login":
@@ -333,7 +337,7 @@ class Main extends eui.UILayer {
                             roomID: "r1",
                             hostName:"ruchaos",
                             gameName:"ruchaos ‘s game",
-                            roomState:1, // 1-等待中；2-进行中；3-已结束；(4-当前游戏)
+                            roomState:2, // 1-等待中；2-进行中；3-已结束；(4-当前游戏)
                             gameType:1,//1-1v1,2-2v2,3-2v2随机分组
                             gameTime:1,//1-快棋，2-长考，3不限
                             players:[

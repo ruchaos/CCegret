@@ -1,62 +1,72 @@
 {
-  "1696b8294b4": {
-    "backgroundType": "user",
-    "useBgImage": false,
-    "useBgColor": true,
-    "backgroundX": 0,
-    "backgroundY": 0,
-    "backgroundWidth": -1,
-    "backgroundHeight": -1,
-    "backgroundAlpha": 100,
-    "backgroundColor": "#000000"
-  },
-  "global": {
-    "globalBackgroundAlpha": 100,
-    "globalBackgroundX": 0,
-    "globalBackgroundY": 0,
-    "globalBackgroundWidth": -1,
-    "globalBackgroundHeight": -1,
-    "globalBackgroundColor": "#000000",
-    "globalBackgroundImage": "",
-    "globalAutoLayerMarkEnable": false
-  },
-  "1696bcd3a72": {
-    "backgroundType": "user",
-    "backgroundAlpha": "0"
-  },
-  "1696bd09477": {
-    "backgroundType": "user",
-    "backgroundAlpha": "0"
-  },
-  "169dcc7f2b6": {
-    "backgroundType": "user",
-    "useBgImage": true,
-    "useBgColor": true,
-    "backgroundColor": "#000000"
-  },
-  "16b5b0dee26": {
-    "path": "GameItems.ts",
-    "class": "GameItems",
-    "parentPath": "resource/eui_skins/ItemRendererSkin.exml"
-  },
-  "16b6f1dc8cf": {
-    "path": "Person.ts",
-    "class": "Person",
-    "parentPath": ""
-  },
-  "16b82f51857": {
-    "path": "Toast.ts",
-    "class": "Toast",
-    "parentPath": ""
-  },
-  "16b83396a15": {
-    "path": "ToastUI.ts",
-    "class": "ToastUI",
-    "parentPath": ""
-  },
-  "16ba7afa888": {
-    "path": "..\\resource\\custom_skins\\Game.ts",
-    "class": "Game",
-    "parentPath": ""
-  }
+    "1696b8294b4": {
+        "backgroundType": "user",
+        "useBgImage": false,
+        "useBgColor": true,
+        "backgroundX": 0,
+        "backgroundY": 0,
+        "backgroundWidth": -1,
+        "backgroundHeight": -1,
+        "backgroundAlpha": 100,
+        "backgroundColor": "#000000"
+    },
+    "global": {
+        "globalBackgroundAlpha": 100,
+        "globalBackgroundX": 0,
+        "globalBackgroundY": 0,
+        "globalBackgroundWidth": -1,
+        "globalBackgroundHeight": -1,
+        "globalBackgroundColor": "#000000",
+        "globalBackgroundImage": "",
+        "globalAutoLayerMarkEnable": true
+    },
+    "1696bcd3a72": {
+        "backgroundType": "user",
+        "backgroundAlpha": "0"
+    },
+    "1696bd09477": {
+        "backgroundType": "user",
+        "backgroundAlpha": "0"
+    },
+    "169dcc7f2b6": {
+        "backgroundType": "user",
+        "useBgImage": true,
+        "useBgColor": true,
+        "backgroundColor": "#000000"
+    },
+    "16b5b0dee26": {
+        "path": "GameItems.ts",
+        "class": "GameItems",
+        "parentPath": "resource/eui_skins/ItemRendererSkin.exml"
+    },
+    "16b6f1dc8cf": {
+        "path": "Person.ts",
+        "class": "Person",
+        "parentPath": ""
+    },
+    "16b82f51857": {
+        "path": "Toast.ts",
+        "class": "Toast",
+        "parentPath": ""
+    },
+    "16b83396a15": {
+        "path": "ToastUI.ts",
+        "class": "ToastUI",
+        "parentPath": ""
+    },
+    "16ba7afa888": {
+        "path": "..\\resource\\custom_skins\\Game.ts",
+        "class": "Game",
+        "parentPath": ""
+    },
+    "176d205a966": {
+        "path": "..\\resource\\custom_skins\\Piece.ts",
+        "class": "Piece",
+        "parentPath": ""
+    },
+    "177299d1a3f": {
+        "path": "Target.ts",
+        "class": "Target",
+        "parentPath": ""
+    }
 }

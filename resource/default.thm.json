@@ -16,7 +16,9 @@
 		"HomeUI": "resource/eui_skins/HomeUI.exml",
 		"Toast": "resource/eui_skins/Toast.exml",
 		"ToastUI": "resource/eui_skins/ToastUI.exml",
-		"Game": "resource/custom_skins/Game.exml"
+		"Game": "resource/custom_skins/Game.exml",
+		"Piece": "resource/eui_skins/Piece.exml",
+		"Target": "resource/cunstom_skins/Target.exml"
 	},
 	"autoGenerateExmlsList": true,
 	"exmls": [
@@ -29,8 +31,10 @@
 		"resource/custom_skins/Home.exml",
 		"resource/custom_skins/Login.exml",
 		"resource/custom_skins/Person.exml",
+		"resource/custom_skins/Piece.exml",
 		"resource/custom_skins/Register.exml",
 		"resource/custom_skins/Room.exml",
+		"resource/custom_skins/Target.exml",
 		"resource/custom_skins/ToastUI.exml",
 		"resource/eui_skins/ButtonSkin.exml",
 		"resource/eui_skins/CheckBoxSkin.exml",

@@ -1,5 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
-<e:Skin class="GameSkin" width="700" height="700" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" >
+<e:Skin class="GameSkin" width="700" height="700" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" xmlns:ns1="*" >
 	<w:Config id="16ba7afa888" ></w:Config>
-	<e:Image width="700" height="700" x="0" y="0" fillMode="scale" source="resource/pic/room/game.png"/>
+	<e:Image id="board" width="700" height="700" x="0" y="0" fillMode="scale" source="resource/pic/game/board.png"/>
+	<e:Group id="EFlayer" width="700" height="700" x="0" y="0"/>
+
+	<e:Button id="testbutton" label="test" x="300" y="350"/>
+	<e:Rect id="cover" width="700" height="67" x="0" y="633" fillAlpha="0.8" anchorOffsetY="0" fillColor="0x000000" visible="false"/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </e:Skin>

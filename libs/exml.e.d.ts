@@ -14,9 +14,13 @@ declare class LoginSkin extends eui.Skin{
 }
 declare class PersonSkin extends eui.Skin{
 }
+declare class PieceSkin extends eui.Skin{
+}
 declare class RegisterSkin extends eui.Skin{
 }
 declare class RoomSkin extends eui.Skin{
+}
+declare class TargetSkin extends eui.Skin{
 }
 declare class ToastUISkin extends eui.Skin{
 }

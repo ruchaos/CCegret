@@ -162,7 +162,7 @@ var Main = (function (_super) {
     };
     //主控制开始点，首先进行登陆，然后加载首页
     Main.prototype.createGameScene = function () {
-        this.addPage("Home");
+        this.addPage("Room");
         Toast.init(this);
         this.socketsListening();
     };
@@ -265,7 +265,9 @@ var Main = (function (_super) {
         ;
         this._Room.init(roomData);
         this.addChild(this._Room);
-        this._Home.visible = false;
+        if (this._Home) {
+            this._Home.visible = false;
+        }
     };
     //加载页面功能，加载page页面
     Main.prototype.addPage = function (page) {
@@ -284,7 +286,9 @@ var Main = (function (_super) {
                 }
                 ;
                 this.addChild(this._Home);
-                this._Home.visible = true;
+                if (this._Home) {
+                    this._Home.visible = true;
+                }
                 break;
             case "Login":
                 if (!this._Login) {
@@ -382,7 +386,7 @@ var Main = (function (_super) {
                     roomID: "r1",
                     hostName: "ruchaos",
                     gameName: "ruchaos ‘s game",
-                    roomState: 1,
+                    roomState: 2,
                     gameType: 1,
                     gameTime: 1,
                     players: [
