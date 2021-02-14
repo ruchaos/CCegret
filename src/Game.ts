@@ -3,8 +3,7 @@ class Game extends eui.Component implements  eui.UIComponent {
 		super();
 		this.addEventListener(eui.UIEvent.COMPLETE,this.uiCompHandler,this);
 
-		this.skinName="resource/custom_skins/Game.exml";
-		
+		this.skinName="resource/custom_skins/Game.exml";		
 	}
 
 	protected partAdded(partName:string,instance:any):void
@@ -25,17 +24,33 @@ class Game extends eui.Component implements  eui.UIComponent {
 		this.initBoard();
 		var notation=new Notation();
 		this.notation=notation;
-		this.setupwithNotation(this.notation);
-
-		this.testbutton.addEventListener(egret.TouchEvent.TOUCH_TAP,this.test,this);
-
-		
+		this.setupwithNotation(this.notation);		
+		this.boardcancel.addEventListener(egret.TouchEvent.TOUCH_TAP,this.clearMoves,this);
+		this.showdead.addEventListener(egret.TouchEvent.TOUCH_TAP,this.showgraveyard,this);
+		this.graveyardClose.addEventListener(egret.TouchEvent.TOUCH_TAP,this.hidegraveyard,this);
+		this.reviveCancel.addEventListener(egret.TouchEvent.TOUCH_TAP,this.hidereviveZone,this);
+		this.confirmTargetButton.addEventListener(egret.TouchEvent.TOUCH_TAP,this.sendMoves,this);
 
 	}
 
-	public test():void{
+	public showgraveyard():void{
+		this.graveyard.visible=true;
+	}
+	
+	public hidegraveyard():void{
+		this.graveyard.visible=false;
+	}
+	public hidereviveZone():void{
+		this.reviveZone.visible=false;
+	}
 
-
+	public setBoardColor(num:number){
+		var colors=[0x669933,0xcc6600,0x336699,0x663366];
+		if(num<=colors.length&&num>0){
+			this.boardcancel.strokeColor=colors[num-1];
+		}else{
+			this.boardcancel.strokeColor=0x000000;
+		}		
 	}
 
 	public initBoard():void{
@@ -121,37 +136,83 @@ class Game extends eui.Component implements  eui.UIComponent {
 
 	}
 
-	public setupwithNotation(notation:Notation){
+	public setupwithNotation(notation:any){
+		//清除棋盘上的棋子
 			for(let Py=0;Py<11;Py++) {			
 				for(let Px=0;Px<11;Px++){
 					if(this.boards[Py][Px].Piece&&this.boards[Py][Px].Piece.LDE==0){
-						this.removeChild(this.boards[Py][Px].Piece);
+						this.BoardLayer.removeChild(this.boards[Py][Px].Piece);//todo-可以查看棋子是否已经存在，来决定是删除重建还是修改位置
 						this.boards[Py][Px].Piece=null;
 					}	
 				}
 			}
+		//清除墓地棋子
+			this.graveA.removeChildren();
+			this.graveE.removeChildren();
+			this.graveF.removeChildren();
+			this.graveW.removeChildren();		
+
 		
 		for (var i=0;i<notation.currentPostions.length;i++){
-			var p=new Piece(notation.currentPostions[i].belong,notation.currentPostions[i].pieceType,notation.currentPostions[i].revive);
+			var p=new Piece(notation.currentPostions[i].belong,notation.currentPostions[i].pieceName,notation.currentPostions[i].revive);
 			p.LDE=notation.currentPostions[i].LDE;						
 			p.Px=notation.currentPostions[i].Px;
 			p.Py=notation.currentPostions[i].Py;
-			p.Pname=this.boards[p.Py][p.Px].Pname;
+			p.Pname=this.boards[p.Py][p.Px].Pname;//todo-可能没用，从所在的PXPY即可知道Pname
 			p.name=p.pieceName;
 			p.x=this.Px2x(p.Px);
 			p.y=this.Px2x(p.Py);
-			p.addEventListener(egret.TouchEvent.TOUCH_TAP,this.pieceTapHandler.bind(this,p,false),this);
-			this.boards[p.Py][p.Px].Piece=p;
+			if(p.LDE==0){
+					p.piece.addEventListener(egret.TouchEvent.TOUCH_TAP,this.pieceTapHandler.bind(this,p,false),this);
+					p.skill.addEventListener(egret.TouchEvent.TOUCH_TAP,this.skillTapHandler.bind(this,p,false),this);
+					this.boards[p.Py][p.Px].Piece=p;
+					this.BoardLayer.addChild(p);
+			}else if(p.LDE==1){
+									
+				var img=new eui.Image();
+				img.source=p.p.source;
+				img.width=40;
+				img.height=40;					
+				img.y=0;
+				img.name=p.pieceName;
+				if(p.belong==1){
+					img.x=(this.graveA.numChildren)*45;
+					this.graveA.addChild(img);
+				}else if(p.belong==2){
+					img.x=(this.graveF.numChildren)*45;
+					this.graveF.addChild(img);
+				}else if(p.belong==3){
+					img.x=(this.graveW.numChildren)*45;
+					this.graveW.addChild(img);
+				}else if(p.belong==4){
+					img.x=(this.graveE.numChildren)*45;
+					this.graveE.addChild(img);
+				}
 
-
-			this.addChild(p);
-			if(p.LDE>0){
+				this.BoardLayer.addChild(p);
+				p.visible=false;
+				
+			}else{				
+				this.BoardLayer.addChild(p);
 				p.visible=false;
 			}
-		}
+		}		
+
+		this.setRestrict(notation.currentStats.restrict);
 
 		this.checkEFI();
 
+		this.setBoardColor(notation.currentPlayer);
+		
+
+	}
+
+	public SyncNotation(notation:any){
+		this.notation.currentPostions=notation.currentPostions;
+		this.notation.lastMove=notation.lastMove;
+		this.notation.currentPlayer=notation.currentPlayer;
+		this.notation.currentStats=notation.currentStats;
+		this.notation.NotationHistory=notation.NotationHistory;
 	}
 
 	public Px2x(Px:number):number{
@@ -174,15 +235,293 @@ class Game extends eui.Component implements  eui.UIComponent {
 		if(this.currentSelectedPiece){
 			this.clearMoves();
 		}
-		this.showMoves(piece);		
+		if(piece.belong==this.notation.currentPlayer){
+			this.showMoves(piece);
+			piece.skillname=this.skillbutton(piece);
+			console.log(piece.skillname);
+			if(piece.skillname==""){
+				piece.skill.visible=false;
+			}else{
+				piece.skill.visible=true;
+			}
+		}
+	}
 
-	}	
+	public skillbutton(piece:Piece):string{	
+		let bpy=piece.Py;
+		let bpx=piece.Px;
+		let postison=this.boards[bpy][bpx];	
+
+		if(piece.pieceType=="D"&&piece.restricted==false){ //预言师
+			if(piece.Py==5&&piece.Px==5){				
+				return "Restrict";
+			}
+		}else if(piece.pieceType=="N"&&piece.restricted==false){
+			if(piece.Py==5&&piece.Px==5){
+				return "Resurrection";
+			}else if((piece.belong%2==1&&(postison.Ffield+postison.Efield+postison.Fenchant+postison.Eenchant)==0)||
+					(piece.belong%2==0&&(postison.Afield+postison.Wfield+postison.Aenchant+postison.Wenchant)==0)){
+				return "Reincarnation";
+			}
+		}else if(piece.pieceType=="I"&&piece.restricted==false){
+			if((piece.belong%2==1&&(postison.Ffield+postison.Efield+postison.Fenchant+postison.Eenchant)==0)||
+				(piece.belong%2==0&&(postison.Afield+postison.Wfield+postison.Aenchant+postison.Wenchant)==0)){
+				if(this.boards[5][5].Piece&&this.boards[5][5].Piece.pieceType=="I"){
+					
+						if((this.boards[5][5].Piece.belong-piece.belong+4)%2==0){
+							return "Entanglement";
+						}
+					
+				}else{
+					return "Transposition";
+				}
+			}
+
+		}else if(piece.pieceType=="S"&&piece.restricted==false){
+			var MonsterAlive=false;
+			for(let i=0;i<this.notation.currentPostions.length;i++){
+				if(this.notation.currentPostions[i].pieceType=="M"&&this.notation.currentPostions[i].belong==piece.belong&&this.notation.currentPostions[i].LDE==0){
+					MonsterAlive=true;
+				}
+			}
+			if(!MonsterAlive){//没有己方召唤兽在场（LDE=0）
+				if(piece.Py==5&&piece.Px==5){
+					return "Convene";
+				}else if((piece.belong%2==1&&(postison.Ffield+postison.Efield+postison.Fenchant+postison.Eenchant)==0)||
+					(piece.belong%2==0&&(postison.Afield+postison.Wfield+postison.Aenchant+postison.Wenchant)==0)){
+					return "Summon";
+				}
+			}
+			
+		}
+		return "";
+	}
+	public showResurrectionPostions(piece:Piece,reviveName:String):void{
+		//关闭reviveZone
+		this.hidereviveZone();
+		//复活技能定位
+		//显示棋盘上，所有不在敌方结界中，不在敌方力场中，没有棋子的的位置
+		for(let by=0;by<11;by++){
+			for(let bx=0;bx<11;bx++){
+				if((bx==0&&by==0)||(bx==10&&by==10)||(bx==10&&by==0)||(bx==0&&by==10)){
+
+				}else{
+					if(!this.boards[by][bx].Piece){
+						if(piece.belong%2==0&&(this.boards[by][bx].Aenchant+this.boards[by][bx].Wenchant+this.boards[by][bx].Afield+this.boards[by][bx].Wfield)==0){
+							this.putaMagicAt(bx,by);
+						}else if(piece.belong%2==1&&(this.boards[by][bx].Fenchant+this.boards[by][bx].Eenchant+this.boards[by][bx].Ffield+this.boards[by][bx].Efield)==0){
+							this.putaMagicAt(bx,by);
+						}
+						
+					}
+				}
+				
+			}
+		}
+		this.gameMove.currentSkill="Resurrection";
+		this.gameMove.currentTargets.push({targetPiece:reviveName});
+
+	}
+
+	public showReincarnationPostions(piece:Piece,reviveName:String):void{
+		//关闭reviveZone
+		this.hidereviveZone();
+		//复活技能定位
+		//显示周围，所有不在敌方结界中，不在敌方力场中，没有棋子的的位置
+		
+
+
+		for(let y=-1;y<2;y++){
+			for(let x=-1;x<2;x++){
+				var bx=x+piece.Px;
+				var by=y+piece.Py;
+				if((bx==0&&by==0)||(bx==10&&by==10)||(bx==10&&by==0)||(bx==0&&by==10)){
+
+				}else if(bx>=0&&bx<=10&&by>=0&&by<=10){				
+					if(!this.boards[by][bx].Piece){
+						if(piece.belong%2==0&&(this.boards[by][bx].Aenchant+this.boards[by][bx].Wenchant+this.boards[by][bx].Afield+this.boards[by][bx].Wfield)==0){
+							this.putaMagicAt(bx,by);
+						}else if(piece.belong%2==1&&(this.boards[by][bx].Fenchant+this.boards[by][bx].Eenchant+this.boards[by][bx].Ffield+this.boards[by][bx].Efield)==0){
+							this.putaMagicAt(bx,by);
+						}						
+					}
+				}
+			}
+		}
+		this.gameMove.currentSkill="Reincarnation";
+		this.gameMove.currentTargets.push({targetPiece:reviveName});
+
+	}
+
+	public skillTapHandler(piece:Piece):void{
+		if(this.currentSelectedPiece){
+			this.clearMoves();
+		}		
+		//根据技能名字判断技能展示方式
+		switch(piece.skillname){
+			case "Restrict":
+			//标记棋盘 所有敌方 非权杖 非召唤兽 存活棋子所在位置
+				for (let i=0;i<this.notation.currentPostions.length;i++){
+					if((this.notation.currentPostions[i].LDE==0&&this.notation.currentPostions[i].belong-piece.belong+4)%2==1){//是敌方棋子
+						if(this.notation.currentPostions[i].pieceType!="W"&&this.notation.currentPostions[i].pieceType[0]!="M"){
+							
+							this.putaMagicAt(this.notation.currentPostions[i].Px,this.notation.currentPostions[i].Py);
+							this.gameMove.currentSkill="Restrict";
+						}
+					}
+				}
+				
+			break;
+
+			case "Resurrection":
+				//点击位置时，显示revivezone。
+				this.bordies.removeChildren();
+				for (let i=0;i<this.notation.currentPostions.length;i++){
+					if(this.notation.currentPostions[i].belong==piece.belong&&this.notation.currentPostions[i].LDE==1){
+						var reviveTarget=new eui.Image();
+						reviveTarget.name=this.notation.currentPostions[i].pieceName;
+						reviveTarget.source="resource/pic/game/"+reviveTarget.name+"r.png";
+						reviveTarget.width=70;
+						reviveTarget.height=70;					
+						reviveTarget.y=0;
+						reviveTarget.x=(this.bordies.numChildren)*80;
+						reviveTarget.addEventListener(egret.TouchEvent.TOUCH_TAP,this.showResurrectionPostions.bind(this,piece,reviveTarget.name,false),this);
+						this.bordies.addChild(reviveTarget);
+					}
+				}
+				if(this.bordies.numChildren==0){
+					this.cantReviveTip.visible=true;
+				}else{
+					this.cantReviveTip.visible=false;
+				}
+				this.reviveZone.visible=true;
+				//点击对应棋子，显示棋盘上，所有不在敌方结界中，不在敌方力场中，没有棋子的的位置(showResurrectionPostions)
+				//点击retreat取消（listener)				
+
+			break;
+			case "Reincarnation":
+				this.bordies.removeChildren();
+				for (let i=0;i<this.notation.currentPostions.length;i++){
+					if(this.notation.currentPostions[i].belong==piece.belong&&this.notation.currentPostions[i].LDE==1){
+						var reviveTarget=new eui.Image();
+						reviveTarget.name=this.notation.currentPostions[i].pieceName;
+						reviveTarget.source="resource/pic/game/"+reviveTarget.name+"r.png";
+						reviveTarget.width=70;
+						reviveTarget.height=70;					
+						reviveTarget.y=0;
+						reviveTarget.x=(this.bordies.numChildren)*80;
+						reviveTarget.addEventListener(egret.TouchEvent.TOUCH_TAP,this.showReincarnationPostions.bind(this,piece,reviveTarget.name,false),this);
+						this.bordies.addChild(reviveTarget);
+					}
+				}
+				if(this.bordies.numChildren==0){
+					this.cantReviveTip.visible=true;
+				}else{
+					this.cantReviveTip.visible=false;
+				}
+				this.reviveZone.visible=true;
+
+
+				//显示revivezone。
+				//点击对应棋子，杀死死灵师，并在对应位置复活棋子//点击retreat取消
+
+
+			break;
+			case "Entanglement":
+				//显示所有己方和友方不在敌方结界和力场中的，非权杖棋子
+				for (let i=0;i<this.notation.currentPostions.length;i++){
+					if(this.notation.currentPostions[i].LDE==0&&(this.notation.currentPostions[i].belong-piece.belong+4)%2==0){//是己方或友方棋子
+						if(this.notation.currentPostions[i].pieceType!="W"&&this.notation.currentPostions[i].pieceName!=piece.pieceName){//不是权杖
+							let by=this.notation.currentPostions[i].Py;
+							let bx=this.notation.currentPostions[i].Px;
+							
+							if(piece.belong%2==0&&(this.boards[by][bx].Aenchant+this.boards[by][bx].Wenchant+this.boards[by][bx].Afield+this.boards[by][bx].Wfield)==0){
+								
+								this.putaMagicAt(bx,by);
+							}else if(piece.belong%2==1&&(this.boards[by][bx].Fenchant+this.boards[by][bx].Eenchant+this.boards[by][bx].Ffield+this.boards[by][bx].Efield)==0){
+								
+								this.putaMagicAt(bx,by);
+							}							
+							this.gameMove.currentSkill="Entanglement";
+						}
+					}
+				}
+
+			break;
+			case "Transposition":
+				//显示所有己方不在敌方结界和力场中的，非权杖棋子
+				for (let i=0;i<this.notation.currentPostions.length;i++){
+					if(this.notation.currentPostions[i].LDE==0&&this.notation.currentPostions[i].belong==piece.belong){//是己方或友方棋子
+						if(this.notation.currentPostions[i].pieceType!="W"&&this.notation.currentPostions[i].pieceName!=piece.pieceName){//不是权杖且不是自身
+							let by=this.notation.currentPostions[i].Py;
+							let bx=this.notation.currentPostions[i].Px;
+							
+							if(piece.belong%2==0&&(this.boards[by][bx].Aenchant+this.boards[by][bx].Wenchant+this.boards[by][bx].Afield+this.boards[by][bx].Wfield)==0){
+								
+								this.putaMagicAt(bx,by);
+							}else if(piece.belong%2==1&&(this.boards[by][bx].Fenchant+this.boards[by][bx].Eenchant+this.boards[by][bx].Ffield+this.boards[by][bx].Efield)==0){
+								
+								this.putaMagicAt(bx,by);
+							}
+							this.gameMove.currentSkill="Transposition";
+						}
+					}
+				}
+
+			break;
+			case "Convene":
+			//显示棋盘上，所有不在敌方结界中，不在敌方力场中，没有棋子的的位置
+			for(let by=0;by<11;by++){
+				for(let bx=0;bx<11;bx++){
+					if((bx==0&&by==0)||(bx==10&&by==10)||(bx==10&&by==0)||(bx==0&&by==10)){
+
+					}else{
+						if(!this.boards[by][bx].Piece){
+							if(piece.belong%2==0&&(this.boards[by][bx].Aenchant+this.boards[by][bx].Wenchant+this.boards[by][bx].Afield+this.boards[by][bx].Wfield)==0){
+								this.putaMagicAt(bx,by);
+							}else if(piece.belong%2==1&&(this.boards[by][bx].Fenchant+this.boards[by][bx].Eenchant+this.boards[by][bx].Ffield+this.boards[by][bx].Efield)==0){
+								this.putaMagicAt(bx,by);
+							}
+							this.gameMove.currentSkill="Convene";
+						}
+					}
+				}
+			}
+
+
+			break;
+			case "Summon":
+			//显示周围，所有不在敌方结界中，不在敌方力场中，没有棋子的的位置
+					for(let y=-1;y<2;y++){
+						for(let x=-1;x<2;x++){
+							var bx=x+piece.Px;
+							var by=y+piece.Py;
+							if((bx==0&&by==0)||(bx==10&&by==10)||(bx==10&&by==0)||(bx==0&&by==10)){
+
+							}else if(bx>=0&&bx<=10&&by>=0&&by<=10){				
+								if(!this.boards[by][bx].Piece){
+									if(piece.belong%2==0&&(this.boards[by][bx].Aenchant+this.boards[by][bx].Wenchant+this.boards[by][bx].Afield+this.boards[by][bx].Wfield)==0){
+										this.putaMagicAt(bx,by);
+									}else if(piece.belong%2==1&&(this.boards[by][bx].Fenchant+this.boards[by][bx].Eenchant+this.boards[by][bx].Ffield+this.boards[by][bx].Efield)==0){
+										this.putaMagicAt(bx,by);
+									}
+									this.gameMove.currentSkill="Summon";
+								}
+							}
+						}
+					}
+
+			break;
+
+		}
+
+	}
 
 	//当棋子被点击时，判断状态，并展示可移动位置
 	public showMoves(piece:Piece):void{
-		//basictest	
-		this.currentSelectedPiece=piece;		
-		piece.setSelect(true);
+		
+		this.currentSelectedPiece=piece;				
+		piece.setSelect(true);		
 		
 		//根据piece的type、px、py以及this.boards中的信息，展示添加destination，稍后根据destination的点击情况继续。
 		for(let d=0;d<8;d++){
@@ -248,7 +587,7 @@ class Game extends eui.Component implements  eui.UIComponent {
 					
 					if(piece.pieceType=="D"&&piece.restricted==false){ //如果移动的棋子是未被禁锢的预言师
 						if(this.boards[tpy][tpx].Piece!=null){   //如果目标格有棋子
-							if((this.boards[tpy][tpx].Piece.belong-piece.belong)%2==0){ //是友方棋子
+							if((this.boards[tpy][tpx].Piece.belong-piece.belong+4)%2==0){ //是友方棋子
 								reach=true; //（不可移动至此）已到尽头
 							}else{ //不是友方棋子（即敌方棋子）
 								this.putaAttackAt(tpx,tpy);//可以移动并攻击(目前与putaDestinationAt一样)
@@ -260,7 +599,7 @@ class Game extends eui.Component implements  eui.UIComponent {
 
 					}else if(piece.pieceType=="E"&&piece.Py==5&&piece.Px==5){ //如果移动的棋子是法力之源的元素师
 						if(this.boards[tpy][tpx].Piece!=null){   //如果目标格有棋子
-							if((this.boards[tpy][tpx].Piece.belong-piece.belong)%2==0){
+							if((this.boards[tpy][tpx].Piece.belong-piece.belong+4)%2==0){
 								if(this.boards[tpy][tpx].Piece.invisable==true){
 									//如果是我方、隐身的（幻术师）
 									//（什么也不做，不可以移动到此，但也不是尽头）
@@ -269,7 +608,7 @@ class Game extends eui.Component implements  eui.UIComponent {
 									reach=true;//已到尽头
 								}
 								
-							}else if((this.boards[tpy][tpx].Piece.belong-piece.belong)%2==1){
+							}else if((this.boards[tpy][tpx].Piece.belong-piece.belong+4)%2==1){
 								if(this.boards[tpy][tpx].Piece.invisable==true){
 									//如果是敌方、隐身的（幻术师）
 									this.putaAttackAt(tpx,tpy);//可以移动并攻击(目前与putaDestinationAt一样)
@@ -314,11 +653,19 @@ class Game extends eui.Component implements  eui.UIComponent {
 							if(this.boards[tpy][tpx].Piece.invisable==true){
 									//隐身的（幻术师）									
 									//什么也不做，跳过，但不是尽头
-							}else if((this.boards[tpy][tpx].Piece.belong-piece.belong)%2==0){ //是友方棋子
+							}else if((this.boards[tpy][tpx].Piece.belong-piece.belong+4)%2==0){ //是友方棋子
 								reach=true;//已到尽头
-							}else if((this.boards[tpy][tpx].Piece.belong-piece.belong)%2==1){ //是敌方棋子
-								if(piece.weak==true){ //虚弱的棋子（幻术师，或有己方召唤兽在场的召唤师）
+							}else if((this.boards[tpy][tpx].Piece.belong-piece.belong+4)%2==1){ //是敌方棋子
+								var MonsterAlive=false;
+								for(let i=0;i<this.notation.currentPostions.length;i++){
+									if(this.notation.currentPostions[i].pieceType=="M"&&this.notation.currentPostions[i].belong==piece.belong&&this.notation.currentPostions[i].LDE==0){
+										MonsterAlive=true;
+									}
+								}
+								if(piece.pieceType=="I"){ //虚弱的棋子-幻术师
 									reach=true;//已到尽头	
+								}else if(piece.pieceType=="S"&&MonsterAlive){//虚弱的棋子-有己方召唤兽在场的召唤师
+									reach=true;//已到尽头
 								}else{
 									this.putaAttackAt(tpx,tpy);//可以移动并攻击(目前与putaDestinationAt一样)
 									reach=true;//已到尽头
@@ -347,36 +694,190 @@ class Game extends eui.Component implements  eui.UIComponent {
 	public clearMoves():void{
 		if(this.currentSelectedPiece){
 			this.currentSelectedPiece.setSelect(false);
-			for (var i=0;i< this.destinations.length;i++){				
-				this.removeChild(this.destinations[i]);				
+			this.currentSelectedPiece.skill.visible=false;
+			this.gameMove.currentSkill="";
+			for (let i=0;i< this.targets.length;i++){				
+				this.BoardLayer.removeChild(this.targets[i]);				
 			}
-			this.destinations=[];
+			for (let i=0;i< this.confirmTargets.length;i++){				
+				this.BoardLayer.removeChild(this.confirmTargets[i]);				
+			}
+			
+			this.targets=[];
+			this.confirmTargets=[];
+			this.gameMove.currentPieceName="";
+			this.gameMove.currentSkill="";
+			this.gameMove.currentTargets=[];
+			this.confirmTargetButton.visible=false;
 		}
 	}
+
+	
 	public DestinationTapHandler(t:Target):void{
+		//给出位置确认
+		//提交socket服务器
+
 		//点击destination后，确认，否则clearMoves()
 		//确认时，向服务器提交步法，包括操作人信息、游戏房间信息、步法信息、用时信息（以服务器时间为准）、局面校验
 		//等待服务器返回新的notation，并更新。
+		if(this.confirmTargets.length>0){
+			this.sendMoves();			
+		}else{
+			for(let i=this.targets.length;i>0;i--){			
+			var ta=this.targets.pop();
+			this.BoardLayer.removeChild(ta);
+			if(ta==t){
+				
+				var ct={Px:ta.Px,Py:ta.Py};
+				this.gameMove.currentPieceName=this.currentSelectedPiece.pieceName;
+				if(this.boards[ta.Py][ta.Px].Piece){
+					this.gameMove.currentSkill="kill";
+					this.gameMove.currentTargets.push({targetPiece:this.boards[ta.Py][ta.Px].Piece.pieceName});
+					this.gameMove.currentTargets.push(ct);
+				}else{
+					this.gameMove.currentSkill="move";
+					this.gameMove.currentTargets.push(ct);
+				}
 
-	
-		var pieceName="";
-		if(this.currentSelectedPiece){
-			pieceName=this.currentSelectedPiece.pieceName;
+				this.confirmTargets.push(ta);
+				this.BoardLayer.addChild(ta);
+			}
 		}
-		
-		this.notation.movePiece(pieceName,t.Px,t.Py);
-		this.clearMoves();
-		this.setupwithNotation(this.notation);
-
+		this.confirmTargetButton.visible=true;
+		}		
+				
 	}
+
+	public OneMagicTarget(t:Target):void{
+		if(this.confirmTargets.length>0){
+			this.sendMoves();			
+		}else{
+			if(this.gameMove.currentSkill=="Restrict"||this.gameMove.currentSkill=="Entanglement"||this.gameMove.currentSkill=="Transposition"){
+				this.gameMove.currentTargets.push({targetPiece:this.boards[t.Py][t.Px].Piece.pieceName});
+			}
+			if(this.gameMove.currentSkill=="Reincarnation"||this.gameMove.currentSkill=="Resurrection"){
+				t.targeting.source="resource/pic/game/"+this.gameMove.currentTargets[0].targetPiece+"rs.png";
+				t.targeting.width=t.targeting.height=60;				
+			}
+
+			for(let i=this.targets.length;i>0;i--){			
+				var ta=this.targets.pop();
+				this.BoardLayer.removeChild(ta);
+				if(ta==t){
+					
+					var ct={Px:ta.Px,Py:ta.Py};
+					this.gameMove.currentPieceName=this.currentSelectedPiece.pieceName;
+					//this.gameMove.currentSkill="move";
+					this.gameMove.currentTargets.push(ct);
+
+					var pt={Px:this.currentSelectedPiece.Px,Py:this.currentSelectedPiece.Py};
+					this.gameMove.currentTargets.push(pt);
+
+					this.confirmTargets.push(ta);
+					this.BoardLayer.addChild(ta);
+					}
+			}
+			
+			this.confirmTargetButton.visible=true;
+		}			
+	}
+
+	public SummonTarget(t):void{
+		
+		var ct={Px:t.Px,Py:t.Py};
+		var temp=[];		
+		if(t.hold){
+			t.targeting.source="resource/pic/game/skilltarget.png";
+			t.targeting.width=t.targeting.height=42;
+			t.hold=false;
+			for(let i=this.gameMove.currentTargets.length;i>0;i--){
+				var ta=this.gameMove.currentTargets.pop();
+				if(ta.Px!=ct.Px||ta.Py!=ct.Py){
+					temp.push(ta);
+				}
+			}
+			this.gameMove.currentTargets=temp;			
+			
+
+		}else if(this.gameMove.currentTargets.length<4){
+			t.targeting.source="resource/pic/game/"+this.currentSelectedPiece.pieceName[0]+"Mrs.png";
+			t.targeting.width=t.targeting.height=60;			
+			t.hold=true;
+			this.gameMove.currentTargets.push(ct);
+		}
+		if(this.gameMove.currentTargets.length>0){
+			this.confirmTargetButton.visible=true;
+		}else{
+			this.confirmTargetButton.visible=false;
+		}
+
+		console.log(JSON.stringify(this.gameMove));
+		
+		
+	}
+
+	public MagicTapHandler(t:Target):void{
+		//根据当前魔法名字，确认如何操作
+		
+		if(this.currentSelectedPiece){
+			this.gameMove.currentPieceName=this.currentSelectedPiece.pieceName;
+		}
+		switch (this.gameMove.currentSkill){
+			case "Restrict":				
+				this.OneMagicTarget(t);
+			break;
+
+			case "Resurrection":
+				this.OneMagicTarget(t);				
+			break;
+
+			case "Reincarnation":
+				this.OneMagicTarget(t);				
+			break;
+
+			case "Entanglement":
+				this.OneMagicTarget(t);
+			break;
+
+			case "Transposition":
+				this.OneMagicTarget(t);
+			break;
+
+			case "Convene":
+				this.gameMove.currentPieceName=this.currentSelectedPiece.pieceName;
+				this.SummonTarget(t);
+
+			break;
+
+			case "Summon":
+				this.gameMove.currentPieceName=this.currentSelectedPiece.pieceName;
+				this.SummonTarget(t);
+
+			break;
+
+		}
+
+
+
+
+	}	
 
 	public putaDestinationAt(Px:number,Py:number):void{
 		var t=new Target(1,Px,Py);
 		t.x=this.Px2xT(Px);
 		t.y=this.Px2xT(Py);
 		t.addEventListener(egret.TouchEvent.TOUCH_TAP,this.DestinationTapHandler.bind(this,t,false),this);
-		this.destinations.push(t);
-		this.addChild(t);
+		this.targets.push(t);
+		this.BoardLayer.addChild(t);
+	}
+
+	public putaMagicAt(Px:number,Py:number):void{
+		var t=new Target(2,Px,Py);
+		t.x=this.Px2xT(Px);
+		t.y=this.Px2xT(Py);
+		t.addEventListener(egret.TouchEvent.TOUCH_TAP,this.MagicTapHandler.bind(this,t,false),this);
+		this.targets.push(t);
+		this.BoardLayer.addChild(t);
 	}
 
 	public putaAttackAt(Px:number,Py:number):void{
@@ -454,6 +955,24 @@ class Game extends eui.Component implements  eui.UIComponent {
 		return f
 	}
 
+	public setRestrict(pieceName:string):void{
+		if(pieceName==""){
+			for(let i=0;i<this.notation.currentPostions.length;i++){
+				if(this.BoardLayer.getChildByName(this.notation.currentPostions[i].pieceName)){
+					var p=<Piece>this.BoardLayer.getChildByName(this.notation.currentPostions[i].pieceName);
+					p.setRestrict(false);
+				}
+			}
+			//取消所有棋子的restricted状态。
+		
+		}else{
+			var p=<Piece>this.BoardLayer.getChildByName(pieceName);
+			p.setRestrict(true);
+
+		}
+
+	}
+
 	public checkEFI():void{
 		//清除所有棋盘上的EF状态
 		for(let Py=0;Py<11;Py++) {			
@@ -472,7 +991,7 @@ class Game extends eui.Component implements  eui.UIComponent {
 		//分别寻找D的位置:
 			//检查是否被禁锢
 			//若未禁锢，设置当前位置，及周围八个位置的对应E，设置对应E的显示位置		
-		var d1=<Piece>this.getChildByName("AD");
+		var d1=<Piece>this.BoardLayer.getChildByName("AD");
 		if((d1.restricted==false)&&(d1.LDE==0)){
 			for(let y=-1;y<2;y++){
 				for(let x=-1;x<2;x++){
@@ -486,7 +1005,7 @@ class Game extends eui.Component implements  eui.UIComponent {
 			}
 			this.putEnchantAt(1,d1.Px,d1.Py);		
 		}
-		var d2=<Piece>this.getChildByName("FD");
+		var d2=<Piece>this.BoardLayer.getChildByName("FD");
 		if((d2.restricted==false)&&(d2.LDE==0)){
 			for(let y=-1;y<2;y++){
 				for(let x=-1;x<2;x++){
@@ -500,7 +1019,7 @@ class Game extends eui.Component implements  eui.UIComponent {
 			}
 			this.putEnchantAt(2,d2.Px,d2.Py);			
 		}
-		var d3=<Piece>this.getChildByName("WD");
+		var d3=<Piece>this.BoardLayer.getChildByName("WD");
 		if((d3.restricted==false)&&(d3.LDE==0)){
 			for(let y=-1;y<2;y++){
 				for(let x=-1;x<2;x++){
@@ -513,7 +1032,7 @@ class Game extends eui.Component implements  eui.UIComponent {
 			}
 			this.putEnchantAt(3,d3.Px,d3.Py);			
 		}
-		var d4=<Piece>this.getChildByName("ED");
+		var d4=<Piece>this.BoardLayer.getChildByName("ED");
 		if((d4.restricted==false)&&(d4.LDE==0)){
 			for(let y=-1;y<2;y++){
 				for(let x=-1;x<2;x++){
@@ -529,9 +1048,9 @@ class Game extends eui.Component implements  eui.UIComponent {
 		}
 		
 		//分别寻找P的位置：
-		var p1=<Piece>this.getChildByName("AP");		
+		var p1=<Piece>this.BoardLayer.getChildByName("AP");		
 			//检查是否在法力之源
-			if((p1.Pname=="F5")){
+			if((p1.LDE==0&&p1.Px==5&&p1.Py==5)){
 				//若在法力之源，在周围八个位置中，没有敌方E设置F，设置对应F的位置				
 				for(let y=-1;y<2;y++){
 					for(let x=-1;x<2;x++){
@@ -572,9 +1091,9 @@ class Game extends eui.Component implements  eui.UIComponent {
 						}
 			}
 			
-		var p2=<Piece>this.getChildByName("FP");		
+		var p2=<Piece>this.BoardLayer.getChildByName("FP");		
 			//检查是否在法力之源
-			if((p2.Pname=="F5")){
+			if((p2.LDE==0&&p2.Px==5&&p2.Py==5)){
 				//若在法力之源，在周围八个位置中，没有敌方E设置F，设置对应F的位置				
 				for(let y=-1;y<2;y++){
 					for(let x=-1;x<2;x++){
@@ -616,9 +1135,9 @@ class Game extends eui.Component implements  eui.UIComponent {
 						}
 			}
 
-		var p3=<Piece>this.getChildByName("WP");		
+		var p3=<Piece>this.BoardLayer.getChildByName("WP");		
 			//检查是否在法力之源
-			if((p3.Pname=="F5")){
+			if((p3.LDE==0&&p3.Px==5&&p3.Py==5)){
 				//若在法力之源，在周围八个位置中，没有敌方E设置F，设置对应F的位置				
 				for(let y=-1;y<2;y++){
 					for(let x=-1;x<2;x++){
@@ -659,9 +1178,9 @@ class Game extends eui.Component implements  eui.UIComponent {
 						}
 			}
 
-		var p4=<Piece>this.getChildByName("EP");		
+		var p4=<Piece>this.BoardLayer.getChildByName("EP");		
 			//检查是否在法力之源
-			if((p4.Pname=="F5")){
+			if((p4.LDE==0&&p4.Px==5&&p4.Py==5)){
 				//若在法力之源，在周围八个位置中，没有敌方E设置F，设置对应F的位置				
 				for(let y=-1;y<2;y++){
 					for(let x=-1;x<2;x++){
@@ -703,7 +1222,7 @@ class Game extends eui.Component implements  eui.UIComponent {
 			}
 			
 		//分别寻找I的位置：
-		var i1=<Piece>this.getChildByName("AI");
+		var i1=<Piece>this.BoardLayer.getChildByName("AI");
 		if((i1.restricted==false)&&(i1.LDE==0)
 				&&(this.boards[i1.Py][i1.Px].Fenchant==0)
 				&&(this.boards[i1.Py][i1.Px].Eenchant==0)
@@ -717,7 +1236,7 @@ class Game extends eui.Component implements  eui.UIComponent {
 					i1.setInvisable(false);
 				}
 
-		var i2=<Piece>this.getChildByName("FI");
+		var i2=<Piece>this.BoardLayer.getChildByName("FI");
 		if((i2.restricted==false)&&(i2.LDE==0)
 				&&(this.boards[i2.Py][i2.Px].Aenchant==0)
 				&&(this.boards[i2.Py][i2.Px].Wenchant==0)
@@ -731,7 +1250,7 @@ class Game extends eui.Component implements  eui.UIComponent {
 					i2.setInvisable(false);
 				}			
 
-		var i3=<Piece>this.getChildByName("WI");
+		var i3=<Piece>this.BoardLayer.getChildByName("WI");
 		if((i3.restricted==false)&&(i3.LDE==0)
 				&&(this.boards[i3.Py][i3.Px].Fenchant==0)
 				&&(this.boards[i3.Py][i3.Px].Eenchant==0)
@@ -745,7 +1264,7 @@ class Game extends eui.Component implements  eui.UIComponent {
 					i3.setInvisable(false);
 				}
 
-		var i4=<Piece>this.getChildByName("EI");
+		var i4=<Piece>this.BoardLayer.getChildByName("EI");
 		if((i4.restricted==false)&&(i4.LDE==0)
 				&&(this.boards[i4.Py][i4.Px].Aenchant==0)
 				&&(this.boards[i4.Py][i4.Px].Wenchant==0)
@@ -761,9 +1280,68 @@ class Game extends eui.Component implements  eui.UIComponent {
 		//在棋盘上放置各个E，在棋盘上放置各个F
 	}
 
-	public testbutton:eui.Button;
+	
+
+	//发送消息
+	public sendMoves():void{
+	
+
+		var data={
+			username:username,
+			token:token,
+			roomID:this.gameInfo.roomID,
+			gameID:this.gameInfo.gameID,
+			notation:this.notation,
+			gameMove:this.gameMove
+			};
+
+		// 	var msg=JSON.stringify(data);
+		// console.log(msg);
+
+		// //test
+		
+		// if(this.notation.currentPlayer<4){
+		// 	this.notation.currentPlayer++;
+		// }else{
+		// 	this.notation.currentPlayer=1;
+		// }
+		// this.setBoardColor(this.notation.currentPlayer);
+		
+		// //test.		
+		socket.emit("GameMove",data);
+		this.clearMoves();
+	}
+
+
+	public board:eui.Image;	
 	public EFlayer:eui.Group;
 
+	public BoardLayer:eui.Group;
+	public boardcancel:eui.Rect;
+	public confirmTargetButton:eui.Button;
+
+	public gameInfo:any={};
+
+
+
+
+
+	//死灵复活用
+	public reviveZone:eui.Group;
+	public reviveCancel:eui.Rect;
+	public confirm:eui.Button;
+	public bordies:eui.Group;
+	public cantReviveTip:eui.Label;
+
+
+	//已死棋子（不包括权杖和召唤师）
+	public showdead:eui.Button;
+	public graveyard:eui.Group;
+	public graveA:eui.Group;
+	public graveW:eui.Group;
+	public graveF:eui.Group;
+	public graveE:eui.Group;
+	public graveyardClose:eui.Rect;
 
 
 	public bwidth:number=700;
@@ -773,13 +1351,16 @@ class Game extends eui.Component implements  eui.UIComponent {
 	public fwidth:number=62;
 	public twidth:number=50;
 
+	public gameMove:any={currentPieceName:"",currentSkill:"",currentTargets:[]};
 
-	public currentSelectedPiece:Piece;
-	public destinations:Target[]=[];
+	public currentSelectedPiece:Piece;	
+	public targets:Target[]=[];
+	public confirmTargets:Target[]=[];
 
 	public notation:Notation;
 	public boards:BoardPostion[][]=[];
 	private Pnamelist:Array<string>=["A","B","C","D","E","F","G","H","I","J","K"];
+	
 
 
 	

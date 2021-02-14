@@ -1,25 +1,31 @@
 class Piece extends eui.Component implements  eui.UIComponent {
-	public constructor(belong:number,pieceType:string,revive:boolean) {
+	public constructor(belong:number,pieceName:string,revive:boolean) {
 		super();
 		this.addEventListener(eui.UIEvent.COMPLETE,this.uiCompHandler,this);
 		this.skinName="resource/custom_skins/Piece.exml";
 
 
-		var bl=['x','A','F','W','E'];
-		var picName;
-		this.pieceType=pieceType;
-		if(pieceType.length>1){
-			this.pieceType="M";
-		}
+		//var bl=['x','A','F','W','E'];
+		
+		this.pieceName=pieceName;
+		this.pieceType=pieceName[1];
+		
+
+		// if(revive){
+		// 	picName=bl[belong]+this.pieceType+'r';
+		// }else{
+		// 	picName=bl[belong]+this.pieceType;
+		// }
+
+		var picName="";
+
 		if(revive){
-			this.pieceName=bl[belong]+this.pieceType+'r';
-			picName=bl[belong]+this.pieceType+'r';
+			picName=pieceName[0]+pieceName[1]+'r';
 		}else{
-			this.pieceName=bl[belong]+this.pieceType;
-			picName=bl[belong]+this.pieceType;
+			picName=pieceName[0]+pieceName[1];
 		}
 
-				//A气（Air） F火（Fire） W水(Water) E土（Earth）
+		//A气（Air） F火（Fire） W水(Water) E土（Earth）
 		//E元素师(Elementalist) D预言师(Diviner) N死灵师(Necromancer) W权杖（Wand） P力场师（Psychic) I幻术师（Illusionist） S召唤师(Summoner) M召唤兽(Monster)
 
 		this.p.source="resource/pic/game/"+picName+".png";
@@ -31,6 +37,7 @@ class Piece extends eui.Component implements  eui.UIComponent {
 		this.revive=revive;
 
 		this.restricted=false;
+
 		if(this.pieceType=="W"||this.pieceType=="M"){
 			this.maxmoves=1;
 		}else if(this.pieceType=="N"||this.pieceType=="P"){
@@ -41,14 +48,12 @@ class Piece extends eui.Component implements  eui.UIComponent {
 			this.maxmoves=4;
 		}
 		
-		if(this.pieceType=="I"){
-			this.weak=true;
+		if(this.pieceType=="I"){			
 			this.setInvisable(true);
-		}else{
-			this.weak=false;
+		}else{			
 			this.setInvisable(false);
 		}
-		this.LDE=0;//live=0,death=1,exiled=2		
+		this.LDE=0;//live=0,death=1,exiled=2
 		
 	}
 
@@ -133,11 +138,24 @@ class Piece extends eui.Component implements  eui.UIComponent {
 		}
 
 	}
+
+	public setRestrict(restrict:boolean):void{
+		this.restricted=restrict;
+		this.restrict.visible=restrict;
+	}
 		
 	private selected:boolean;
-	
-	private p:eui.Image;
-	private s:eui.Image;
+
+	public piece:eui.Group;	
+	public p:eui.Image;
+	public s:eui.Image;
+	public restrict:eui.Image;
+
+
+
+	public skill:eui.Image;
+	public skillname:string="";
+
 
 	public pieceName:string;
 	public belong:number;
@@ -147,8 +165,7 @@ class Piece extends eui.Component implements  eui.UIComponent {
 	public LDE:number;//live=0,death=1,exiled=2	
 
 	public restricted:boolean;
-	public invisable:boolean;
-	public weak:boolean;
+	public invisable:boolean;	
 	public maxmoves:number;
 
 	public Pname:string;

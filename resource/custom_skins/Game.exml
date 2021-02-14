@@ -2,10 +2,57 @@
 <e:Skin class="GameSkin" width="700" height="700" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" xmlns:ns1="*" >
 	<w:Config id="16ba7afa888" ></w:Config>
 	<e:Image id="board" width="700" height="700" x="0" y="0" fillMode="scale" source="resource/pic/game/board.png"/>
-	<e:Group id="EFlayer" width="700" height="700" x="0" y="0"/>
+	<e:Group id="EFlayer" width="700" height="700" x="0" y="0">
+	</e:Group>
+	<e:Group id="BoardLayer" width="700" height="700" x="0" y="0">
+		<e:Rect id="boardcancel" width="700" height="700" x="0" y="0" strokeColor="0x669933" fillColor="0x663366" fillAlpha="0" strokeWeight="5" strokeAlpha="0.8"/>
+	</e:Group>
+	<e:Button id="confirmTargetButton" label="" x="650" y="650" scaleX="1" scaleY="1" width="50" height="50" visible="false">
+		<e:skinName>
+			<e:Skin states="up,down,disabled">
+			<e:Image width="100%" height="100%" source="resource/pic/game/confirm.png"/>
+			<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
+			</e:Skin>
+		</e:skinName>
+	</e:Button>
+	<e:Button id="showdead" label="" x="0" y="0" width="50" height="50">
+		<e:skinName>
+		<e:Skin states="up,down,disabled">
+			<e:Image width="100%" height="100%" source="resource/pic/game/graveyard.png"/>
+			<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
+		</e:Skin>
+		</e:skinName>
+	</e:Button>
+	<e:Group id="graveyard" width="700" height="150" x="0" y="0" anchorOffsetX="0" anchorOffsetY="0" visible="false">
+		<e:Rect width="700" height="150" fillAlpha="0.9" anchorOffsetY="0" fillColor="0x000000" x="0" y="0" scaleX="1" scaleY="1"/>
 
-	<e:Button id="testbutton" label="test" x="300" y="350"/>
-	<e:Rect id="cover" width="700" height="67" x="0" y="633" fillAlpha="0.8" anchorOffsetY="0" fillColor="0x000000" visible="false"/>
+		<e:Rect width="300" height="2" x="45" y="61" anchorOffsetY="0" fillColor="0x01ff00"/>
+		<e:Rect width="300" height="2" x="45" y="131" anchorOffsetY="0" fillColor="0x0045ff"/>
+		<e:Rect width="300" height="2" x="365" y="61" anchorOffsetY="0" fillColor="0xff6d00"/>
+		<e:Rect width="300" height="2" x="365" y="131" anchorOffsetY="0" fillColor="0xab00ff"/>
+		<e:Image width="25" height="25" x="43" y="31" scaleX="1" scaleY="1" source="resource/pic/game/graveyard.png"/>
+		<e:Image width="25" height="25" x="43" y="101" scaleX="1" scaleY="1" source="resource/pic/game/graveyard.png"/>
+		<e:Image width="25" height="25" x="363" y="31" scaleX="1" scaleY="1" source="resource/pic/game/graveyard.png"/>
+		<e:Image width="25" height="25" x="363" y="101" scaleX="1" scaleY="1" source="resource/pic/game/graveyard.png"/>
+		<e:Rect id="graveyardClose" width="700" height="700" x="0" y="0" fillAlpha="0"/>
+		<e:Group id="graveA" width="270" height="40" x="73" y="21" anchorOffsetX="0" anchorOffsetY="0">
+		</e:Group>
+		<e:Group id="graveW" width="270" height="40" x="73" y="91" anchorOffsetX="0" anchorOffsetY="0"/>
+		<e:Group id="graveF" width="270" height="40" x="393" y="21" anchorOffsetX="0" anchorOffsetY="0"/>
+		<e:Group id="graveE" width="270" height="40" x="393" y="91" anchorOffsetX="0" anchorOffsetY="0"/>
+
+	</e:Group>
+	<e:Group id="reviveZone" width="700" height="700" horizontalCenter="0" verticalCenter="0" visible="false">
+		<e:Rect id="reviveCancel" width="700" height="700" x="0" y="0" fillAlpha="0"/>
+		<e:Rect width="700" height="90" fillAlpha="0.8" anchorOffsetY="0" fillColor="0x000000" scaleX="1" scaleY="1" verticalCenter="0" horizontalCenter="0"/>
+		<e:Label id="cantReviveTip" text="没有可复活的棋子" textColor="0xffffff" verticalCenter="0" horizontalCenter="-5"/>
+		<e:Group id="bordies" anchorOffsetY="0" verticalCenter="0" x="200" height="70" width="390">
+		</e:Group>
+		<e:Image width="60" height="60" x="130" scaleX="1" scaleY="1" source="resource/pic/game/graveyard.png" anchorOffsetX="0" anchorOffsetY="0" verticalCenter="0"/>
+	</e:Group>
+
+
+
 
 
 

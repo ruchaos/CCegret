@@ -11,6 +11,7 @@ class Target extends eui.Component implements  eui.UIComponent {
 		this.targeting.source="resource/pic/game/"+typeimg+".png";
 		this.Px=Px;
 		this.Py=Py;
+		this.hold=false;
     }
 
 	protected partAdded(partName:string,instance:any):void
@@ -25,6 +26,7 @@ class Target extends eui.Component implements  eui.UIComponent {
 	}
 
 	public targeting:eui.Image;
+	public hold:boolean;
 	public Px:number;
 	public Py:number;
 	

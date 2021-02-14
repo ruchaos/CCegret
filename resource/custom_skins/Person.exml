@@ -11,15 +11,16 @@
 			</e:Skin>
 		</e:skinName>
 	</e:Button>
-	<e:Button id="btnSubmit" label="" y="749.67" width="200" height="70" horizontalCenter="-164">
+	<e:Button id="btnSubmit" label="" y="760.67" width="200" height="70" horizontalCenter="-174">
 		<e:skinName>
 			<e:Skin states="up,down,disabled">
-			<e:Image width="100%" height="100%" source="resource/pic/dialog/logout.png" source.down="resource/pic/dialog/logout-click.png" source.disabled="resource/pic/dialog/logout-disable.png"/>
+			<e:Image width="100%" height="100%" source="resource/pic/dialog/logout-disable.png"/>
 			<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
 			</e:Skin>
 		</e:skinName>
+
 	</e:Button>
-	<e:Label id="games" text="您已进行了10场游戏" x="106.33" y="416.98" anchorOffsetX="0" width="504.67" anchorOffsetY="0" height="44.67" size="40" fontFamily="Microsoft YaHei" textColor="0xaaaaaa" italic="true"/>
-	<e:Label id="tips" text="在棋谱中所有您的用户名可以查看比赛记录" x="106.33" y="489.99" anchorOffsetX="0" width="502" anchorOffsetY="0" height="94" size="40" fontFamily="Microsoft YaHei" textColor="0xAAAAAA" italic="true"/>
-	<e:Label id="toChangePW" text="点击这里修改密码" x="106.33" y="624.31" anchorOffsetX="0" width="502" anchorOffsetY="0" height="50" size="40" fontFamily="Microsoft YaHei" italic="true" textColor="0xcccccc"/>
+	<e:Label id="games" text="您已进行了10场游戏" x="92" y="414.98" anchorOffsetX="0" width="504.67" anchorOffsetY="0" height="44.67" size="40" fontFamily="Microsoft YaHei" textColor="0xaaaaaa" italic="true"/>
+	<e:Label id="tips" text="在棋谱界面，搜索您的昵称回顾您的棋谱" x="93.34" y="495.48" anchorOffsetX="0" width="502" anchorOffsetY="0" height="94" size="40" fontFamily="Microsoft YaHei" textColor="0xAAAAAA" italic="true"/>
+	<e:Label id="toChangePW" text="修改密码" x="92" y="640" anchorOffsetX="0" width="194" anchorOffsetY="0" height="50" size="40" fontFamily="Microsoft YaHei" italic="true" textColor="0xcccccc"/>
 </e:Skin>

@@ -30,7 +30,7 @@ var Create = (function (_super) {
     Create.prototype.init = function () {
         this.hostName = username;
         this.title.text = this.hostName + " 's game";
-        this.type1Handler();
+        this.type4Handler();
         this.time1Handler();
     };
     //添加各按钮监听
@@ -40,7 +40,7 @@ var Create = (function (_super) {
         this.btnSubmit.addEventListener(egret.TouchEvent.TOUCH_TAP, this.btnSubmitHandler, this);
         this.type1.addEventListener(egret.TouchEvent.TOUCH_TAP, this.type1Handler, this);
         this.type2.addEventListener(egret.TouchEvent.TOUCH_TAP, this.type2Handler, this);
-        this.type3.addEventListener(egret.TouchEvent.TOUCH_TAP, this.type3Handler, this);
+        this.type4.addEventListener(egret.TouchEvent.TOUCH_TAP, this.type4Handler, this);
         this.time1.addEventListener(egret.TouchEvent.TOUCH_TAP, this.time1Handler, this);
         this.time2.addEventListener(egret.TouchEvent.TOUCH_TAP, this.time2Handler, this);
         this.time3.addEventListener(egret.TouchEvent.TOUCH_TAP, this.time3Handler, this);
@@ -90,7 +90,7 @@ var Create = (function (_super) {
         //修改数据
         this.gameType = 1; //1-1V1模式
         //修改提示文本
-        this.typehint.text = "每人控制两方棋子";
+        this.typehint.text = "每人控制两方棋子，房主决定先后手";
     };
     Create.prototype.type2Handler = function () {
         //设置样式
@@ -100,13 +100,13 @@ var Create = (function (_super) {
         //修改提示文本
         this.typehint.text = "每人各控制一方棋子";
     };
-    Create.prototype.type3Handler = function () {
+    Create.prototype.type4Handler = function () {
         //设置样式
-        this.setBtnTypeFocus(this.type3);
+        this.setBtnTypeFocus(this.type4);
         //修改数据
-        this.gameType = 3; //2-2V2 随机队伍模式
+        this.gameType = 4; //4-1V1 随机先手
         //修改提示文本
-        this.typehint.text = "每人各控制一方棋子，开始后随机队伍";
+        this.typehint.text = "每人控制两方棋子，随机先后手";
     };
     //time1 2 3
     Create.prototype.time1Handler = function () {
@@ -142,7 +142,7 @@ var Create = (function (_super) {
     Create.prototype.setBtnTypeFocus = function (btn) {
         this.type1.selected = false;
         this.type2.selected = false;
-        this.type3.selected = false;
+        this.type4.selected = false;
         btn.selected = true;
     };
     //time组样式

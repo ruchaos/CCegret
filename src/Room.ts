@@ -19,6 +19,7 @@ class Room extends eui.Component implements  eui.UIComponent {
 
 	private uiCompHandler():void{
 		this.quit.addEventListener(egret.TouchEvent.TOUCH_TAP,this.quitHandler,this);
+		this.exit.addEventListener(egret.TouchEvent.TOUCH_TAP,this.exitHandler,this);
 		this.dismiss.addEventListener(egret.TouchEvent.TOUCH_TAP,this.dismissHandler,this);
 		this.kick1.addEventListener(egret.TouchEvent.TOUCH_TAP,this.kick1Handler,this);
 		this.kick2.addEventListener(egret.TouchEvent.TOUCH_TAP,this.kick2Handler,this);
@@ -28,11 +29,104 @@ class Room extends eui.Component implements  eui.UIComponent {
 		this.switch23.addEventListener(egret.TouchEvent.TOUCH_TAP,this.switch23Handler,this);
 		this.switch34.addEventListener(egret.TouchEvent.TOUCH_TAP,this.switch34Handler,this);
 		this.drawoffer.addEventListener(egret.TouchEvent.TOUCH_TAP,this.drawofferHandler,this);
-		this.surrender.addEventListener(egret.TouchEvent.TOUCH_TAP,this.surrenderHandler,this);		
+		this.surrender.addEventListener(egret.TouchEvent.TOUCH_TAP,this.surrenderHandler,this);	
+
+		this.pan.visible=false;
+		this.btnClose.addEventListener(egret.TouchEvent.TOUCH_TAP,this.btnCloseHandler,this);	
+		this.panBack.addEventListener(egret.TouchEvent.TOUCH_TAP,this.btnCloseHandler,this);
+		this.btnSubmit.addEventListener(egret.TouchEvent.TOUCH_TAP,this.btnSubmitHandler,this);
 		
 		this.addEventListener(LOBBYEVENT.SOCKETMSG,this.SocketHandler,this);
 
 		this.start.addEventListener(egret.TouchEvent.TOUCH_TAP,this.startHandler,this);
+
+		this.timer.addEventListener(egret.TimerEvent.TIMER,this.timerFunc,this);  
+
+		this.prev.addEventListener(egret.TouchEvent.TOUCH_TAP,this.prevHandler,this);  
+		this.next.addEventListener(egret.TouchEvent.TOUCH_TAP,this.nextHandler,this);  
+		this.beginning.addEventListener(egret.TouchEvent.TOUCH_TAP,this.beginningHandler,this); 
+	}
+
+	private prevHandler():void{
+		if (this.currentStepNum>0){
+			this.currentStepNum--;
+			var notation=this.Game.notation.getNotation(this.currentStepNum);
+			this.Game.setupwithNotation(notation);
+			this.stepNum.text="#"+this.currentStepNum;
+			this.lastMove.text=this.textMove(notation.lastMove);
+		}
+		if(this.currentStepNum==this.Game.notation.NotationHistory.length-1){
+			this.result.visible=true;
+		}else{
+			this.result.visible=false;
+		}
+	}
+
+	private nextHandler():void{	
+		if (this.currentStepNum<this.Game.notation.NotationHistory.length-1){
+			this.currentStepNum++;
+			var notation=this.Game.notation.getNotation(this.currentStepNum);
+			this.Game.setupwithNotation(notation);
+			this.stepNum.text="#"+this.currentStepNum;
+			this.lastMove.text=this.textMove(notation.lastMove);
+		}
+		if(this.currentStepNum==this.Game.notation.NotationHistory.length-1){
+			this.result.visible=true;
+		}else{
+			this.result.visible=false;
+		}
+	}
+
+	private beginningHandler():void{
+		this.currentStepNum=0;
+		var notation=this.Game.notation.getNotation(0);
+		this.Game.setupwithNotation(notation);
+		this.stepNum.text="#"+this.currentStepNum;
+		this.lastMove.text="";
+		if(this.currentStepNum==this.Game.notation.NotationHistory.length-1){
+			this.result.visible=true;
+		}else{
+			this.result.visible=false;
+		}
+		
+	}
+
+	private textMove(move:any):string{
+		if(move.currentPieceName){
+			var textMove="";
+			var pieceName=move.currentPieceName;
+			var skill="";
+			var tgt="";
+			if(move.currentSkill=="move"||move.currentSkill=="kill"){
+				skill="-";			
+			}else{
+				skill="+";			
+			}
+
+			if(move.currentSkill=="move"){
+				tgt=this.PxNames[move.currentTargets[0].Px]+this.PyNames[move.currentTargets[0].Py];
+					
+			}else if(move.currentSkill=="Convene"||move.currentSkill=="Summon"){
+				for(let i=0;i<move.currentTargets.length;i++){				
+						tgt+="/"+this.PxNames[move.currentTargets[i].Px]+this.PyNames[move.currentTargets[i].Py];
+				}
+				
+			}else{
+				tgt=move.currentTargets[0].targetPiece+"/"+this.PxNames[move.currentTargets[1].Px]+this.PyNames[move.currentTargets[1].Py];	
+			}
+
+			textMove=pieceName+skill+tgt;
+			return textMove;
+		}else{
+			return "";
+		}
+		
+		
+		
+	}	
+
+	private btnCloseHandler():void{
+		this.pan.visible=false;
 	}
 
 	private startHandler():void{
@@ -45,23 +139,55 @@ class Room extends eui.Component implements  eui.UIComponent {
 
 	}
 
+
 	private toGaming(roomData:any):void{
 		//开始游戏
+		this.Game.gameInfo.players=roomData.players;
+		this.Game.gameInfo.roomID=roomData.roomID;
+		this.Game.gameInfo.gameID=roomData.gameID;		
+
+
+		this.Game.setupwithNotation(roomData.notation);
 		//切换到游戏状态	
 		this.setBtn(roomData);
+
+		
 	}
 
 	private toFinished(roomData:any):void{
 		//游戏结束
 		//切换到游戏结束状态
 		this.setBtn(roomData);
+
+		//基于this.Game.notation
+		//提取指定notation
+		this.currentStepNum=roomData.notation.NotationHistory.length-1;
+		
+		
+		var notation=roomData.notation;
+		this.Game.SyncNotation(notation);
+		this.Game.setupwithNotation(notation);
+		this.stepNum.text="#"+this.currentStepNum;
+		this.lastMove.text=this.textMove(notation.lastMove);
+
+		if(roomData.gameResult.reason==3){
+			this.reason.text="对方认输";
+		}else if(roomData.gameResult.reason==4){
+			this.reason.text="约和";
+		}else if(roomData.gameResult.reason==5){
+			this.reason.text="对方超时";
+		}
+		
+
 	}
 
 	private SocketHandler(evt:LOBBYEVENT):void{		
 		var roomData=evt.roomData;
 		switch (evt.socketevent){
 			case "PlayersChanges":
+			if(roomData.roomState==1){
 				this.playerChange(roomData);
+			}				
 				break;
 			case "LeaveRoomSuccess":
 				this.BacktoHome();
@@ -73,12 +199,58 @@ class Room extends eui.Component implements  eui.UIComponent {
 			case "BeKicked":
 				this.BacktoHome();
 				break;
-			case "GameStarted":
+			case "GameStarted":			
 				this.toGaming(roomData);
+				this.playerChange(roomData);
+				this.changeCurrentPlayer(roomData);
+				this.Game.SyncNotation(roomData.notation);
+				this.Game.setupwithNotation(roomData.notation);
 				break;
 			case "GameOver":
 				this.toFinished(roomData);
 				break;
+
+			case "GotNotation":
+				this.toFinished(roomData);
+				break;
+
+			case "NewNotation":
+				this.setPlayerTimer(roomData);				
+				this.changeCurrentPlayer(roomData);
+				this.Game.setupwithNotation(roomData.notation);
+				this.Game.SyncNotation(roomData.notation);
+				this.currentPlayer=roomData.notation.currentPlayer;
+				if(!this.timer.running){
+					this.timer.start();
+				}
+				break;
+
+			case "OfferingDraw":
+				var auth=false;
+				for(let i=0;i<roomData.drawAccepter.length;i++){
+					if(username==roomData.drawAccepter[i]){
+						auth=true;
+					}
+				}
+				
+				this.drawoffer.selected=auth;
+					
+				break;
+
+			case "EnterGameSuccess":
+				this.toGaming(roomData);
+				this.playerChange(roomData);
+				this.changeCurrentPlayer(roomData);
+				this.Game.SyncNotation(roomData.notation);
+				this.Game.setupwithNotation(roomData.notation);
+				this.currentPlayer=roomData.notation.currentPlayer;
+				if(!this.timer.running){
+					this.timer.start();
+				}				
+					
+				break;	
+			
+
 		};
 		
 	}
@@ -88,8 +260,13 @@ class Room extends eui.Component implements  eui.UIComponent {
 		data.username=username;
 		data.token=token;
 		data.roomID=this.roomID;
-		socket.emit("LeaveRoom",data);
+		socket.emit("LeaveRoom",data);		
 	}
+
+	private exitHandler():void{
+		this.BacktoHome();	
+	}
+
 
 	private dismissHandler():void{
 		var data={username:"",token:"",roomID:""};
@@ -101,21 +278,43 @@ class Room extends eui.Component implements  eui.UIComponent {
 
 	private drawofferHandler():void{
 		if(this.drawoffer.selected==true){
-			Toast.launch("正在提和，再次点击取消");
+			this.pan.visible=true;
+			this.panTitle.text="要提和吗？";
+			this.panContent.text="点击提交键确认提出和棋\n若对方继续行棋表示拒绝";
+			this.submitEvent="DrawOffer";
+			this.drawoffer.selected=false;
 		}else{
-			Toast.launch("已取消提和");
+			this.pan.visible=true;
+			this.panTitle.text="要和棋吗？";
+			this.panContent.text="点击提交>>本局和棋\n继续行棋>>拒绝和棋";
+			this.submitEvent="DrawOfferAccept";
+			this.drawoffer.selected=true;
 		}
 		
 		//如果当前是按下状态，向服务器提交设置为提合，否则设置为未提合
 	}
 
-	private surrenderHandler():void{			
-		var data={username:"",token:"",roomID:""};
+	private surrenderHandler():void{
+		this.pan.visible=true;
+		this.panTitle.text="要认输吗？";		
+		this.submitEvent="Surrender";
+		if(this.Game.notation.NotationHistory.length<5){
+			this.panContent.text="点击提交-确认认输\n(本局不满4步不记录)";
+		}else{
+			this.panContent.text="点击提交-确认认输";
+		}		
+	}
+
+	private btnSubmitHandler():void{
+		var data={username:"",token:"",roomID:"",gameID:""};
 		data.username=username;
 		data.token=token;
 		data.roomID=this.roomID;
-		socket.emit("testGameOver",data);
-	}		
+		data.gameID=this.Game.gameInfo.gameID;
+		socket.emit(this.submitEvent,data);
+		this.pan.visible=false;
+	}
+				
 
 	private kick1Handler():void{
 		var data={username:"",token:"",roomID:"",bekickedPlayer:""};
@@ -196,37 +395,46 @@ class Room extends eui.Component implements  eui.UIComponent {
 		this.player4.text=roomData.players[3].playerName;
 		//Roomui.addStar4Me();//改为加横线，忽略房主问题
 		//Roomui.player1.textFlow=[{text:Roomui.player1.text,style:{"underline":true}}];//改为加横线，忽略房主问题
-		this.setPlayerTimer(roomData);			
+		this.setPlayerTimer(roomData);
 		this.setBtn(roomData);
 		this.gameStateVS.selectedIndex=roomData.roomState-1;
+
+		this.players=[];
+		this.timerAs=[];
+		this.timerBs=[];
+
+		this.players.push(this.player1);
+		this.players.push(this.player2);
+		this.players.push(this.player3);
+		this.players.push(this.player4);
+
+		this.timerAs.push(this.timerA1);
+		this.timerAs.push(this.timerA2);
+		this.timerAs.push(this.timerA3);
+		this.timerAs.push(this.timerA4);
+
+		this.timerBs.push(this.timerB1);
+		this.timerBs.push(this.timerB2);
+		this.timerBs.push(this.timerB3);
+		this.timerBs.push(this.timerB4);
 		
 			
 		//测试代码
-		// roomState=1;//roomState 1-等待中；2-进行中；3-已结束；(4-当前游戏)
-		// var roomData={
-		// 	roomID:123,	
-		// 	roomState:3,//NUM		
-		// 	gameType:"2v2",//NUM	
-		// 	gameTime:"快棋",//NUM	
-		// 	gameDate:"20190615",
-		// 	hostName:"rux",
-		// 	player1:"rux",
-		// 	player2:"lynn",
-		// 	player3:"rux",
-		// 	player4:"lynn",
-		// 	timerA1:600,
-		// 	timerB1:60,
-		// 	timerA2:600,
-		// 	timerB2:60,
-		// 	timerA3:600,
-		// 	timerB3:60,
-		// 	timerA4:600,
-		// 	timerB4:60,
-		// 	ready:true,
-		// 	menu:[],
+		// var data={
+			
+		// 	roomID:"r1",
+		
+		// 	notation:{
+		// 		currentPlayer:1
+		// 	},
+		// 	players:[
+		// 		{playerName:"ruchaos",playerTimeA:60,playerTimeB:600},//time和游戏类型对应;如果是1v1,player[2],player[3]和[0][1]一样。
+		// 		{playerName:"lynn",playerTimeA:60,playerTimeB:600},
+		// 		{playerName:"ruchaos",playerTimeA:60,playerTimeB:600},
+		// 		{playerName:"lynn",playerTimeA:60,playerTimeB:600},
+		// 		]
 		// };
-		// roomData.roomState=searchState;
-
+		// this.changeCurrentPlayer(data);
 		//测试代码结束
 		
 
@@ -253,6 +461,7 @@ class Room extends eui.Component implements  eui.UIComponent {
 		this.gameStateVS.selectedIndex=this.roomState-1;
 
 		this.quit.visible=false;
+		this.exit.visible=false;
 		this.dismiss.visible=false;
 		this.surrender.visible=false;
 		this.start.visible=false;
@@ -279,6 +488,9 @@ class Room extends eui.Component implements  eui.UIComponent {
 					this.kick1.visible=true;
 					this.kick2.visible=true;
 					this.switch12.visible=true;
+				}else if(roomData.gameType==4){
+					this.kick1.visible=true;
+					this.kick2.visible=true;
 				}else if(roomData.gameType==2){
 					this.kick1.visible=true;
 					this.kick2.visible=true;
@@ -334,7 +546,8 @@ class Room extends eui.Component implements  eui.UIComponent {
 				}
 
 		}else if(this.roomState==3){
-				this.quit.visible=true;	
+				this.quit.visible=false;
+				this.exit.visible=true;	
 				this.gameDate.visible=true;
 
 				this.T1win.visible=false;
@@ -349,7 +562,7 @@ class Room extends eui.Component implements  eui.UIComponent {
 					this.Draw.visible=true;
 				};		
 		}else{
-			this.quit.visible=true;
+			this.exit.visible=true;
 		}
 	}
 	// private addStar4Me():void{
@@ -385,6 +598,68 @@ class Room extends eui.Component implements  eui.UIComponent {
 		this.timerB4.text=this.S2MMSS(roomData.players[3].playerTimeB);
 	}
 
+	private changeCurrentPlayer(data:any):void{
+	// 	"NewNotation":{ s2c
+	// roomID:"r1",
+	
+	// notation:notation
+	// players:[
+	// 	{playerName:"ruchaos",playerTimeA:60,playerTimeB:600},//time和游戏类型对应;如果是1v1,player[2],player[3]和[0][1]一样。
+	// 	{playerName:"lynn",playerTimeA:60,playerTimeB:600},
+	// 	{playerName:"ruchaos",playerTimeA:60,playerTimeB:600},
+	// 	{playerName:"lynn",playerTimeA:60,playerTimeB:600},
+	// 	]
+	// }
+		this.timeA=[];
+		this.timeB=[];
+		var playerNum=data.notation.currentPlayer-1;
+		var CurrentPlayerName=data.players[playerNum].playerName;
+
+		for(let i=0;i<data.players.length;i++){
+			this.timeA.push(data.players[i].playerTimeA);
+			this.timeB.push(data.players[i].playerTimeB);
+			if(i==playerNum){
+				this.players[i].textFlow=[{text:this.players[i].text,style:{"underline":true}}];
+			}
+			else{
+				this.players[i].textFlow=[{text:this.players[i].text,style:{"underline":false}}];
+			}
+		}
+
+	}
+
+	private timerFunc():void{
+		//倒计时-设定时间，并每1秒减1，然后转为时间格式更新对应label
+		//如果A倒计时为0，则启动B倒计时，
+
+		//A倒计时总是优先，如果是快棋，则每次会重置A，如果是长考，则每次会重置B，B耗尽时，判负
+		let i=this.currentPlayer-1;
+									
+		if(this.timeA[i]>0){
+			this.timeA[i]--;
+			this.timerAs[i].text=this.S2MMSS(this.timeA[i]);
+			
+		}else if(this.timeB[i]>0){
+			this.timeB[i]--;
+				this.timerBs[i].text=this.S2MMSS(this.timeB[i]);				
+		}
+
+		//设置Timer颜色
+		for(let m=0;m<4;m++){
+			if(this.timeA[m]<=10){
+				this.timerAs[m].textColor=0xFF0000;
+			}else{
+				this.timerAs[m].textColor=0xCCCCCC;
+			}
+			if(this.timeB[m]<=10){
+				this.timerBs[m].textColor=0xFF0000;
+			}else{
+				this.timerBs[m].textColor=0xCCCCCC;
+			}
+		}		
+	}
+
+
 	private S2MMSS(seconds:number):string{
 		var MMSS:string="00:00";
 		var t:number;
@@ -411,20 +686,32 @@ class Room extends eui.Component implements  eui.UIComponent {
 		this.parent.removeChild(this);
 	}
 
+
+
+
 	//定义变量
 	public roomID:string;
 	public roomState:number;
-
-
 
 	public gameName:eui.Label;
 	public gameType:eui.Label;
 	public gameTime:eui.Label;
 	public gameDate:eui.Label;
 	public quit:eui.Button;
+	public exit:eui.Button;
 	public dismiss:eui.Button;
 	public surrender:eui.Button;
 	public drawoffer:eui.ToggleButton;
+
+	public pan:eui.Group;
+	public panTitle:eui.Label;
+	public panContent:eui.Label;
+	public btnClose:eui.Button;
+	public btnSubmit:eui.Button;
+	public submitEvent:string;
+	public panBack:eui.Rect;
+
+
 	public BOARD:eui.Rect;
 	public Game:Game;
 
@@ -436,6 +723,9 @@ class Room extends eui.Component implements  eui.UIComponent {
 	public player2:eui.Label;
 	public player3:eui.Label;
 	public player4:eui.Label;
+
+	public currentPlayer:number;
+
 
 	public gameStateVS:eui.ViewStack;
 
@@ -456,13 +746,32 @@ class Room extends eui.Component implements  eui.UIComponent {
 	public timerA4:eui.Label;
 	public timerB4:eui.Label;
 
-	public stepNum:eui.Label;
+	public players=[];
+	public timerAs=[];
+	public timerBs=[];
+	public timeA=[];
+	public timeB=[];
+	
+	public timer:egret.Timer=new egret.Timer(1000,0);
+
+	public result:eui.Group;
+	public reason:eui.Label;
 	public T1win:eui.Image;
 	public T2win:eui.Image;
 	public Draw:eui.Image;
+
+	public stepNum:eui.Label;	
+	public lastMove:eui.Label;
+
+	public currentStepNum:number=0;
+	public PxNames:Array<string>=["A","B","C","D","E","F","G","H","I","J","K"];
+	public PyNames:Array<string>=["0","1","2","3","4","5","6","7","8","9","10"];;
+
 	public beginning:eui.Button;
 	public prev:eui.Button;
 	public next:eui.Button;
+
+
 	
 
 	

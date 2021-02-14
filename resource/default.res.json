@@ -1,7 +1,7 @@
 {
 	"groups": [
 		{
-			"keys": "checkbox_select_disabled_png,checkbox_select_down_png,checkbox_select_up_png,checkbox_unselect_png,selected_png,border_png,header_png,radiobutton_select_disabled_png,radiobutton_select_down_png,radiobutton_select_up_png,radiobutton_unselect_png,roundthumb_png,thumb_png,track_png,tracklight_png,handle_png,off_png,on_png,button_down_png,button_up_png,thumb_pb_png,track_pb_png,track_sb_png,bg_jpg,egret_icon_png,description_json,beginning_png,beginning-click_png,beginning-disable_png,dismiss_png,dismiss-click_png,kick_png,kick-click_png,next_png,next-click_png,next-disable_png,prev_png,prev-click_png,prev-disable_png,quit_png,quit-click_png,start_png,start-click_png,start-disable_png,surrender_png,surrender-click_png,switch_png,switch-click_png,team1win_png,team2win_png,BGCC-game-finish_png,CC-room-hostready_png,dialogback_png,login_png,login-click_png,login-disable_png,logout_png,logout-click_png,logout-disable_png,register_png,register-click_png,register-disabe_png,submit_png,submit-click_png,submit-disable_png,timefast_png,timefast-click_png,timeslow_png,timeslow-click_png,timeunlimited_png,timeunlimited-click_png,type11_png,type11-click_png,type22_png,type22-click_png,type22rt_png,type22rt-click_png,btncreate_png,btncreate-click_png,btncreate-disable_png,close_png,close-click_png,CC-login_png,CC-person_png,CC-register_png,CC-changePW_png,draw_png,drawoffer_png,drawoffer-click_png,board_png,confirm_png,confirmMove_png,confirmSkill_png,destination_png,move_png,retreat_png,skill_png,skillSure_png,skilltarget_png,target_png,AIi_png,AIis_png,AIr_png,AIrs_png,E-illu-invisable-normal_png,E-illu-invisable-resur_png,E-illu-invisable-resur-selected_png,E-illu-invisable-selected_png,F-illu-invisable-normal_png,F-illu-invisable-resur_png,F-illu-invisable-resur-selected_png,F-illu-invisable-selected_png,W-illu-invisable-resur_png,W-illu-invisable-resur-selected_png,W-illu-invisable-selected_png,W-illu-invisable-normal_png,AIr2_png,AIrs2_png,AIs_png,AM_png,AMr_png,AMrs_png,AMs_png,AN_png,ANr_png,ANrs_png,ANs_png,AP_png,APr_png,APrs_png,APs_png,AS_png,ASr_png,ASrs_png,ASs_png,AW_png,AWr_png,AWrs_png,AWs_png,ED_png,EDr_png,EDrs_png,EDs_png,EE_png,EEr_png,EErs_png,EEs_png,Efield_png,Efieldmain_png,EI_png,EIr_png,EIrs_png,EIs_png,EM_png,EMr_png,EMrs_png,EMs_png,EN_png,ENr_png,ENrs_png,ENs_png,EP_png,EPr_png,EPrs_png,EPs_png,ES_png,ESr_png,ESrs_png,ESs_png,EW_png,EWr_png,EWrs_png,EWs_png,FD_png,FDr_png,FDrs_png,FDs_png,FE_png,FEr_png,FErs_png,FEs_png,Ffield_png,Ffieldmain_png,FI_png,FIr_png,FIrs_png,FIs_png,FM_png,FMr_png,FMrs_png,FMs_png,FN_png,FNr_png,FNrs_png,FNs_png,FP_png,FPr_png,FPrs_png,FPs_png,FS_png,FSr_png,FSrs_png,FSs_png,FW_png,FWr_png,FWrs_png,FWs_png,WD_png,WDr_png,WDrs_png,WDs_png,WE_png,WEr_png,WErs_png,WEs_png,Wfield_png,Wfieldmain_png,WI_png,WIr_png,WIrs_png,WIs_png,WM_png,WMr_png,WMrs_png,WMs_png,WN_png,WNr_png,WNrs_png,WNs_png,WP_png,WPr_png,WPrs_png,WPs_png,WS_png,WSr_png,WSrs_png,WSs_png,WW_png,WWr_png,WWrs_png,WWs_png,weaken_png,Aenchant_png,Eenchant_png,Fenchant_png,Wenchant_png",
+			"keys": "checkbox_select_disabled_png,checkbox_select_down_png,checkbox_select_up_png,checkbox_unselect_png,selected_png,border_png,header_png,radiobutton_select_disabled_png,radiobutton_select_down_png,radiobutton_select_up_png,radiobutton_unselect_png,roundthumb_png,thumb_png,track_png,tracklight_png,handle_png,off_png,on_png,button_down_png,button_up_png,thumb_pb_png,track_pb_png,track_sb_png,bg_jpg,egret_icon_png,description_json,beginning_png,beginning-click_png,beginning-disable_png,dismiss_png,dismiss-click_png,kick_png,kick-click_png,next_png,next-click_png,next-disable_png,prev_png,prev-click_png,prev-disable_png,quit_png,quit-click_png,start_png,start-click_png,start-disable_png,surrender_png,surrender-click_png,switch_png,switch-click_png,team1win_png,team2win_png,BGCC-game-finish_png,CC-room-hostready_png,dialogback_png,login_png,login-click_png,login-disable_png,logout_png,logout-click_png,logout-disable_png,register_png,register-click_png,register-disabe_png,submit_png,submit-click_png,submit-disable_png,timefast_png,timefast-click_png,timeslow_png,timeslow-click_png,timeunlimited_png,timeunlimited-click_png,type11_png,type11-click_png,type22_png,type22-click_png,type22rt_png,type22rt-click_png,btncreate_png,btncreate-click_png,btncreate-disable_png,close_png,close-click_png,CC-login_png,CC-person_png,CC-register_png,CC-changePW_png,draw_png,drawoffer_png,drawoffer-click_png,board_png,confirm_png,confirmMove_png,confirmSkill_png,destination_png,move_png,retreat_png,skill_png,skillSure_png,skilltarget_png,target_png,AIi_png,AIis_png,AIr_png,AIrs_png,E-illu-invisable-normal_png,E-illu-invisable-resur_png,E-illu-invisable-resur-selected_png,E-illu-invisable-selected_png,F-illu-invisable-normal_png,F-illu-invisable-resur_png,F-illu-invisable-resur-selected_png,F-illu-invisable-selected_png,W-illu-invisable-resur_png,W-illu-invisable-resur-selected_png,W-illu-invisable-selected_png,W-illu-invisable-normal_png,AIr2_png,AIrs2_png,AIs_png,AM_png,AMr_png,AMrs_png,AMs_png,AN_png,ANr_png,ANrs_png,ANs_png,AP_png,APr_png,APrs_png,APs_png,AS_png,ASr_png,ASrs_png,ASs_png,AW_png,AWr_png,AWrs_png,AWs_png,ED_png,EDr_png,EDrs_png,EDs_png,EE_png,EEr_png,EErs_png,EEs_png,Efield_png,Efieldmain_png,EI_png,EIr_png,EIrs_png,EIs_png,EM_png,EMr_png,EMrs_png,EMs_png,EN_png,ENr_png,ENrs_png,ENs_png,EP_png,EPr_png,EPrs_png,EPs_png,ES_png,ESr_png,ESrs_png,ESs_png,EW_png,EWr_png,EWrs_png,EWs_png,FD_png,FDr_png,FDrs_png,FDs_png,FE_png,FEr_png,FErs_png,FEs_png,Ffield_png,Ffieldmain_png,FI_png,FIr_png,FIrs_png,FIs_png,FM_png,FMr_png,FMrs_png,FMs_png,FN_png,FNr_png,FNrs_png,FNs_png,FP_png,FPr_png,FPrs_png,FPs_png,FS_png,FSr_png,FSrs_png,FSs_png,FW_png,FWr_png,FWrs_png,FWs_png,WD_png,WDr_png,WDrs_png,WDs_png,WE_png,WEr_png,WErs_png,WEs_png,Wfield_png,Wfieldmain_png,WI_png,WIr_png,WIrs_png,WIs_png,WM_png,WMr_png,WMrs_png,WMs_png,WN_png,WNr_png,WNrs_png,WNs_png,WP_png,WPr_png,WPrs_png,WPs_png,WS_png,WSr_png,WSrs_png,WSs_png,WW_png,WWr_png,WWrs_png,WWs_png,weaken_png,Aenchant_png,Eenchant_png,Fenchant_png,Wenchant_png,graveyard_png,close2_png,type11r_png,type11r-click_png,dialogback2_png",
 			"name": "preload"
 		}
 	],
@@ -1235,6 +1235,31 @@
 			"name": "Wenchant_png",
 			"type": "image",
 			"url": "pic/game/Wenchant.png"
+		},
+		{
+			"name": "graveyard_png",
+			"type": "image",
+			"url": "pic/game/graveyard.png"
+		},
+		{
+			"name": "close2_png",
+			"type": "image",
+			"url": "pic/game/close.png"
+		},
+		{
+			"name": "type11r_png",
+			"type": "image",
+			"url": "pic/dialog/type11r.png"
+		},
+		{
+			"name": "type11r-click_png",
+			"type": "image",
+			"url": "pic/dialog/type11r-click.png"
+		},
+		{
+			"name": "dialogback2_png",
+			"type": "image",
+			"url": "pic/dialog/dialogback2.png"
 		}
 	]
 }

@@ -9,9 +9,9 @@ let ChangePWSrv:string=Srv+"changePW";
 let RecordSrv:string=Srv+"record";
 
 let isLogin:boolean=false;
-let username:string="ruchaos";
+let username:string="guest";
 let formerPage:string="Home";
 
 let token="abc123";
-let gameTypeNo=["1v1","2v2","2v2随机"];
+let gameTypeNo=["1v1","2v2","2v2r","1V1r"];
 let gameTimeNo=["快棋","长考","不限"];

@@ -96,12 +96,12 @@ class Main extends eui.UILayer {
     //主控制开始点，首先进行登陆，然后加载首页
     protected createGameScene(): void {
      
-        this.addPage("Room");
+        this.addPage("Home");
         Toast.init(this);
         this.socketsListening();
     }
 
-   //登陆验证功能？
+   //登陆验证功能？ 
 
 
    //socket监听
@@ -119,8 +119,33 @@ class Main extends eui.UILayer {
 
         socket.on("EnterRoomSuccess",(roomData)=>{
             console.log("Server:EnterRoomSuccess");
-            this.openRoom(roomData);        	
+            this.openRoom(roomData);
         });
+
+        socket.on("EnterGameSuccess",(roomData)=>{
+            console.log("Server:EnterGameSuccess");
+            this.openRoom(roomData);
+            
+            var LobbyEvent:LOBBYEVENT=new LOBBYEVENT(LOBBYEVENT.SOCKETMSG);
+		    LobbyEvent.socketevent="EnterGameSuccess";
+            LobbyEvent.roomData=roomData;
+            if(this._Room){
+                this._Room.dispatchEvent(LobbyEvent); 
+            };
+        });
+
+        socket.on("GotNotation",(roomData)=>{
+            console.log("Server:GotNotation");
+            this.openRoom(roomData);
+            
+            var LobbyEvent:LOBBYEVENT=new LOBBYEVENT(LOBBYEVENT.SOCKETMSG);
+		    LobbyEvent.socketevent="GotNotation";
+            LobbyEvent.roomData=roomData;
+            if(this._Room){
+                this._Room.dispatchEvent(LobbyEvent); 
+            };
+        });
+
 
         socket.on("EnterRoomAfterCreateSuccess",(roomData)=>{
             console.log("Server:EnterRoomSuccessAfterCreateSuccess");
@@ -186,6 +211,30 @@ class Main extends eui.UILayer {
                 this._Room.dispatchEvent(LobbyEvent); 
             };
         });
+
+        
+        socket.on("NewNotation",(roomData)=>{
+            console.log("Server:NewNotation");
+            var LobbyEvent:LOBBYEVENT=new LOBBYEVENT(LOBBYEVENT.SOCKETMSG);
+		    LobbyEvent.socketevent="NewNotation";
+            LobbyEvent.roomData=roomData;
+            if(this._Room){
+                this._Room.dispatchEvent(LobbyEvent); 
+            };
+        });
+
+        socket.on("OfferingDraw",(roomData)=>{
+            console.log("Server:OfferingDraw");
+            var LobbyEvent:LOBBYEVENT=new LOBBYEVENT(LOBBYEVENT.SOCKETMSG);
+		    LobbyEvent.socketevent="OfferingDraw";
+            LobbyEvent.roomData=roomData;
+            if(this._Room){
+                this._Room.dispatchEvent(LobbyEvent); 
+            };
+        });
+
+
+
    }
         // private toastkick(msg:string){
         //     //糟糕的办法，解决被请出房间后，toast层在home以下的问题。

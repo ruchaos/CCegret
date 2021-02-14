@@ -39,7 +39,7 @@ class Home extends eui.Component implements  eui.UIComponent {
 
 
 		this.dsRooms=[
-			{roomID:123,roomState:1,gameName:"ruchaos 's game",hostName:"ruchaos",gameType:"1v1",gameTime:"快棋",gameDate:"20190615"},
+			{roomID:123,roomState:1,gameName:"网络连接失败",hostName:"ruchaos",gameType:"1v1",gameTime:"快棋",gameDate:"20190615"},
 			{roomID:124,roomState:1,gameName:"ruchaos 's game",hostName:"ruchaos",gameType:"1v1",gameTime:"快棋",gameDate:"20190615"},
 			{roomID:125,roomState:1,gameName:"ruchaos 's game",hostName:"ruchaos",gameType:"1v1",gameTime:"快棋",gameDate:"20190615"}
 		];
@@ -105,7 +105,7 @@ class Home extends eui.Component implements  eui.UIComponent {
 	}	
 	//8 搜索键
 	private searchHandler():void{	
-		this.searchHostName=this.searchCondition.text;
+		
 		this.searchRooms();			
 	}
 
@@ -120,9 +120,9 @@ class Home extends eui.Component implements  eui.UIComponent {
 	private searchRooms():void{
 		//请求房间列表，其中，如果请求棋谱则不判断，如果在游戏中则请求当前游戏，房主名称等于搜索条件
 		//1-等待中；2-进行中；3-已结束；4-当前游戏
-		var req={type:"list",roomState:0,hostName:""};
+		var req={type:"list",roomState:0,playerName:""};
 		req.roomState=this.roomState;
-		req.hostName=this.searchHostName.trim();		
+		req.playerName=this.searchCondition.text.trim();		
 		this.httppost(RoomSrv,req);
 	}
 
@@ -130,13 +130,10 @@ class Home extends eui.Component implements  eui.UIComponent {
 	//11 自动刷新当前列表
 	private refreshRooms():void{
 		this.searchRooms();
-		var timer:egret.Timer=new egret.Timer(this.refreshTime);
+		var timer:egret.Timer=new egret.Timer(this.refreshTime,0);
 		timer.addEventListener(egret.TimerEvent.TIMER,()=>{
-			this.searchRooms();
-			
-			
-			timer.start();
-		},this)
+			this.searchRooms();				
+		},this);
 		timer.start();
 		//定时按当前条件刷新游戏列表
 	}
@@ -224,7 +221,6 @@ class Home extends eui.Component implements  eui.UIComponent {
 	private history:eui.ToggleButton;
 	private searchCondition:eui.TextInput;
 	private roomState:number;//1-等待中；2-进行中；3-已结束；4-当前游戏
-	private searchHostName:string="";
 
 
 	private search:eui.Button;

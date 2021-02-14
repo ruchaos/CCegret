@@ -21,12 +21,28 @@
 	</e:Button>
 	<e:Label id="typehint" text="每人控制一方，" y="454.66" anchorOffsetX="0" width="520" anchorOffsetY="0" height="70" size="24" fontFamily="Microsoft YaHei" textColor="0xaaaaaa" italic="true" multiline="true" lineSpacing="12" horizontalCenter="0"/>
 	<e:Label id="timehint" text="每步1分钟，步超时消耗长考时间，长考时间每人10分钟" y="614.66" anchorOffsetX="0" width="520" anchorOffsetY="0" height="70" size="24" fontFamily="Microsoft YaHei" textColor="0xAAAAAA" italic="true" multiline="true" lineSpacing="12" horizontalCenter="0"/>
-	<e:ToggleButton id="type1" label="" x="86" y="381" width="120" height="59">
+	<e:ToggleButton id="type4" label="" x="86" y="381" width="120" height="59">
+		<e:skinName>
+			<e:Skin states="up,down,disabled">
+			<e:Image width="100%" height="100%" source="resource/pic/dialog/type11r.png" source.down="resource/pic/dialog/type11r-click.png"/>
+			<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
+			</e:Skin>
+		</e:skinName>
+	</e:ToggleButton>
+	<e:ToggleButton id="type1" label="" x="240" y="381" width="120" height="59">
 		<e:skinName>
 			<e:Skin states="up,down,disabled">
 			<e:Image width="100%" height="100%" source="resource/pic/dialog/type11.png" source.down="resource/pic/dialog/type11-click.png"/>
 			<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
 			</e:Skin>
+		</e:skinName>
+	</e:ToggleButton>
+	<e:ToggleButton id="type2" label="" x="396" y="381" width="120" height="59">
+		<e:skinName>
+		<e:Skin states="up,down,disabled">
+			<e:Image width="100%" height="100%" source="resource/pic/dialog/type22.png" source.down="resource/pic/dialog/type22-click.png"/>
+			<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
+		</e:Skin>
 		</e:skinName>
 	</e:ToggleButton>
 	<e:ToggleButton id="time1" label="" x="86" y="544" width="120" height="59">
@@ -53,20 +69,6 @@
 			</e:Skin>
 		</e:skinName>
 	</e:ToggleButton>
-	<e:ToggleButton id="type2" label="" x="236" y="381" width="120" height="59">
-		<e:skinName>
-			<e:Skin states="up,down,disabled">
-			<e:Image width="100%" height="100%" source="resource/pic/dialog/type22.png" source.down="resource/pic/dialog/type22-click.png"/>
-			<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
-			</e:Skin>
-		</e:skinName>
-	</e:ToggleButton>
-	<e:ToggleButton id="type3" label="" x="386" y="381" width="120" height="59">
-		<e:skinName>
-			<e:Skin states="up,down,disabled">
-			<e:Image width="100%" height="100%" source="resource/pic/dialog/type22rt.png" source.down="resource/pic/dialog/type22rt-click.png"/>
-			<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
-			</e:Skin>
-		</e:skinName>
-	</e:ToggleButton>
+
+
 </e:Skin>

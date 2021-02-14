@@ -38,9 +38,9 @@
 		</e:skinName>
 	</e:ToggleButton>
 	<e:Image width="375" height="63" x="28" y="226" anchorOffsetX="0" anchorOffsetY="0" source="resource/pic/home/searchinputbox.png"/>
-	<e:TextInput id="searchCondition" width="274" height="40" x="54.5" y="237" anchorOffsetX="0" anchorOffsetY="0" textColor="0xcccccc" prompt="输入房主ID..." skinName="skins.TextInputSkin2"/>
+	<e:TextInput id="searchCondition" width="274" height="40" x="54.5" y="237" anchorOffsetX="0" anchorOffsetY="0" textColor="0xcccccc" prompt="输入房主昵称..." skinName="skins.TextInputSkin2"/>
 
-	<e:Button id="search" label="" x="350" y="238">
+	<e:Button id="search" label="" x="350" y="238" visible="false">
 		<e:skinName>
 			<e:Skin states="up,down,disabled">
 			<e:Image width="100%" height="100%" source="resource/pic/home/search.png" source.down="resource/pic/home/search-click.png"/>

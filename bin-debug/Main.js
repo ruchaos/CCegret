@@ -162,11 +162,11 @@ var Main = (function (_super) {
     };
     //主控制开始点，首先进行登陆，然后加载首页
     Main.prototype.createGameScene = function () {
-        this.addPage("Room");
+        this.addPage("Home");
         Toast.init(this);
         this.socketsListening();
     };
-    //登陆验证功能？
+    //登陆验证功能？ 
     //socket监听
     Main.prototype.socketsListening = function () {
         var _this = this;
@@ -182,6 +182,28 @@ var Main = (function (_super) {
         socket.on("EnterRoomSuccess", function (roomData) {
             console.log("Server:EnterRoomSuccess");
             _this.openRoom(roomData);
+        });
+        socket.on("EnterGameSuccess", function (roomData) {
+            console.log("Server:EnterGameSuccess");
+            _this.openRoom(roomData);
+            var LobbyEvent = new LOBBYEVENT(LOBBYEVENT.SOCKETMSG);
+            LobbyEvent.socketevent = "EnterGameSuccess";
+            LobbyEvent.roomData = roomData;
+            if (_this._Room) {
+                _this._Room.dispatchEvent(LobbyEvent);
+            }
+            ;
+        });
+        socket.on("GotNotation", function (roomData) {
+            console.log("Server:GotNotation");
+            _this.openRoom(roomData);
+            var LobbyEvent = new LOBBYEVENT(LOBBYEVENT.SOCKETMSG);
+            LobbyEvent.socketevent = "GotNotation";
+            LobbyEvent.roomData = roomData;
+            if (_this._Room) {
+                _this._Room.dispatchEvent(LobbyEvent);
+            }
+            ;
         });
         socket.on("EnterRoomAfterCreateSuccess", function (roomData) {
             console.log("Server:EnterRoomSuccessAfterCreateSuccess");
@@ -241,6 +263,26 @@ var Main = (function (_super) {
             console.log("Server:GameOver");
             var LobbyEvent = new LOBBYEVENT(LOBBYEVENT.SOCKETMSG);
             LobbyEvent.socketevent = "GameOver";
+            LobbyEvent.roomData = roomData;
+            if (_this._Room) {
+                _this._Room.dispatchEvent(LobbyEvent);
+            }
+            ;
+        });
+        socket.on("NewNotation", function (roomData) {
+            console.log("Server:NewNotation");
+            var LobbyEvent = new LOBBYEVENT(LOBBYEVENT.SOCKETMSG);
+            LobbyEvent.socketevent = "NewNotation";
+            LobbyEvent.roomData = roomData;
+            if (_this._Room) {
+                _this._Room.dispatchEvent(LobbyEvent);
+            }
+            ;
+        });
+        socket.on("OfferingDraw", function (roomData) {
+            console.log("Server:OfferingDraw");
+            var LobbyEvent = new LOBBYEVENT(LOBBYEVENT.SOCKETMSG);
+            LobbyEvent.socketevent = "OfferingDraw";
             LobbyEvent.roomData = roomData;
             if (_this._Room) {
                 _this._Room.dispatchEvent(LobbyEvent);

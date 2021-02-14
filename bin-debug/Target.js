@@ -23,6 +23,7 @@ var Target = (function (_super) {
         _this.targeting.source = "resource/pic/game/" + typeimg + ".png";
         _this.Px = Px;
         _this.Py = Py;
+        _this.hold = false;
         return _this;
     }
     Target.prototype.partAdded = function (partName, instance) {

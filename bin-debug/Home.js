@@ -12,7 +12,6 @@ var Home = (function (_super) {
     __extends(Home, _super);
     function Home() {
         var _this = _super.call(this) || this;
-        _this.searchHostName = "";
         _this.addEventListener(eui.UIEvent.COMPLETE, _this.uiCompHandler, _this);
         _this.skinName = "resource/custom_skins/Home.exml";
         return _this;
@@ -45,7 +44,7 @@ var Home = (function (_super) {
     Home.prototype.init = function () {
         this.refreshTime = 2000;
         this.dsRooms = [
-            { roomID: 123, roomState: 1, gameName: "ruchaos 's game", hostName: "ruchaos", gameType: "1v1", gameTime: "快棋", gameDate: "20190615" },
+            { roomID: 123, roomState: 1, gameName: "网络连接失败", hostName: "ruchaos", gameType: "1v1", gameTime: "快棋", gameDate: "20190615" },
             { roomID: 124, roomState: 1, gameName: "ruchaos 's game", hostName: "ruchaos", gameType: "1v1", gameTime: "快棋", gameDate: "20190615" },
             { roomID: 125, roomState: 1, gameName: "ruchaos 's game", hostName: "ruchaos", gameType: "1v1", gameTime: "快棋", gameDate: "20190615" }
         ];
@@ -101,7 +100,6 @@ var Home = (function (_super) {
     };
     //8 搜索键
     Home.prototype.searchHandler = function () {
-        this.searchHostName = this.searchCondition.text;
         this.searchRooms();
     };
     //9 清除键
@@ -113,19 +111,18 @@ var Home = (function (_super) {
     Home.prototype.searchRooms = function () {
         //请求房间列表，其中，如果请求棋谱则不判断，如果在游戏中则请求当前游戏，房主名称等于搜索条件
         //1-等待中；2-进行中；3-已结束；4-当前游戏
-        var req = { type: "list", roomState: 0, hostName: "" };
+        var req = { type: "list", roomState: 0, playerName: "" };
         req.roomState = this.roomState;
-        req.hostName = this.searchHostName.trim();
+        req.playerName = this.searchCondition.text.trim();
         this.httppost(RoomSrv, req);
     };
     //11 自动刷新当前列表
     Home.prototype.refreshRooms = function () {
         var _this = this;
         this.searchRooms();
-        var timer = new egret.Timer(this.refreshTime);
+        var timer = new egret.Timer(this.refreshTime, 0);
         timer.addEventListener(egret.TimerEvent.TIMER, function () {
             _this.searchRooms();
-            timer.start();
         }, this);
         timer.start();
         //定时按当前条件刷新游戏列表
