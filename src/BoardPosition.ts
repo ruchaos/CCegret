@@ -6,7 +6,7 @@ class BoardPostion {
     public  Pname:string;
 	public  Px:number;
 	public	Py:number;
-	public	Piece:Piece=null;
+	public	Piece:string="";
 
 	public connect:number[]=[1,1,1,1,0,0,0,0];
 	//up-0,down-1,left-2,right-3,↖leftup-4，↗rightup-5，↙leftdown-6，↘rightdown-7

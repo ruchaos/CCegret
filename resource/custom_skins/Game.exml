@@ -4,8 +4,9 @@
 	<e:Image id="board" width="700" height="700" x="0" y="0" fillMode="scale" source="resource/pic/game/board.png"/>
 	<e:Group id="EFlayer" width="700" height="700" x="0" y="0">
 	</e:Group>
+	<e:Rect id="boardcancel" width="700" height="700" x="0" y="0" strokeColor="0x669933" fillColor="0x663366" fillAlpha="0" strokeWeight="5" strokeAlpha="0.8"/>
 	<e:Group id="BoardLayer" width="700" height="700" x="0" y="0">
-		<e:Rect id="boardcancel" width="700" height="700" x="0" y="0" strokeColor="0x669933" fillColor="0x663366" fillAlpha="0" strokeWeight="5" strokeAlpha="0.8"/>
+
 	</e:Group>
 	<e:Button id="confirmTargetButton" label="" x="650" y="650" scaleX="1" scaleY="1" width="50" height="50" visible="false">
 		<e:skinName>

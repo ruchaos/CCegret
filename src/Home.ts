@@ -24,6 +24,7 @@ class Home extends eui.Component implements  eui.UIComponent {
 	//添加监听
 	private addListeners():void{
 		this.logo.addEventListener(egret.TouchEvent.TOUCH_TAP,this.logoHandler,this);
+		this.closerules.addEventListener(egret.TouchEvent.TOUCH_TAP,this.closerulesHandler,this);
 		this.person.addEventListener(egret.TouchEvent.TOUCH_TAP,this.personHandler,this);
 		this.join.addEventListener(egret.TouchEvent.TOUCH_TAP,this.joinHandler,this);
 		this.observe.addEventListener(egret.TouchEvent.TOUCH_TAP,this.observeHandler,this);
@@ -58,8 +59,18 @@ class Home extends eui.Component implements  eui.UIComponent {
 //监听的Handlers
 	//1 LOGO logoHandler
 	private logoHandler():void{
+		this.Rules.visible=true;
 		
 	}
+
+	//1-1 closerulesHandler
+	private closerulesHandler():void{
+		this.Rules.visible=false;		
+		
+	}
+	
+
+
 	//2 个人 personHandler
 	private personHandler():void{
 		var openLoginEvent:LOBBYEVENT= new LOBBYEVENT(LOBBYEVENT.OPEN);
@@ -228,5 +239,9 @@ class Home extends eui.Component implements  eui.UIComponent {
 	private rooms:eui.List;
 	private dsRooms:Array<Object>;
 	private dpRooms:eui.ArrayCollection;
+
+	public Rules:eui.Group;
+	public closerules:eui.Button;
+
 
 }

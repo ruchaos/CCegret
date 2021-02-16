@@ -3,7 +3,7 @@ var __reflect = (this && this.__reflect) || function (p, c, t) {
 };
 var BoardPostion = (function () {
     function BoardPostion() {
-        this.Piece = null;
+        this.Piece = "";
         this.connect = [1, 1, 1, 1, 0, 0, 0, 0];
         //up-0,down-1,left-2,right-3,↖leftup-4，↗rightup-5，↙leftdown-6，↘rightdown-7
         this.up = 1;

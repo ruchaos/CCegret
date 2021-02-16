@@ -45,6 +45,8 @@ class Room extends eui.Component implements  eui.UIComponent {
 		this.prev.addEventListener(egret.TouchEvent.TOUCH_TAP,this.prevHandler,this);  
 		this.next.addEventListener(egret.TouchEvent.TOUCH_TAP,this.nextHandler,this);  
 		this.beginning.addEventListener(egret.TouchEvent.TOUCH_TAP,this.beginningHandler,this); 
+
+		
 	}
 
 	private prevHandler():void{

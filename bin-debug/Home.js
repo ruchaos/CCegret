@@ -31,6 +31,7 @@ var Home = (function (_super) {
     //添加监听
     Home.prototype.addListeners = function () {
         this.logo.addEventListener(egret.TouchEvent.TOUCH_TAP, this.logoHandler, this);
+        this.closerules.addEventListener(egret.TouchEvent.TOUCH_TAP, this.closerulesHandler, this);
         this.person.addEventListener(egret.TouchEvent.TOUCH_TAP, this.personHandler, this);
         this.join.addEventListener(egret.TouchEvent.TOUCH_TAP, this.joinHandler, this);
         this.observe.addEventListener(egret.TouchEvent.TOUCH_TAP, this.observeHandler, this);
@@ -57,6 +58,11 @@ var Home = (function (_super) {
     //监听的Handlers
     //1 LOGO logoHandler
     Home.prototype.logoHandler = function () {
+        this.Rules.visible = true;
+    };
+    //1-1 closerulesHandler
+    Home.prototype.closerulesHandler = function () {
+        this.Rules.visible = false;
     };
     //2 个人 personHandler
     Home.prototype.personHandler = function () {

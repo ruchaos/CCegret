@@ -10,7 +10,7 @@ r.prototype = e.prototype, t.prototype = new r();
 };
 var Piece = (function (_super) {
     __extends(Piece, _super);
-    function Piece(belong, pieceName, revive) {
+    function Piece(belong, pieceName) {
         var _this = _super.call(this) || this;
         _this.skillname = "";
         _this.addEventListener(eui.UIEvent.COMPLETE, _this.uiCompHandler, _this);
@@ -24,19 +24,14 @@ var Piece = (function (_super) {
         // 	picName=bl[belong]+this.pieceType;
         // }
         var picName = "";
-        if (revive) {
-            picName = pieceName[0] + pieceName[1] + 'r';
-        }
-        else {
-            picName = pieceName[0] + pieceName[1];
-        }
+        picName = pieceName[0] + pieceName[1];
         //A气（Air） F火（Fire） W水(Water) E土（Earth）
         //E元素师(Elementalist) D预言师(Diviner) N死灵师(Necromancer) W权杖（Wand） P力场师（Psychic) I幻术师（Illusionist） S召唤师(Summoner) M召唤兽(Monster)
         _this.p.source = "resource/pic/game/" + picName + ".png";
         _this.s.source = "resource/pic/game/" + picName + "s.png";
         _this.selected = false;
         _this.belong = belong;
-        _this.revive = revive;
+        _this.revive = false;
         _this.restricted = false;
         if (_this.pieceType == "W" || _this.pieceType == "M") {
             _this.maxmoves = 1;
@@ -81,6 +76,18 @@ var Piece = (function (_super) {
             this.s.visible = false;
             this.p.visible = true;
         }
+    };
+    Piece.prototype.setRevive = function (revive) {
+        this.revive = revive;
+        var picName = "";
+        picName = this.pieceName[0] + this.pieceName[1];
+        if (revive) {
+            picName = picName + "r";
+        }
+        //A气（Air） F火（Fire） W水(Water) E土（Earth）
+        //E元素师(Elementalist) D预言师(Diviner) N死灵师(Necromancer) W权杖（Wand） P力场师（Psychic) I幻术师（Illusionist） S召唤师(Summoner) M召唤兽(Monster)
+        this.p.source = "resource/pic/game/" + picName + ".png";
+        this.s.source = "resource/pic/game/" + picName + "s.png";
     };
     Piece.prototype.setSelect = function (select) {
         this.selected = select;

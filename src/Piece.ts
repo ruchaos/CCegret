@@ -1,5 +1,5 @@
 class Piece extends eui.Component implements  eui.UIComponent {
-	public constructor(belong:number,pieceName:string,revive:boolean) {
+	public constructor(belong:number,pieceName:string) {
 		super();
 		this.addEventListener(eui.UIEvent.COMPLETE,this.uiCompHandler,this);
 		this.skinName="resource/custom_skins/Piece.exml";
@@ -19,11 +19,10 @@ class Piece extends eui.Component implements  eui.UIComponent {
 
 		var picName="";
 
-		if(revive){
-			picName=pieceName[0]+pieceName[1]+'r';
-		}else{
-			picName=pieceName[0]+pieceName[1];
-		}
+		
+			
+		picName=pieceName[0]+pieceName[1];
+		
 
 		//A气（Air） F火（Fire） W水(Water) E土（Earth）
 		//E元素师(Elementalist) D预言师(Diviner) N死灵师(Necromancer) W权杖（Wand） P力场师（Psychic) I幻术师（Illusionist） S召唤师(Summoner) M召唤兽(Monster)
@@ -34,7 +33,7 @@ class Piece extends eui.Component implements  eui.UIComponent {
 		this.selected=false;
 
 		this.belong=belong;		
-		this.revive=revive;
+		this.revive=false;
 
 		this.restricted=false;
 
@@ -86,6 +85,23 @@ class Piece extends eui.Component implements  eui.UIComponent {
 			this.s.visible=false;
 			this.p.visible=true;
 		}
+	}
+
+	public setRevive(revive:boolean):void{
+		this.revive=revive;
+		var picName="";		
+			
+		picName=this.pieceName[0]+this.pieceName[1];
+		if(revive){
+			picName=picName+"r";
+		}
+		
+		//A气（Air） F火（Fire） W水(Water) E土（Earth）
+		//E元素师(Elementalist) D预言师(Diviner) N死灵师(Necromancer) W权杖（Wand） P力场师（Psychic) I幻术师（Illusionist） S召唤师(Summoner) M召唤兽(Monster)
+
+		this.p.source="resource/pic/game/"+picName+".png";
+		this.s.source="resource/pic/game/"+picName+"s.png";
+
 	}
 
 	public setSelect(select:boolean):void{
