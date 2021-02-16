@@ -72,19 +72,20 @@
 			</e:ArrayCollection>
 		</e:List>
 	</e:Scroller>
-	<e:Group id="Rules" width="700" height="1000" x="10" y="10" anchorOffsetX="0" anchorOffsetY="0" visible="false">
+	<e:Group id="Rules" width="700" height="1000" x="10" y="10" anchorOffsetX="0" anchorOffsetY="0">
 		<e:Scroller width="700" height="1000" x="0" y="0">
 			<e:Group>
-				<e:Image width="700" x="0" y="0" source="resource/pic/home/rules.png" height="9980"/>
-				<e:Button id="closerules" label="" x="630" y="20" anchorOffsetX="0" width="45" anchorOffsetY="0" height="45">
-					<e:skinName>
-					<e:Skin states="up,down,disabled">
-						<e:Image width="100%" height="100%" source="resource/pic/home/clear.png" source.down="resource/pic/home/clear-click.png"/>
-						<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
-					</e:Skin>
-					</e:skinName>
-				</e:Button>
+			<e:Image width="700" x="0" y="0" source="resource/pic/home/rules.png" height="9980"/>
 			</e:Group>
 		</e:Scroller>
+		<e:Button id="closerules" label="" x="645" y="10" anchorOffsetX="0" width="45" anchorOffsetY="0" height="45">
+			<e:skinName>
+			<e:Skin states="up,down,disabled">
+				<e:Image width="100%" height="100%" source="resource/pic/home/clear.png" source.down="resource/pic/home/clear-click.png"/>
+				<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
+			</e:Skin>
+			</e:skinName>
+		</e:Button>
+
 	</e:Group>
 </e:Skin>
