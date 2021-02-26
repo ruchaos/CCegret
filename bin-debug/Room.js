@@ -472,6 +472,9 @@ var Room = (function (_super) {
                 }
                 ;
             }
+            else {
+                this.quit.visible = true;
+            }
         }
         else if (this.roomState == 2) {
             var isPlayer = false;

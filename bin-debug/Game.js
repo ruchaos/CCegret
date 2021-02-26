@@ -164,7 +164,11 @@ var Game = (function (_super) {
                 this.boards[Py][Px].Piece = "";
             }
         }
-        this.BoardLayer.removeChildren();
+        for (var k = 0; k < this.Pieces.length; k++) {
+            if (this.BoardLayer.getChildByName(this.Pieces[k].name)) {
+                this.BoardLayer.removeChild(this.Pieces[k]);
+            }
+        }
         //清除墓地棋子
         this.graveA.removeChildren();
         this.graveE.removeChildren();
@@ -183,6 +187,7 @@ var Game = (function (_super) {
                 p = new Piece(notation.currentPostions[i].belong, notation.currentPostions[i].pieceName);
                 p.piece.addEventListener(egret.TouchEvent.TOUCH_TAP, this.pieceTapHandler.bind(this, p, false), this);
                 p.skill.addEventListener(egret.TouchEvent.TOUCH_TAP, this.skillTapHandler.bind(this, p, false), this);
+                p.name = p.pieceName;
                 this.Pieces.push(p);
             }
             p.LDE = notation.currentPostions[i].LDE;

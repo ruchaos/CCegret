@@ -520,8 +520,8 @@ class Room extends eui.Component implements  eui.UIComponent {
 				if((roomData.players[3].playerName==username)||(roomData.players[3].playerName=="")){
 					this.kick4.visible=false;
 				};
-				
-
+			}else{
+				this.quit.visible=true;
 			}
 		}else if(this.roomState==2){
 				var isPlayer=false;

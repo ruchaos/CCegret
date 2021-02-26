@@ -22,8 +22,8 @@
       "name": "promise"
     },
     {
-      "name":"socket.io",
-      "path":"./libs/socketio"
+      "name": "socket.io",
+      "path": "./libs/socketio"
     }
   ],
   "targets": {
