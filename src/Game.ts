@@ -289,11 +289,11 @@ class Game extends eui.Component implements  eui.UIComponent {
 		}else if(piece.pieceType=="I"&&piece.restricted==false){
 			if((piece.belong%2==1&&(postison.Ffield+postison.Efield+postison.Fenchant+postison.Eenchant)==0)||
 				(piece.belong%2==0&&(postison.Afield+postison.Wfield+postison.Aenchant+postison.Wenchant)==0)){
-				if(this.getPieceInXY(5,5)&&this.getPieceInXY(5,5).pieceType=="I"){
+				if(this.getPieceInXY(5,5)&&this.getPieceInXY(5,5).pieceType=="I"&&(this.getPieceInXY(5,5).belong-piece.belong+4)%2==0){
 					
-						if((this.getPieceInXY(5,5).belong-piece.belong+4)%2==0){
-							return "Entanglement";
-						}
+						
+					return "Entanglement";
+						
 					
 				}else{
 					return "Transposition";

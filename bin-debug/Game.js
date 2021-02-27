@@ -1092,20 +1092,20 @@ var Game = (function (_super) {
                             this.putFieldAt((i + 1), p.Px, p.Py, true);
                             //左
                             if ((p.Py - 1) >= 0 && (this.boards[p.Py - 1][p.Px].Aenchant + this.boards[p.Py - 1][p.Px].Wenchant) == 0) {
-                                if (i == 0) {
+                                if (i == 1) {
                                     this.boards[p.Py - 1][p.Px].Ffield = 1;
                                 }
-                                else if (i == 2) {
+                                else if (i == 3) {
                                     this.boards[p.Py - 1][p.Px].Efield = 1;
                                 }
                                 this.putFieldAt((i + 1), p.Px, p.Py - 1, false);
                             }
                             //右
                             if ((p.Py + 1) <= 10 && (this.boards[p.Py + 1][p.Px].Aenchant + this.boards[p.Py + 1][p.Px].Wenchant) == 0) {
-                                if (i == 0) {
+                                if (i == 1) {
                                     this.boards[p.Py + 1][p.Px].Ffield = 1;
                                 }
-                                else if (i == 2) {
+                                else if (i == 3) {
                                     this.boards[p.Py + 1][p.Px].Efield = 1;
                                 }
                                 this.putFieldAt((i + 1), p.Px, p.Py + 1, false);
@@ -1146,6 +1146,7 @@ var Game = (function (_super) {
         }
     };
     Game.prototype.checkEFI = function () {
+        //已废弃！！
         //清除所有棋盘上的EF状态
         for (var Py = 0; Py < 11; Py++) {
             for (var Px = 0; Px < 11; Px++) {
